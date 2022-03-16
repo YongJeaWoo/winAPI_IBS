@@ -73,6 +73,15 @@
     <Filter Include="Engine\Component\Collider">
       <UniqueIdentifier>{66f880d3-44cc-47c7-b826-3eacc68b752c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\scene">
+      <UniqueIdentifier>{c8c5d326-ab9e-4a0c-93e9-a302fa925f33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\scene_title">
+      <UniqueIdentifier>{ab81c38a-97bd-4882-aec4-1fdd4ad296ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\scene_tool">
+      <UniqueIdentifier>{9efbfe89-c310-45ee-b1f1-ae090ce3121b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -95,15 +104,6 @@
     </ClInclude>
     <ClInclude Include="struct.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Start.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Tool.h">
-      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="CResource.h">
       <Filter>Resource\resource</Filter>
@@ -192,19 +192,19 @@
     <ClInclude Include="CUIManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>Scene\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Tool.h">
+      <Filter>Scene\scene_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle.h">
+      <Filter>Scene\scene_title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Start.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Tool.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CResource.cpp">
       <Filter>Resource\resource</Filter>
@@ -292,6 +292,15 @@
     </ClCompile>
     <ClCompile Include="CUIManager.cpp">
       <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>Scene\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tool.cpp">
+      <Filter>Scene\scene_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle.cpp">
+      <Filter>Scene\scene_title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
