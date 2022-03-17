@@ -32,6 +32,10 @@ CMonster::CMonster()
 
 CMonster::~CMonster()
 {
+	if (nullptr != m_pAI)
+	{
+		delete m_pAI;
+	}
 }
 
 void CMonster::render()
@@ -69,7 +73,15 @@ void CMonster::update()
 
 	SetPos(pos);
 
-	GetAnimator()->update();
+	if (nullptr != GetAnimator())
+	{
+		GetAnimator()->update();
+	}
+
+	if (nullptr != m_pAI)
+	{
+		m_pAI->update();
+	}
 }
 
 void CMonster::SetAI(AI* ai)

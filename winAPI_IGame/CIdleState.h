@@ -7,8 +7,7 @@ public:
 	CIdleState(MON_STATE state);
 	virtual ~CIdleState();
 
+	virtual void update();
 	virtual void Enter();
 	virtual void Exit();
-
-
 };
