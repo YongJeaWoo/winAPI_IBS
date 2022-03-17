@@ -18,6 +18,7 @@
 #include <string>
 #include <math.h>
 #include <assert.h>
+#include <stdio.h>
 
 // STL
 #include <vector>
@@ -39,6 +40,9 @@ using namespace std;
 enum class GROUP_GAMEOBJ
 {
 	DEFAULT,
+	BACKGROUNDTITLE,
+	TITLE,
+	BACKGROUNDUP,
 	BACKGROUND,
 	MAP,
 	TILE,
