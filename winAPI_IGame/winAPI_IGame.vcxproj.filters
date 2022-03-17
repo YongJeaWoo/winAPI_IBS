@@ -82,6 +82,15 @@
     <Filter Include="Scene\scene_tool">
       <UniqueIdentifier>{9efbfe89-c310-45ee-b1f1-ae090ce3121b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\State">
+      <UniqueIdentifier>{ef5ff5fa-1a85-4acb-abdb-2284d54a28ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\IdleState">
+      <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AI">
+      <UniqueIdentifier>{d924295f-4b4d-46c6-9b0a-177e0fceb4fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -207,6 +216,15 @@
     <ClInclude Include="CTileButton.h">
       <Filter>Object\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Object\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Object\IdleState</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Object\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -313,6 +331,15 @@
     </ClCompile>
     <ClCompile Include="CTileButton.cpp">
       <Filter>Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Object\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Object\IdleState</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Object\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -77,6 +77,18 @@ enum class GROUP_TILE
 	SIZE,
 };
 
+enum class MON_STATE
+{
+	IDLE,
+	PATROL,
+	TRACE,
+	ATT,
+	RUN,
+	DEAD,
+
+	SIZE,
+};
+
 //========================================
 //## 이벤트 타입					##
 //========================================

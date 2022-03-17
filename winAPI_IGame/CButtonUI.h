@@ -13,8 +13,6 @@ private:
 	DWORD_PTR m_pParam1;
 	DWORD_PTR m_pParam2;
 
-	wstring m_strText;
-
 protected:
 	CD2DImage* m_pImg;
 	wstring m_strText;

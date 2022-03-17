@@ -2,6 +2,7 @@
 #include "CGameObject.h"
 
 class CD2DImage;
+class AI;
 
 class CMonster : public CGameObject
 {
@@ -13,14 +14,17 @@ private:
 
 	CD2DImage* m_pImg;
 
+	AI* m_pAI;
+
 public:
 	CMonster();
-	~CMonster();
+	virtual ~CMonster();
 	virtual CMonster* Clone();
 
 	virtual void render();
 	virtual void update();
 
+	void SetAI(AI* ai);
 	void SetCenterPos(fPoint point);
 
 	void OnCollisionEnter(CCollider* pOther);

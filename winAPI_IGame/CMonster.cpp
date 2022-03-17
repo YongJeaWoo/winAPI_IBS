@@ -3,6 +3,7 @@
 #include "CCollider.h"
 #include "CD2DImage.h"
 #include "CAnimator.h"
+#include "AI.h"
 
 CMonster* CMonster::Clone()
 {
@@ -69,6 +70,12 @@ void CMonster::update()
 	SetPos(pos);
 
 	GetAnimator()->update();
+}
+
+void CMonster::SetAI(AI* ai)
+{
+	m_pAI = ai;
+	m_pAI->m_pOwner = this;
 }
 
 void CMonster::SetCenterPos(fPoint point)
