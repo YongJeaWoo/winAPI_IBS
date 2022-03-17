@@ -17,6 +17,7 @@ CMonster::CMonster()
 	m_bIsUPDir = true;
 
 	SetName(L"Monster");
+	SetScale(fPoint(100, 100));
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(90.f, 90.f));

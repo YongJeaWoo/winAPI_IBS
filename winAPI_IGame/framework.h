@@ -70,7 +70,9 @@ enum class GROUP_TILE
 {
 	NONE,
 	GROUND,
+	PLATFORM,
 	WALL,
+	SLOPE,
 
 	SIZE,
 };
