@@ -14,8 +14,8 @@ void CTitle::Enter()
 	// 위로 움직일 커튼
 	CTitleGround* m_pUpImage = new CTitleGround;
 	m_pUpImage->Load(L"UpTitle", L"texture\\background\\UpTitle.png");
-	m_pUpImage->SetPos(fPoint(0, 0));
-	m_pUpImage->SetScale(fPoint(WINSIZEX, WINSIZEY));
+	m_pUpImage->SetPos(fPoint(120.f, 0));
+	m_pUpImage->SetScale(fPoint(WINSIZEX - 240.f, WINSIZEY));
 	AddObject(m_pUpImage, GROUP_GAMEOBJ::BACKGROUNDUP);
 
 	// 메인 타이틀 일부분 가려주는 커튼
@@ -25,6 +25,7 @@ void CTitle::Enter()
 	m_pTitleImage->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(m_pTitleImage, GROUP_GAMEOBJ::TITLE);
 
+	// 키가눌릴때 시작 하는 것을 구현을 못함
 	if (Key(VK_SPACE))
 	{
 		// TODO : m_pUpImage 위로 올리기
