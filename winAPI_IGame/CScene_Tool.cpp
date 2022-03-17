@@ -8,6 +8,7 @@
 #include "CUI.h"
 #include "CPanelUI.h"
 #include "CButtonUI.h"
+#include "CTileButton.h"
 
 INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -17,7 +18,7 @@ CScene_Tool::CScene_Tool()
 
 	m_hWnd = 0;
 	m_iIdx = 0;
-	m_gTile = GROUP_TILE::GROUND;
+	m_gTile = GROUP_TILE::NONE;
 	m_velocity = 500;
 	m_iTileX = 0;
 	m_iTileY = 0;
@@ -81,32 +82,8 @@ void CScene_Tool::Enter()
 	m_hWnd = CreateDialog(hInst, MAKEINTRESOURCE(IDD_TILEBOX), hWnd, TileWinProc);
 	ShowWindow(m_hWnd, SW_SHOW);
 
+	CreateTile(20, 20);
 	CreateTilePanel();
-
-	/*
-	// UI 생성
-	CPanelUI* pPanelUI = new CPanelUI();
-	pPanelUI->SetScale(fPoint(200.f, 80.f));
-	pPanelUI->SetPos(fPoint(WINSIZEX - pPanelUI->GetScale().x, 0.f));		// UI는 카메라의 위치와 상관없이 절대 좌표를 통해 구현
-	AddObject(pPanelUI, GROUP_GAMEOBJ::UI);
-
-	CButtonUI* pButtonUI = new CButtonUI();
-	pButtonUI->SetScale(fPoint(100.f, 40.f));
-	pButtonUI->SetClickedCallBack(ClickTileGroupButton, 0, 0);	// 추가 정보가 필요로 하지 않는 동작
-	pButtonUI->SetPos(fPoint(10.f, 10.f));
-	pPanelUI->AddChild(pButtonUI);
-
-	// UI 복사
-	CPanelUI* pClonePanel = pPanelUI->Clone();
-	pClonePanel->SetPos(pClonePanel->GetPos() + fPoint(-500.f, 0.f));
-	AddObject(pClonePanel, GROUP_GAMEOBJ::UI);
-
-	CButtonUI* pBtnUI = new CButtonUI();
-	pBtnUI->SetScale(fPoint(100.f, 100.f));
-	pBtnUI->SetPos(fPoint(100.f, 100.f));
-	pBtnUI->SetClickedCallBack(ChangeScene, 0, 0);
-	AddObject(pBtnUI, GROUP_GAMEOBJ::UI);
-	*/
 
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }
@@ -352,9 +329,9 @@ void ClickTileGroupButton(DWORD_PTR param1, DWORD_PTR param2)
 {
 	// param1 : Scene_tool
 	// param2 : CButtonUI
-	CScene_Tool* csene_tool = (CScene_Tool*)param1;
+	CScene_Tool* scene_tool = (CScene_Tool*)param1;
 	CButtonUI* button = (CButtonUI*)param2;
-	csene_tool->ClickTileGroup(button);
+	scene_tool->ClickTileGroup(button);
 }
 
 void CScene_Tool::ClickTileGroup(CButtonUI* button)
@@ -376,11 +353,41 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 	}
 }
 
+void ClickTileButton(DWORD_PTR param1, DWORD_PTR param2)
+{
+	CScene_Tool* scene_tool = (CScene_Tool*)param1;
+	CTileButton* button = (CTileButton*)param2;
+	scene_tool->ClickTile(button);
+}
+
+
+void CScene_Tool::ClickTile(CTileButton* button)
+{
+	SetIdx(button->GetIdx());
+}
+
 void CScene_Tool::CreateTilePanel()
 {
 	CPanelUI* panelTile = new CPanelUI;
+	panelTile->SetName(L"panelTile");
 	panelTile->SetScale(fPoint(400.f, 600.f));
 	panelTile->SetPos(fPoint(WINSIZEX - 450.f, 50.f));
+
+	CD2DImage* pImg = CResourceManager::getInst()->LoadD2DImage(L"Tile", L"texture\\tile\\tilemap.bmp");
+	for (UINT y = 0; y < 12; y++)
+	{
+		for (UINT x = 0; x < 12; x++)
+		{
+			CTileButton* btnTile = new CTileButton;
+			btnTile->SetScale(fPoint(CTile::SIZE_TILE, CTile::SIZE_TILE));
+			btnTile->SetPos(fPoint((float)x * CTile::SIZE_TILE, (float)y * CTile::SIZE_TILE));
+			btnTile->SetPos(btnTile->GetPos() + fPoint(8.f, 8.f));
+			btnTile->SetImage(pImg);
+			btnTile->SetIdx(y * 12 + x);
+			btnTile->SetClickedCallBack(ClickTileButton, (DWORD_PTR)this, (DWORD_PTR)btnTile);
+			panelTile->AddChild(btnTile);
+		}
+	}
 
 	CButtonUI* btnTileGroup = new CButtonUI;
 	btnTileGroup->SetScale(fPoint(100.f, 50.f));
@@ -450,7 +457,8 @@ void CScene_Tool::PrintTileGroup()
 				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
-				RGB(255, 0, 0)
+				RGB(255, 0, 0),
+				3.f
 			);
 		}
 		else if (GROUP_TILE::WALL == pTile->GetGroup())
@@ -460,7 +468,8 @@ void CScene_Tool::PrintTileGroup()
 				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
-				RGB(0, 255, 0)
+				RGB(0, 255, 0),
+				3.f
 			);
 		}
 	}

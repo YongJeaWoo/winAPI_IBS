@@ -3,6 +3,7 @@
 
 class CD2DImage;
 class CButtonUI;
+class CTileButton;
 
 class CScene_Tool : public CScene
 {
@@ -40,6 +41,7 @@ public:
 	void LoadMap();
 	
 	void ClickTileGroup(CButtonUI* button);
+	void ClickTile(CTileButton* button);
 
 private:
 	void CreateTilePanel();

@@ -204,6 +204,9 @@
     <ClInclude Include="CTitleGround.h">
       <Filter>Object\Map</Filter>
     </ClInclude>
+    <ClInclude Include="CTileButton.h">
+      <Filter>Object\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -307,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="CTitleGround.cpp">
       <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileButton.cpp">
+      <Filter>Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

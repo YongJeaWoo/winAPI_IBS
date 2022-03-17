@@ -7,7 +7,8 @@ CButtonUI::CButtonUI()
 	m_pFunc = nullptr;
 	m_pParam1 = 0;
 	m_pParam2 = 0;
-	m_strText = L"NONE";
+	m_pImg = nullptr;
+	m_strText = L"";
 }
 
 CButtonUI::~CButtonUI()
@@ -27,6 +28,17 @@ void CButtonUI::render()
 	{
 		CRenderManager::getInst()->RenderText(
 			m_strText,
+			GetFinalPos().x,
+			GetFinalPos().y,
+			GetFinalPos().x + GetScale().x,
+			GetFinalPos().y + GetScale().y
+		);
+	}
+
+	if (nullptr != m_pImg)
+	{
+		CRenderManager::getInst()->RenderImage(
+			m_pImg,
 			GetFinalPos().x,
 			GetFinalPos().y,
 			GetFinalPos().x + GetScale().x,
@@ -53,6 +65,11 @@ void CButtonUI::MouseLbtnClicked()
 	{
 		m_pFunc(m_pParam1, m_pParam2);
 	}
+}
+
+void CButtonUI::SetImage(CD2DImage* img)
+{
+	m_pImg = img;
 }
 
 void CButtonUI::SetText(const wstring& str)

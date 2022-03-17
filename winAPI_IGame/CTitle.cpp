@@ -32,9 +32,6 @@ void CTitle::Enter()
 
 		ChangeScn(GROUP_SCENE::STAGE_01);
 	}
-
-	else if (Key(VK_ESCAPE))
-		PostQuitMessage(0);
 }
 
 void CTitle::Exit()
