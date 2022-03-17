@@ -25,8 +25,8 @@ void CMissile::update()
 {
 	fPoint pos = GetPos();
 
-	pos.x += m_fVelocity * m_fvDir.x * fDT;
-	pos.y += m_fVelocity * m_fvDir.y * fDT;
+	pos.x += m_fSpeed * m_fvDir.x * fDT;
+	pos.y += m_fSpeed * m_fvDir.y * fDT;
 
 	SetPos(pos);
 

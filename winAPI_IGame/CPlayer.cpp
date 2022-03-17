@@ -49,21 +49,21 @@ void CPlayer::update()
 
 	if (Key(VK_LEFT))
 	{
-		pos.x -= m_fVelocity * fDT;
+		pos.x -= m_fSpeed * fDT;
 		GetAnimator()->Play(L"LeftMove");
 	}
 	if (Key(VK_RIGHT))
 	{
-		pos.x += m_fVelocity * fDT;
+		pos.x += m_fSpeed * fDT;
 		GetAnimator()->Play(L"RightMove");
 	}				   
 	if (Key(VK_UP))	   
 	{				   
-		pos.y -= m_fVelocity * fDT;
+		pos.y -= m_fSpeed * fDT;
 	}				   
 	if (Key(VK_DOWN))  
 	{				   
-		pos.y += m_fVelocity * fDT;
+		pos.y += m_fSpeed * fDT;
 	}
 
 	SetPos(pos);
@@ -91,6 +91,7 @@ void CPlayer::CreateMissile()
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fpMissilePos);
 	pMissile->SetDir(fVec2(1, 0));
+	pMissile->SetName(L"Missile_Player");
 
 	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
