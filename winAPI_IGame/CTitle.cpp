@@ -12,11 +12,11 @@ void CTitle::Enter()
 	AddObject(m_pTitleBackImage, GROUP_GAMEOBJ::BACKGROUNDTITLE);
 
 	// 위로 움직일 커튼
-	/*CTitleGround* m_pUpImage = new CTitleGround;
+	CTitleGround* m_pUpImage = new CTitleGround;
 	m_pUpImage->Load(L"UpTitle", L"texture\\background\\UpTitle.png");
 	m_pUpImage->SetPos(fPoint(120.f, 0));
 	m_pUpImage->SetScale(fPoint(WINSIZEX - 240.f, WINSIZEY));
-	AddObject(m_pUpImage, GROUP_GAMEOBJ::BACKGROUNDUP);*/
+	AddObject(m_pUpImage, GROUP_GAMEOBJ::BACKGROUNDUP);
 
 	// 메인 타이틀 일부분 가려주는 커튼
 	CTitleGround* m_pTitleImage = new CTitleGround;

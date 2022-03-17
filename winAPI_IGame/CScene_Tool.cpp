@@ -18,7 +18,7 @@ CScene_Tool::CScene_Tool()
 	m_hWnd = 0;
 	m_iIdx = 0;
 	m_gTile = GROUP_TILE::GROUND;
-	m_velocity = 200;
+	m_velocity = 500;
 	m_iTileX = 0;
 	m_iTileY = 0;
 }
@@ -59,27 +59,29 @@ void CScene_Tool::update()
 
 void CScene_Tool::render()
 {
-	CScene::render();
+	const vector<CGameObject*>& vecTile = GetGroupObject(GROUP_GAMEOBJ::TILE);
+	for (UINT i = 0; i < vecTile.size(); i++)
+	{
+		vecTile[i]->render();
+	}
+
+	PrintMap();
 	PrintTileLine();
 	PrintTileGroup();
-}
-
-void ChangeScene(DWORD_PTR, DWORD_PTR)
-{
-	ChangeScn(GROUP_SCENE::START);
-}
-
-void ButtonClicked(DWORD_PTR, DWORD_PTR)
-{
-	int a = 0;
+	
+	const vector<CGameObject*>& vecUI = GetGroupObject(GROUP_GAMEOBJ::UI);
+	for (UINT i = 0; i < vecUI.size(); i++)
+	{
+		vecUI[i]->render();
+	}
 }
 
 void CScene_Tool::Enter()
 {
-	CreateTile(5, 5);
-
 	m_hWnd = CreateDialog(hInst, MAKEINTRESOURCE(IDD_TILEBOX), hWnd, TileWinProc);
 	ShowWindow(m_hWnd, SW_SHOW);
+
+	CreateTilePanel();
 
 	/*
 	// UI 생성
@@ -90,7 +92,7 @@ void CScene_Tool::Enter()
 
 	CButtonUI* pButtonUI = new CButtonUI();
 	pButtonUI->SetScale(fPoint(100.f, 40.f));
-	pButtonUI->SetClickedCallBack(ButtonClicked, 0, 0);	// 추가 정보가 필요로 하지 않는 동작
+	pButtonUI->SetClickedCallBack(ClickTileGroupButton, 0, 0);	// 추가 정보가 필요로 하지 않는 동작
 	pButtonUI->SetPos(fPoint(10.f, 10.f));
 	pPanelUI->AddChild(pButtonUI);
 
@@ -322,13 +324,97 @@ void CScene_Tool::LoadTileData()
 	}
 }
 
+void CScene_Tool::LoadMap()
+{
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(OPENFILENAME);  // 구조체 사이즈.
+	ofn.hwndOwner = hWnd; // 부모 윈도우 지정.
+	wchar_t szName[256] = {};
+	ofn.lpstrFile = szName; // 나중에 완성된 경로가 채워질 버퍼 지정.
+	ofn.nMaxFile = sizeof(szName); // lpstrFile에 지정된 버퍼의 문자 수.
+	ofn.lpstrFilter = L"ALL\0*.*\0Image\0*.png"; // 필터 설정
+	ofn.nFilterIndex = 0; // 기본 필터 세팅. 0는 all로 초기 세팅됨. 처음꺼.
+	ofn.lpstrFileTitle = nullptr; // 타이틀 바
+	ofn.nMaxFileTitle = 0; // 타이틀 바 문자열 크기. nullptr이면 0.
+	wstring strTileFolder = CPathManager::getInst()->GetContentPath();
+	strTileFolder += L"map";
+	ofn.lpstrInitialDir = strTileFolder.c_str(); // 초기경로. 우리는 타일 저장할거기 때문에, content->tile 경로로 해두자.
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // 스타일
+
+	if (GetOpenFileName(&ofn))
+	{
+		m_pMap = CResourceManager::getInst()->LoadToolD2DImage(szName);
+	}
+}
+
+void ClickTileGroupButton(DWORD_PTR param1, DWORD_PTR param2)
+{
+	// param1 : Scene_tool
+	// param2 : CButtonUI
+	CScene_Tool* csene_tool = (CScene_Tool*)param1;
+	CButtonUI* button = (CButtonUI*)param2;
+	csene_tool->ClickTileGroup(button);
+}
+
+void CScene_Tool::ClickTileGroup(CButtonUI* button)
+{
+	if (m_gTile == GROUP_TILE::NONE)
+	{
+		m_gTile = GROUP_TILE::GROUND;
+		button->SetText(L"Ground");
+	}
+	else if (m_gTile == GROUP_TILE::GROUND)
+	{
+		m_gTile = GROUP_TILE::WALL;
+		button->SetText(L"WALL");
+	}
+	else if (m_gTile == GROUP_TILE::WALL)
+	{
+		m_gTile = GROUP_TILE::NONE;
+		button->SetText(L"NONE");
+	}
+}
+
+void CScene_Tool::CreateTilePanel()
+{
+	CPanelUI* panelTile = new CPanelUI;
+	panelTile->SetScale(fPoint(400.f, 600.f));
+	panelTile->SetPos(fPoint(WINSIZEX - 450.f, 50.f));
+
+	CButtonUI* btnTileGroup = new CButtonUI;
+	btnTileGroup->SetScale(fPoint(100.f, 50.f));
+	btnTileGroup->SetPos(fPoint(50.f, 500.f));
+	btnTileGroup->SetClickedCallBack(ClickTileGroupButton, (DWORD_PTR)this, (DWORD_PTR)btnTileGroup);
+	panelTile->AddChild(btnTileGroup);
+
+	AddObject(panelTile, GROUP_GAMEOBJ::UI);
+}
+
+void CScene_Tool::PrintMap()
+{
+	if (nullptr == m_pMap)
+		return;
+
+	fPoint pos = CCameraManager::getInst()->GetLookAt();
+	pos = pos - fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
+
+	CRenderManager::getInst()->RenderImage(
+		m_pMap,
+		0 - pos.x,
+		0 - pos.y,
+		2 * m_pMap->GetWidth() - pos.x,
+		2 * m_pMap->GetHeight() - pos.y
+	);
+}
+
 void CScene_Tool::PrintTileLine()
 {
 	fPoint pos = CCameraManager::getInst()->GetLookAt();
 	pos = pos - fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
 
 	// 가로줄 출력
-	for (UINT y = 0; y <= m_iTileX; y++)
+	for (UINT y = 0; y <= m_iTileY; y++)
 	{
 		CRenderManager::getInst()->RenderLine(
 			fPoint(0 - pos.x, y * CTile::SIZE_TILE - pos.y),
@@ -337,7 +423,7 @@ void CScene_Tool::PrintTileLine()
 	}
 
 	// 세로줄 출력
-	for (UINT x = 0; x <= m_iTileY; x++)
+	for (UINT x = 0; x <= m_iTileX; x++)
 	{
 		CRenderManager::getInst()->RenderLine(
 			fPoint(x * CTile::SIZE_TILE - pos.x, 0 - pos.y),
@@ -348,6 +434,9 @@ void CScene_Tool::PrintTileLine()
 
 void CScene_Tool::PrintTileGroup()
 {
+	fPoint pos = CCameraManager::getInst()->GetLookAt();
+	pos = pos - fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
+
 	const vector<CGameObject*>& vecTile = GetGroupObject(GROUP_GAMEOBJ::TILE);
 	CTile* pTile;
 
@@ -357,8 +446,8 @@ void CScene_Tool::PrintTileGroup()
 		if (GROUP_TILE::GROUND == pTile->GetGroup())
 		{
 			CRenderManager::getInst()->RenderEllipse(
-				pTile->GetPos().x + CTile::SIZE_TILE / 2.f,
-				pTile->GetPos().y + CTile::SIZE_TILE / 2.f,
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(255, 0, 0)
@@ -367,8 +456,8 @@ void CScene_Tool::PrintTileGroup()
 		else if (GROUP_TILE::WALL == pTile->GetGroup())
 		{
 			CRenderManager::getInst()->RenderEllipse(
-				pTile->GetPos().x + CTile::SIZE_TILE / 2.f,
-				pTile->GetPos().y + CTile::SIZE_TILE / 2.f,
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(0, 255, 0)
@@ -387,7 +476,7 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		return (INT_PTR)TRUE;
 
 	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK)
+		if (LOWORD(wParam) == IDC_SAVE)
 		{
 			CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
 
@@ -398,7 +487,7 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			return (INT_PTR)TRUE;
 		}
-		else if (LOWORD(wParam) == IDCANCEL)
+		else if (LOWORD(wParam) == IDC_LOAD)
 		{
 			CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
 
@@ -408,6 +497,19 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			pToolScene->LoadTileData();
 
 			return (INT_PTR)TRUE;
+		}
+		else if (LOWORD(wParam) == IDC_MAP)
+		{
+			int x = GetDlgItemInt(hDlg, IDC_EDIT_SIZEX, nullptr, false);
+			int y = GetDlgItemInt(hDlg, IDC_EDIT_SIZEY, nullptr, false);
+
+			CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
+
+			CScene_Tool* pToolScene = dynamic_cast<CScene_Tool*>(pCurScene);
+			assert(pToolScene);
+
+			pToolScene->DeleteGroup(GROUP_GAMEOBJ::TILE);
+			pToolScene->CreateTile(x, y);
 		}
 		else if (LOWORD(wParam) == IDC_BUTTON_SIZE)
 		{
@@ -421,17 +523,6 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			pToolScene->DeleteGroup(GROUP_GAMEOBJ::TILE);
 			pToolScene->CreateTile(x, y);
-		}
-		else if (LOWORD(wParam) == IDC_BUTTON_TILE)
-		{
-			int m_iIdx = GetDlgItemInt(hDlg, IDC_EDIT_TILE, nullptr, false);
-
-			CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
-
-			CScene_Tool* pToolScene = dynamic_cast<CScene_Tool*>(pCurScene);
-			assert(pToolScene);
-
-			pToolScene->SetIdx(m_iIdx);
 		}
 		break;
 	}
