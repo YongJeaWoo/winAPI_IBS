@@ -46,6 +46,9 @@ void CSceneManager::render()
 
 void CSceneManager::init()
 {
+	m_arrScene[(size_t)GROUP_SCENE::TITLEUP] = new CTitle;
+	m_arrScene[(size_t)GROUP_SCENE::TITLEUP]->SetName(L"TitleUp");
+
 	m_arrScene[(size_t)GROUP_SCENE::TITLE] = new CTitle;
 	m_arrScene[(size_t)GROUP_SCENE::TITLE]->SetName(L"Title");
 

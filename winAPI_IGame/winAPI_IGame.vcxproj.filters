@@ -225,8 +225,8 @@
     <ClInclude Include="AI.h">
       <Filter>Object\AI</Filter>
     </ClInclude>
-    <ClInclude Include="CTitleObject.h">
-      <Filter>Object\Tile</Filter>
+    <ClInclude Include="CImageObject.h">
+      <Filter>Scene\scene_title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,8 +344,8 @@
     <ClCompile Include="AI.cpp">
       <Filter>Object\AI</Filter>
     </ClCompile>
-    <ClCompile Include="CTitleObject.cpp">
-      <Filter>Object\Tile</Filter>
+    <ClCompile Include="CImageObject.cpp">
+      <Filter>Scene\scene_title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
