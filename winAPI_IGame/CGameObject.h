@@ -23,7 +23,7 @@ public:
 	CGameObject();
 	CGameObject(const CGameObject& other);
 	virtual ~CGameObject();
-	virtual CGameObject* Clone() = 0;
+	virtual CGameObject* Clone();
 
 	void SetPos(fPoint pos);
 	void SetScale(fPoint scale);

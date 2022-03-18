@@ -45,6 +45,11 @@ CGameObject::~CGameObject()
 	}
 }
 
+CGameObject* CGameObject::Clone()
+{
+	return nullptr;
+}
+
 void CGameObject::SetPos(fPoint pos)
 {
 	m_fptPos = pos;
