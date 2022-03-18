@@ -3,11 +3,7 @@
 
 CImageObject::CImageObject()
 {
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"Title", L"texture\\background\\UpTitle.png");
-	m_bIsRaise = false;
-
-	SetPos(fPoint(0.f, 0.f));
-	
+	m_pImg = nullptr;
 }
 
 CImageObject::~CImageObject()
@@ -21,12 +17,19 @@ CImageObject* CImageObject::Clone()
 
 void CImageObject::update()
 {
-	if (KeyDown(VK_SPACE))
-	{
-		m_bIsRaise = true;
-	}
 }
 
 void CImageObject::render()
 {
+	CRenderManager::getInst()->RenderImage(
+		m_pImg,
+		GetPos().x,
+		GetPos().y,
+		GetPos().x + GetScale().x,
+		GetPos().y + GetScale().y);
+}
+
+void CImageObject::Load(const wstring& strKey, const wstring& strPath)
+{
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
 }

@@ -15,9 +15,6 @@ CTitle::~CTitle()
 
 void CTitle::update()
 {
-	
-
-
 	if (KeyDown(VK_SPACE))
 	{
 		m_bIsSpace = true;
@@ -25,7 +22,14 @@ void CTitle::update()
 
 	if (m_bIsSpace)
 	{
+		fPoint pos = Iobj->GetPos();
+		pos.y -= 50.f * fDT;
+		Iobj->SetPos(pos);
+	}
 
+	if (Iobj->GetPos().y < -1000.f)
+	{
+		ChangeScn(GROUP_SCENE::START);
 	}
 
 	if (Key(VK_ESCAPE))
@@ -40,6 +44,12 @@ void CTitle::Enter()
 	m_pTitleBackImage->SetPos(fPoint(0, 0));
 	m_pTitleBackImage->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(m_pTitleBackImage, GROUP_GAMEOBJ::BACKGROUNDTITLE);
+
+	Iobj = new CImageObject;
+	Iobj->Load(L"UpTitle", L"texture\\background\\UpTitle.png");
+	Iobj->SetPos(fPoint(0.f, 0.f));
+	Iobj->SetScale(fPoint(WINSIZEX, 500.f));
+	AddObject(Iobj, GROUP_GAMEOBJ::BACKGROUNDUP);
 
 	// 메인 타이틀 일부분 가려주는 커튼
 	CTitleGround* m_pTitleImage = new CTitleGround;

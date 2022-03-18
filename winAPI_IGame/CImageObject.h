@@ -17,5 +17,7 @@ public:
 
 	virtual void update();
 	virtual void render();
+
+	void Load(const wstring& strKey, const wstring& strPath);
 };
 
