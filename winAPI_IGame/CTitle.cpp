@@ -7,12 +7,13 @@ void CTitle::update()
 {
 	float f = 0;
 
+	// TODO : 위로 움직여야 되는데
 	// 위로 움직일 커튼
 	CTitleGround* m_pUpImage = new CTitleGround;
 	m_pUpImage->Load(L"UpTitle", L"texture\\background\\UpTitle.png");
 	m_pUpImage->SetPos(fPoint(120.f, f));
 	m_pUpImage->SetScale(fPoint(WINSIZEX - 240.f, WINSIZEY));
-	
+
 
 	if (Key(VK_SPACE))
 	{
