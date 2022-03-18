@@ -13,6 +13,21 @@ CAnimation::CAnimation()
     m_fAccTime = 0;
 }
 
+CAnimation::CAnimation(const CAnimation& pOther)
+{
+    m_strName = pOther.m_strName;
+    for (int i = 0; i < pOther.m_vecFrm.size(); i++)
+    {
+        m_vecFrm.push_back(pOther.m_vecFrm[i]);
+    }
+    m_iCurFrm = pOther.m_iCurFrm;
+    m_fAccTime = pOther.m_fAccTime;
+    m_bReverse = pOther.m_bReverse;
+
+    m_pAnimator = nullptr;
+    m_pImg = pOther.m_pImg;
+}
+
 CAnimation::~CAnimation()
 {
 }
@@ -74,6 +89,7 @@ void CAnimation::render()
             frm.fptLT.y + frm.fptSlice.y
         );
     }
+
     else
     {
         CRenderManager::getInst()->RenderFrame(
