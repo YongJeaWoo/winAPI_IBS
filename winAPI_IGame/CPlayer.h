@@ -1,5 +1,4 @@
 #pragma once
-
 #include "CGameObject.h"
 
 class CD2DImage;
@@ -19,7 +18,5 @@ public:
 
 	virtual void update();
 	virtual void render();
-
-	
 };
 

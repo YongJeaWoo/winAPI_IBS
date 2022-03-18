@@ -20,7 +20,6 @@
 #define IDC_LOAD                        1007
 #define IDC_BUTTON1                     1008
 #define IDC_MAP                         1008
-#define ID_ACCELERATOR32771             32771
 #define IDC_STATIC                      -1
 
 // Next default values for new objects

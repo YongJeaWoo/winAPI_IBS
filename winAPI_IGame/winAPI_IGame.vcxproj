@@ -180,6 +180,7 @@
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="CTitle.h" />
     <ClInclude Include="CTitleGround.h" />
+    <ClInclude Include="CTitleObject.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="framework.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="CTitleGround.cpp" />
+    <ClCompile Include="CTitleObject.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="winAPI_IGame.cpp" />

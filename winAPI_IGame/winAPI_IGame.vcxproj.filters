@@ -225,6 +225,9 @@
     <ClInclude Include="AI.h">
       <Filter>Object\AI</Filter>
     </ClInclude>
+    <ClInclude Include="CTitleObject.h">
+      <Filter>Object\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -340,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="AI.cpp">
       <Filter>Object\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleObject.cpp">
+      <Filter>Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

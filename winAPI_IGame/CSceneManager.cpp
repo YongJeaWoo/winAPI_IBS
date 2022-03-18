@@ -1,8 +1,8 @@
 #include "framework.h"
 #include "CSceneManager.h"
-
 #include "CTitle.h"
 #include "CScene_Tool.h"
+#include "CGameObject.h"
 
 CSceneManager::CSceneManager()
 {

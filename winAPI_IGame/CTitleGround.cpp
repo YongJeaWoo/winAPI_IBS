@@ -41,6 +41,11 @@ void CTitleGround::render()
     );
 }
 
+void CTitleGround::SetDir(fVec2 vec)
+{
+    m_fvDir = vec.normalize();
+}
+
 void CTitleGround::Load(wstring strKey, wstring strPath)
 {
     m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
