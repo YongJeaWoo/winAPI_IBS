@@ -91,9 +91,6 @@
     <Filter Include="Object\AI">
       <UniqueIdentifier>{d924295f-4b4d-46c6-9b0a-177e0fceb4fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\scene_uptitle">
-      <UniqueIdentifier>{f80c1ea7-c8d9-47b7-b894-0717530ba192}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -231,9 +228,6 @@
     <ClInclude Include="CTitleObject.h">
       <Filter>Object\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="CUpTitle.h">
-      <Filter>Scene\scene_uptitle</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -352,9 +346,6 @@
     </ClCompile>
     <ClCompile Include="CTitleObject.cpp">
       <Filter>Object\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="CUpTitle.cpp">
-      <Filter>Scene\scene_uptitle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

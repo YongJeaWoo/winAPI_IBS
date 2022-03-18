@@ -183,7 +183,6 @@
     <ClInclude Include="CTitleObject.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
-    <ClInclude Include="CUpTitle.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Resource.h" />
@@ -231,7 +230,6 @@
     <ClCompile Include="CTitleObject.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
-    <ClCompile Include="CUpTitle.cpp" />
     <ClCompile Include="winAPI_IGame.cpp" />
   </ItemGroup>
   <ItemGroup>
