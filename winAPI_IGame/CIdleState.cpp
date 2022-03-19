@@ -15,6 +15,9 @@ CIdleState::~CIdleState()
 void CIdleState::update()
 {
 	CPlayer* pPlayer = CPlayer::GetPlayer();
+	if (nullptr == pPlayer)
+		return;
+
 	fPoint fptPlayerPos = pPlayer->GetPos();
 
 	CMonster* pMonster = GetMonster();
