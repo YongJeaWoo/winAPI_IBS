@@ -4,6 +4,7 @@
 CImageObject::CImageObject()
 {
 	m_pImg = nullptr;
+	m_bIsRaise = false;
 }
 
 CImageObject::~CImageObject()

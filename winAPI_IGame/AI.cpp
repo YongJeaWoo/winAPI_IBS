@@ -23,6 +23,29 @@ void AI::update()
 	m_pCurState->update();
 }
 
-void AI::AddState(CState* pState)
+CState* AI::GetState(MON_STATE state)
 {
+	map<MON_STATE, CState*>::iterator iter = m_mapState.find(state);
+
+	if (m_mapState.end() == iter)
+		return nullptr;
+
+	return iter->second;
 }
+
+void AI::SetCurState(MON_STATE state)
+{
+	m_pCurState = GetState(state);
+	assert(m_pCurState);
+}
+
+void AI::AddState(CState* state)
+{
+	CState* pState = GetState(state->GetType());
+	assert(!pState);
+
+	m_mapState.insert(make_pair(state->GetType(), state));
+	state->m_pOwnerAI = this;
+}
+
+

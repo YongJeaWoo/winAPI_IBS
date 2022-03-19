@@ -7,7 +7,7 @@ class CState
 	friend class AI;
 
 private:
-	AI* m_pOwnerAi;
+	AI* m_pOwnerAI;
 	MON_STATE m_eState;
 
 public:
@@ -15,6 +15,7 @@ public:
 	virtual ~CState();
 
 	AI* GetOwner();
+	MON_STATE GetType();
 
 	virtual void update() = 0;
 	virtual void Enter() = 0;

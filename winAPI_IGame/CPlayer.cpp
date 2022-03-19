@@ -9,7 +9,7 @@
 
 CPlayer::CPlayer()
 {
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
+	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
 	SetName(L"Player");
 	SetScale(fPoint(70.f, 70.f));
 

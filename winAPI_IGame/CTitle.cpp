@@ -2,11 +2,12 @@
 #include "CTitle.h"
 #include "CTitleGround.h"
 #include "CImageObject.h"
+#include "CGameObject.h"
 
 CTitle::CTitle()
 {
 	m_bIsSpace = false;
-
+	Iobj = nullptr;
 }
 
 CTitle::~CTitle()
@@ -23,13 +24,21 @@ void CTitle::update()
 	if (m_bIsSpace)
 	{
 		fPoint pos = Iobj->GetPos();
-		pos.y -= 50.f * fDT;
+		pos.y -= 100.f * fDT;
 		Iobj->SetPos(pos);
 	}
 
 	if (Iobj->GetPos().y < -1000.f)
 	{
-		ChangeScn(GROUP_SCENE::START);
+		m_bIsSpace = false;
+
+
+		// 한번 더 눌렀을 때 씬 전환
+		if (KeyDown(VK_SPACE))
+		{
+			m_bIsSpace = true;
+			ChangeScn(GROUP_SCENE::START);
+		}
 	}
 
 	if (Key(VK_ESCAPE))
@@ -48,8 +57,12 @@ void CTitle::Enter()
 	Iobj = new CImageObject;
 	Iobj->Load(L"UpTitle", L"texture\\background\\UpTitle.png");
 	Iobj->SetPos(fPoint(0.f, 0.f));
-	Iobj->SetScale(fPoint(WINSIZEX, 500.f));
+	Iobj->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(Iobj, GROUP_GAMEOBJ::BACKGROUNDUP);
+
+	// 오브젝트 움직이기
+	
+
 
 	// 메인 타이틀 일부분 가려주는 커튼
 	CTitleGround* m_pTitleImage = new CTitleGround;

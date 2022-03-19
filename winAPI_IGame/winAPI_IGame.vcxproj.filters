@@ -91,6 +91,9 @@
     <Filter Include="Object\AI">
       <UniqueIdentifier>{d924295f-4b4d-46c6-9b0a-177e0fceb4fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\States">
+      <UniqueIdentifier>{1ac6bb40-9639-47c1-a6e0-25da06159a13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -228,6 +231,12 @@
     <ClInclude Include="CImageObject.h">
       <Filter>Scene\scene_title</Filter>
     </ClInclude>
+    <ClInclude Include="CTitleObject.h">
+      <Filter>Scene\scene_title</Filter>
+    </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>Object\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -346,6 +355,12 @@
     </ClCompile>
     <ClCompile Include="CImageObject.cpp">
       <Filter>Scene\scene_title</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleObject.cpp">
+      <Filter>Scene\scene_title</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>Object\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
