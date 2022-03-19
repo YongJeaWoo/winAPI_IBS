@@ -37,6 +37,7 @@ public:
 	virtual void update();
 
 	float GetSpeed();
+	const sMonInfo& GetMonInfo();
 
 	void SetSpeed(float speed);
 

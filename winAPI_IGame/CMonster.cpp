@@ -58,9 +58,9 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		info.fSpeed = 150.f;
 
 		AI* pAI = new AI;
-		pAI->AddState(new CIdleState(MON_STATE::IDLE));
-		pAI->AddState(new CTraceState(MON_STATE::TRACE));
-		pAI->SetCurState(MON_STATE::IDLE);
+		pAI->AddState(new CIdleState(STATE_MON::IDLE));
+		pAI->AddState(new CTraceState(STATE_MON::TRACE));
+		pAI->SetCurState(STATE_MON::IDLE);
 		pMon->SetMonInfo(info);
 		pMon->SetAI(pAI);
 	}
@@ -102,6 +102,11 @@ float CMonster::GetSpeed()
 	return m_sInfo.fSpeed;
 }
 
+const sMonInfo& CMonster::GetMonInfo()
+{
+	return m_sInfo;
+}
+
 void CMonster::SetSpeed(float speed)
 {
 	m_sInfo.fSpeed = speed;
@@ -115,6 +120,7 @@ void CMonster::SetAI(AI* ai)
 
 void CMonster::SetMonInfo(const sMonInfo& info)
 {
+	m_sInfo = info;
 }
 
 void CMonster::OnCollisionEnter(CCollider* pOther)

@@ -1,6 +1,7 @@
 #pragma once
 
 class AI;
+class CMonster;
 
 class CState
 {
@@ -8,14 +9,15 @@ class CState
 
 private:
 	AI* m_pOwnerAI;
-	MON_STATE m_eState;
+	STATE_MON m_eState;
 
 public:
-	CState(MON_STATE state);
+	CState(STATE_MON state);
 	virtual ~CState();
 
-	AI* GetOwner();
-	MON_STATE GetType();
+	AI* GetOwnerAI();
+	STATE_MON GetType();
+	CMonster* GetMonster();
 
 	virtual void update() = 0;
 	virtual void Enter() = 0;

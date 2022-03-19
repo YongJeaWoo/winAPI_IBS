@@ -7,6 +7,8 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 
+CPlayer* CPlayer::instance = nullptr;
+
 CPlayer::CPlayer()
 {
 	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
@@ -35,7 +37,7 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
-
+	instance = nullptr;
 }
 
 CPlayer* CPlayer::Clone()
@@ -80,6 +82,16 @@ void CPlayer::update()
 void CPlayer::render()
 {
 	component_render();
+}
+
+void CPlayer::RegisterPlayer()
+{
+	instance = this;
+}
+
+CPlayer* CPlayer::GetPlayer()
+{
+	return instance;
 }
 
 void CPlayer::CreateMissile()

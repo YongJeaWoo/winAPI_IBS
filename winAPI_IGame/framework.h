@@ -78,7 +78,7 @@ enum class GROUP_TILE
 	SIZE,
 };
 
-enum class MON_STATE
+enum class STATE_MON
 {
 	IDLE,
 	PATROL,
@@ -99,6 +99,7 @@ enum class TYPE_EVENT
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	CHANGE_SCENE,
+	CHANGE_AI_STATE,
 
 	SIZE,
 };
@@ -136,9 +137,10 @@ enum class TYPE_EVENT
 
 #define MousePos()		CKeyManager::getInst()->GetMousePos()
 
-#define CreateObj(pObj, group)	CEventManager::getInst()->EventCreateObject(pObj, group)
-#define DeleteObj(pObj)			CEventManager::getInst()->EventDeleteObject(pObj)
-#define ChangeScn(scene)		CEventManager::getInst()->EventChangeScene(scene)
+#define CreateObj(pObj, group)		CEventManager::getInst()->EventCreateObject(pObj, group)
+#define DeleteObj(pObj)				CEventManager::getInst()->EventDeleteObject(pObj)
+#define ChangeScn(scene)			CEventManager::getInst()->EventChangeScene(scene)
+#define ChangeAIState(ai, state)	CEventManager::getInst()->EventChangeAIState(ai, state)
 
 //========================================
 //## 전역변수(인스턴스, 윈도우 핸들)	##
