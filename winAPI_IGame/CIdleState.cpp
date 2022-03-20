@@ -25,8 +25,11 @@ void CIdleState::update()
 
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
 	float fLen = fvDiff.Length();
+
 	if (fLen < pMonster->GetMonInfo().fRecogRange)
 		ChangeAIState(GetOwnerAI(), STATE_MON::TRACE);
+
+
 }
 
 void CIdleState::Enter()

@@ -25,10 +25,10 @@ void CTraceState::update()
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
 	float fLen = fvDiff.Length();
 	if (fLen >= pMonster->GetMonInfo().fRecogRange)
-	{
 		ChangeAIState(GetOwnerAI(), STATE_MON::IDLE);
-	}
 
+
+	// 플레이어 추적하자
 	fPoint pos = pMonster->GetPos();
 	pos += fvDiff.Normalize() * 100 * fDT;
 	pMonster->SetPos(pos);

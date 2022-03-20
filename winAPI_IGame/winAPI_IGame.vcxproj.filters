@@ -85,14 +85,14 @@
     <Filter Include="Object\State">
       <UniqueIdentifier>{ef5ff5fa-1a85-4acb-abdb-2284d54a28ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\IdleState">
-      <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\AI">
       <UniqueIdentifier>{d924295f-4b4d-46c6-9b0a-177e0fceb4fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Trace">
+    <Filter Include="Object\State\Trace">
       <UniqueIdentifier>{1ac6bb40-9639-47c1-a6e0-25da06159a13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\State\IdleState">
+      <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -223,7 +223,7 @@
       <Filter>Object\State</Filter>
     </ClInclude>
     <ClInclude Include="CIdleState.h">
-      <Filter>Object\IdleState</Filter>
+      <Filter>Object\State\IdleState</Filter>
     </ClInclude>
     <ClInclude Include="AI.h">
       <Filter>Object\AI</Filter>
@@ -235,10 +235,10 @@
       <Filter>Scene\scene_title</Filter>
     </ClInclude>
     <ClInclude Include="CTraceState.h">
-      <Filter>Object\Trace</Filter>
+      <Filter>Object\State\Trace</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerTitle.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Scene\scene_title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -351,7 +351,7 @@
       <Filter>Object\State</Filter>
     </ClCompile>
     <ClCompile Include="CIdleState.cpp">
-      <Filter>Object\IdleState</Filter>
+      <Filter>Object\State\IdleState</Filter>
     </ClCompile>
     <ClCompile Include="AI.cpp">
       <Filter>Object\AI</Filter>
@@ -363,10 +363,10 @@
       <Filter>Scene\scene_title</Filter>
     </ClCompile>
     <ClCompile Include="CTraceState.cpp">
-      <Filter>Object\Trace</Filter>
+      <Filter>Object\State\Trace</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerTitle.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Scene\scene_title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

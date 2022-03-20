@@ -22,6 +22,7 @@ void CTitle::update()
 		m_bIsSpace = true;
 	}
 
+	// 스페이스 한 번 누를 때 올리기
 	if (m_bIsSpace)
 	{
 		fPoint pos = Iobj->GetPos();
@@ -29,6 +30,7 @@ void CTitle::update()
 		Iobj->SetPos(pos);
 	}
 
+	// 해당 범위 갔을 경우 오브젝트 없애고 플레이어 애니메이션 구현
 	if (Iobj->GetPos().y < -1000.f)
 	{
 		m_bIsSpace = false;
@@ -63,10 +65,10 @@ void CTitle::Enter()
 
 	// 오브젝트 움직이기
 	Pobj = new CPlayerTitle;
-	Pobj->Load(L"PlayerTitle", L"texture\\Player.bmp");
-	Pobj->SetPos(fPoint(WINSIZEX / 2, 500.f));
+	Pobj->Load(L"PlayerTitle", L"texture\\TitlePlayerAnimation.png");
+	Pobj->SetPos(fPoint((WINSIZEX / 2) - 50.f, 550.f));
 	Pobj->SetScale(fPoint(100.f, 100.f));
-	AddObject(Pobj, GROUP_GAMEOBJ::PLAYER);
+	AddObject(Pobj, GROUP_GAMEOBJ::TITLEPLAYER);
 
 
 	// 메인 타이틀 일부분 가려주는 커튼

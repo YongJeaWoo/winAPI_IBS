@@ -11,6 +11,7 @@ CMonster::CMonster()
 {
 	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"MonsterTex", L"texture\\PlayerStand.png");
 	m_pAI = nullptr;
+	m_sInfo = {};
 
 	SetName(L"Monster");
 	SetScale(fPoint(100, 100));
