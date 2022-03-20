@@ -2,12 +2,13 @@
 #include "CTitle.h"
 #include "CTitleGround.h"
 #include "CImageObject.h"
-#include "CGameObject.h"
+
 
 CTitle::CTitle()
 {
 	m_bIsSpace = false;
 	Iobj = nullptr;
+	Pobj = nullptr;
 }
 
 CTitle::~CTitle()
@@ -61,7 +62,11 @@ void CTitle::Enter()
 	AddObject(Iobj, GROUP_GAMEOBJ::BACKGROUNDUP);
 
 	// 오브젝트 움직이기
-	
+	Pobj = new CPlayerTitle;
+	Pobj->Load(L"PlayerTitle", L"texture\\Player.bmp");
+	Pobj->SetPos(fPoint(WINSIZEX / 2, 500.f));
+	Pobj->SetScale(fPoint(100.f, 100.f));
+	AddObject(Pobj, GROUP_GAMEOBJ::PLAYER);
 
 
 	// 메인 타이틀 일부분 가려주는 커튼

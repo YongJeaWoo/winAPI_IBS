@@ -237,6 +237,9 @@
     <ClInclude Include="CTraceState.h">
       <Filter>Object\Trace</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerTitle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -361,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="CTraceState.cpp">
       <Filter>Object\Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerTitle.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
