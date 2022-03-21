@@ -3,6 +3,8 @@
 
 CStage01::CStage01()
 {
+	pObj = nullptr;
+	mObj = nullptr;
 }
 
 CStage01::~CStage01()

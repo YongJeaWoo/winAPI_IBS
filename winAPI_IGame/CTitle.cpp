@@ -8,9 +8,11 @@
 
 CTitle::CTitle()
 {
-	m_bIsSpace = false;
+	m_bIsRaise = false;
 	Iobj = nullptr;
 	Pobj = nullptr;
+	m_fAccTime = 0.f;
+	m_bIsFadeOut = false;
 }
 
 CTitle::~CTitle()
@@ -22,11 +24,11 @@ void CTitle::update()
 	CScene::update();
 	if (KeyDown(VK_SPACE))
 	{
-		m_bIsSpace = true;
+		m_bIsRaise = true;
 	}
 
 	// 스페이스 한 번 누를 때 올리기
-	if (m_bIsSpace)
+	if (m_bIsRaise)
 	{
 		fPoint pos = Iobj->GetPos();
 		pos.y -= 100.f * fDT;
@@ -36,7 +38,7 @@ void CTitle::update()
 	// 해당 범위 갔을 경우 오브젝트 없애고 플레이어 애니메이션 구현
 	if (Iobj->GetPos().y < -800.f)
 	{
-		m_bIsSpace = false;
+		m_bIsRaise = false;
 
 		// TODO:
 		Pobj->Dance();
@@ -44,9 +46,17 @@ void CTitle::update()
 		// 한번 더 눌렀을 때 씬 전환
 		if (KeyDown(VK_SPACE))
 		{
-			m_bIsSpace = true;
-			ChangeScn(GROUP_SCENE::STAGE_01);
+			m_bIsRaise = true;
+			m_fAccTime += fDT;
+			if (!m_bIsFadeOut)
+			{
+				m_bIsFadeOut = true;
+				CCameraManager::getInst()->FadeOut(3.f);
+			}
 		}
+
+		if (m_fAccTime > 3.f)
+			ChangeScn(GROUP_SCENE::STAGE_01);
 	}
 
 	if (Key(VK_ESCAPE))

@@ -13,8 +13,8 @@ CPlayerTitle::CPlayerTitle()
 	SetName(L"TitlePlayer");
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"JustStand",	m_pImg, fPoint(92.f, 0.f), fPoint(30.f, 24.f), fPoint(0.f, 0.f), 5.f, 1);
-	GetAnimator()->CreateAnimation(L"JustDance",	m_pImg, fPoint(0.f, 0.f), fPoint(30.f, 24.f), fPoint(30.f, 0.f), 0.5f, 2);
+	GetAnimator()->CreateAnimation(L"JustStand",	m_pImg, fPoint(54.f, 0.f), fPoint(27.f, 26.f), fPoint(0.f, 0.f), 5.f, 1);
+	GetAnimator()->CreateAnimation(L"JustDance",	m_pImg, fPoint(0.f, 0.f), fPoint(27.f, 26.f), fPoint(27.f, 0.f), 0.5f, 2);
 	GetAnimator()->Play(L"JustStand");
 
 	CAnimation* pAni;

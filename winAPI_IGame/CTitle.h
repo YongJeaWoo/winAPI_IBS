@@ -7,9 +7,11 @@ class CImageObject;
 class CTitle : public CScene
 {
 private:
-	bool m_bIsSpace;
+	bool m_bIsRaise;
 	CImageObject*	Iobj;
 	CPlayerTitle*	Pobj;
+	float m_fAccTime;
+	bool m_bIsFadeOut;
 
 public:
 	CTitle();
