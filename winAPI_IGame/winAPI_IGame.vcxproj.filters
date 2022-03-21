@@ -240,6 +240,9 @@
     <ClInclude Include="CPlayerTitle.h">
       <Filter>Scene\scene_title</Filter>
     </ClInclude>
+    <ClInclude Include="CStage01.h">
+      <Filter>Scene\scene_stage_01</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -364,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="CPlayerTitle.cpp">
       <Filter>Scene\scene_title</Filter>
+    </ClCompile>
+    <ClCompile Include="CStage01.cpp">
+      <Filter>Scene\scene_stage_01</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
