@@ -22,6 +22,7 @@ CTitle::~CTitle()
 void CTitle::update()
 {
 	CScene::update();
+
 	if (KeyDown(VK_SPACE))
 	{
 		m_bIsRaise = true;
@@ -38,6 +39,7 @@ void CTitle::update()
 	// 해당 범위 갔을 경우 오브젝트 없애고 플레이어 애니메이션 구현
 	if (Iobj->GetPos().y < -800.f)
 	{
+		Iobj->GetPos().y == -800.f;
 		m_bIsRaise = false;
 
 		// TODO:
@@ -46,17 +48,19 @@ void CTitle::update()
 		// 한번 더 눌렀을 때 씬 전환
 		if (KeyDown(VK_SPACE))
 		{
-			m_bIsRaise = true;
 			m_fAccTime += fDT;
 			if (!m_bIsFadeOut)
 			{
 				m_bIsFadeOut = true;
-				CCameraManager::getInst()->FadeOut(3.f);
+				CCameraManager::getInst()->FadeOut(3.5f);
 			}
 		}
 
-		if (m_fAccTime > 3.f)
+		if (m_fAccTime > 3.5f)
+		{
+			m_bIsFadeOut = false;
 			ChangeScn(GROUP_SCENE::STAGE_01);
+		}
 	}
 
 	if (Key(VK_ESCAPE))
