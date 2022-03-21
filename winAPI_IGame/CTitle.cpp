@@ -2,6 +2,8 @@
 #include "CTitle.h"
 #include "CTitleGround.h"
 #include "CImageObject.h"
+#include "CPlayerTitle.h"
+#include "CAnimation.h"
 
 // start
 CTitle::CTitle()
@@ -35,6 +37,7 @@ void CTitle::update()
 	{
 		m_bIsSpace = false;
 
+		// TODO : 여기서 타이틀 플레이어 춤 구현
 
 		// 한번 더 눌렀을 때 씬 전환
 		if (KeyDown(VK_SPACE))
@@ -63,13 +66,12 @@ void CTitle::Enter()
 	Iobj->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(Iobj, GROUP_GAMEOBJ::BACKGROUNDUP);
 
-	// 오브젝트 움직이기
+	// 오브젝트 생성
 	Pobj = new CPlayerTitle;
-	Pobj->Load(L"PlayerTitle", L"texture\\Title\\TitlePlayerAnimation.png");
-	Pobj->SetPos(fPoint((WINSIZEX / 2) - 50.f, 550.f));
+	Pobj->Load(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
+	Pobj->SetPos(fPoint(WINSIZEX / 2, 550.f));
 	Pobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Pobj, GROUP_GAMEOBJ::TITLEPLAYER);
-
 
 	// 메인 타이틀 일부분 가려주는 커튼
 	CTitleGround* m_pTitleImage = new CTitleGround;

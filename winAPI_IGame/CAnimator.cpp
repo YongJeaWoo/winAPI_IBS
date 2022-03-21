@@ -58,7 +58,6 @@ void CAnimator::CreateAnimation(const wstring& strName, CD2DImage* tex, fPoint l
 	assert(nullptr == pAni);
 
 	pAni = new CAnimation;
-
 	pAni->SetName(strName);
 	pAni->m_pAnimator = this;
 	pAni->Create(tex, lt, slice, step, duration, frmCount);

@@ -94,6 +94,9 @@
     <Filter Include="Object\State\IdleState">
       <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\scene_stage_01">
+      <UniqueIdentifier>{78b135d7-b507-4801-90b4-a1ebf21c51d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -231,9 +234,6 @@
     <ClInclude Include="CImageObject.h">
       <Filter>Scene\scene_title</Filter>
     </ClInclude>
-    <ClInclude Include="CTitleObject.h">
-      <Filter>Scene\scene_title</Filter>
-    </ClInclude>
     <ClInclude Include="CTraceState.h">
       <Filter>Object\State\Trace</Filter>
     </ClInclude>
@@ -357,9 +357,6 @@
       <Filter>Object\AI</Filter>
     </ClCompile>
     <ClCompile Include="CImageObject.cpp">
-      <Filter>Scene\scene_title</Filter>
-    </ClCompile>
-    <ClCompile Include="CTitleObject.cpp">
       <Filter>Scene\scene_title</Filter>
     </ClCompile>
     <ClCompile Include="CTraceState.cpp">
