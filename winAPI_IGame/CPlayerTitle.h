@@ -18,4 +18,3 @@ public:
 
 	void Load(const wstring& strKey, const wstring& strPath);
 };
-

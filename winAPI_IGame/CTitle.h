@@ -4,14 +4,12 @@
 
 class CImageObject;
 
-
 class CTitle : public CScene
 {
 private:
 	bool m_bIsSpace;
 	CImageObject* Iobj;
 	CPlayerTitle* Pobj;
-
 
 public:
 	CTitle();

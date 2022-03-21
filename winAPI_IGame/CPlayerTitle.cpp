@@ -13,14 +13,19 @@ CPlayerTitle::CPlayerTitle()
 	SetName(L"TitlePlayer");
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"JustDance", m_pImg, fPoint(0.f, 0.f), fPoint(30.f, 24.f), fPoint(30.f, 0.f), 1.f, 4);
-	GetAnimator()->Play(L"JustDance");
-	
+	GetAnimator()->CreateAnimation(L"JustStand",	m_pImg, fPoint(92.f, 0.f), fPoint(30.f, 25.f), fPoint(30.f, 0.f), 5.f, 1);
+	GetAnimator()->CreateAnimation(L"LeftDance",	m_pImg, fPoint(0.f, 0.f), fPoint(30.f, 24.f), fPoint(30.f, 0.f), 0.5f, 0);
+	GetAnimator()->CreateAnimation(L"FaceDance",	m_pImg, fPoint(0.f, 0.f), fPoint(30.f, 24.f), fPoint(30.f, 0.f), 0.5f, 1);
+	GetAnimator()->CreateAnimation(L"RightDance",	m_pImg, fPoint(0.f, 0.f), fPoint(30.f, 24.f), fPoint(30.f, 0.f), 0.5f, 2);
+	GetAnimator()->Play(L"JustStand");
+
 	/*CAnimation* pAni;
-	pAni = GetAnimator()->FindAnimation(L"JustDance");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -10.f);
-	pAni = GetAnimator()->FindAnimation(L"JustDance");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -10.f);*/
+	pAni = GetAnimator()->FindAnimation(L"LeftDance");
+	pAni->GetFrame(1).fptOffset = fPoint(-10.f, 0.f);
+	pAni = GetAnimator()->FindAnimation(L"FaceDance");
+	pAni->GetFrame(1).fptOffset = fPoint(0.f, 0.f);
+	pAni = GetAnimator()->FindAnimation(L"RightDance");
+	pAni->GetFrame(1).fptOffset = fPoint(10.f, 0.f);*/
 }
 
 CPlayerTitle::~CPlayerTitle()

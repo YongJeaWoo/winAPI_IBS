@@ -4,6 +4,7 @@
 #include "CImageObject.h"
 #include "CPlayerTitle.h"
 #include "CAnimation.h"
+#include "CAnimator.h"
 
 // start
 CTitle::CTitle()
@@ -37,7 +38,8 @@ void CTitle::update()
 	{
 		m_bIsSpace = false;
 
-		// TODO : 여기서 타이틀 플레이어 춤 구현
+		// TODO : 여기서 오브젝트 댄스 적용
+
 
 		// 한번 더 눌렀을 때 씬 전환
 		if (KeyDown(VK_SPACE))
