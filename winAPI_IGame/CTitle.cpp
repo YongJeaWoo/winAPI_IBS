@@ -3,7 +3,7 @@
 #include "CTitleGround.h"
 #include "CImageObject.h"
 
-
+// start
 CTitle::CTitle()
 {
 	m_bIsSpace = false;
