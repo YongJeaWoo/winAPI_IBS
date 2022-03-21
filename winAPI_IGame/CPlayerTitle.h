@@ -1,6 +1,8 @@
 #pragma once
 #include "CGameObject.h"
 
+class CTitle;
+
 class CPlayerTitle : public CGameObject
 {
 private:

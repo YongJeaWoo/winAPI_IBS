@@ -38,9 +38,6 @@ void CTitle::update()
 	{
 		m_bIsSpace = false;
 
-		// TODO : 여기서 오브젝트 댄스 적용
-
-
 		// 한번 더 눌렀을 때 씬 전환
 		if (KeyDown(VK_SPACE))
 		{
@@ -62,6 +59,7 @@ void CTitle::Enter()
 	m_pTitleBackImage->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(m_pTitleBackImage, GROUP_GAMEOBJ::BACKGROUNDTITLE);
 
+	// 올라가는 커튼
 	Iobj = new CImageObject;
 	Iobj->Load(L"UpTitle", L"texture\\Title\\UpTitle.png");
 	Iobj->SetPos(fPoint(0.f, 0.f));
@@ -86,4 +84,9 @@ void CTitle::Enter()
 void CTitle::Exit()
 {
 	DeleteAll();
+}
+
+void CTitle::GetPos(CImageObject* Iobjpos)
+{
+	Iobj->GetPos() = Iobjpos;
 }

@@ -8,6 +8,8 @@ class CImageObject : public CGameObject
 private:
 	CD2DImage* m_pImg;
 	bool m_bIsRaise;
+	float x;
+	float y;
 
 public:
 	CImageObject();
