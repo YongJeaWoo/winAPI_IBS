@@ -52,20 +52,20 @@ void CTitle::Enter()
 {
 	// 메인 타이틀
 	CTitleGround* m_pTitleBackImage = new CTitleGround;
-	m_pTitleBackImage->Load(L"BackTitle", L"texture\\background\\BackGround_Title.png");
+	m_pTitleBackImage->Load(L"BackTitle", L"texture\\Title\\BackGround_Title.png");
 	m_pTitleBackImage->SetPos(fPoint(0, 0));
 	m_pTitleBackImage->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(m_pTitleBackImage, GROUP_GAMEOBJ::BACKGROUNDTITLE);
 
 	Iobj = new CImageObject;
-	Iobj->Load(L"UpTitle", L"texture\\background\\UpTitle.png");
+	Iobj->Load(L"UpTitle", L"texture\\Title\\UpTitle.png");
 	Iobj->SetPos(fPoint(0.f, 0.f));
 	Iobj->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(Iobj, GROUP_GAMEOBJ::BACKGROUNDUP);
 
 	// 오브젝트 움직이기
 	Pobj = new CPlayerTitle;
-	Pobj->Load(L"PlayerTitle", L"texture\\TitlePlayerAnimation.png");
+	Pobj->Load(L"PlayerTitle", L"texture\\Title\\TitlePlayerAnimation.png");
 	Pobj->SetPos(fPoint((WINSIZEX / 2) - 50.f, 550.f));
 	Pobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Pobj, GROUP_GAMEOBJ::TITLEPLAYER);
@@ -73,7 +73,7 @@ void CTitle::Enter()
 
 	// 메인 타이틀 일부분 가려주는 커튼
 	CTitleGround* m_pTitleImage = new CTitleGround;
-	m_pTitleImage->Load(L"Title", L"texture\\background\\Title.png");
+	m_pTitleImage->Load(L"Title", L"texture\\Title\\Title.png");
 	m_pTitleImage->SetPos(fPoint(0, 0));
 	m_pTitleImage->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(m_pTitleImage, GROUP_GAMEOBJ::TITLE);
