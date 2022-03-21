@@ -6,7 +6,6 @@
 #include "CAnimation.h"
 #include "CAnimator.h"
 
-// start
 CTitle::CTitle()
 {
 	m_bIsSpace = false;
@@ -20,6 +19,7 @@ CTitle::~CTitle()
 
 void CTitle::update()
 {
+	CScene::update();
 	if (KeyDown(VK_SPACE))
 	{
 		m_bIsSpace = true;
@@ -34,15 +34,18 @@ void CTitle::update()
 	}
 
 	// 해당 범위 갔을 경우 오브젝트 없애고 플레이어 애니메이션 구현
-	if (Iobj->GetPos().y < -1000.f)
+	if (Iobj->GetPos().y < -800.f)
 	{
 		m_bIsSpace = false;
+
+		// TODO:
+		Pobj->Dance();
 
 		// 한번 더 눌렀을 때 씬 전환
 		if (KeyDown(VK_SPACE))
 		{
 			m_bIsSpace = true;
-			ChangeScn(GROUP_SCENE::START);
+			ChangeScn(GROUP_SCENE::STAGE_01);
 		}
 	}
 
@@ -84,9 +87,4 @@ void CTitle::Enter()
 void CTitle::Exit()
 {
 	DeleteAll();
-}
-
-void CTitle::GetPos(CImageObject* Iobjpos)
-{
-	Iobj->GetPos() = Iobjpos;
 }

@@ -3,12 +3,11 @@
 #include "CTexture.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
-#include "CImageObject.h"
+#include "CTitle.h"
 
 CPlayerTitle::CPlayerTitle()
 {
     m_pImg = nullptr;
-    m_bIsRaise = false;
 
 	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
 	SetName(L"TitlePlayer");
@@ -17,7 +16,6 @@ CPlayerTitle::CPlayerTitle()
 	GetAnimator()->CreateAnimation(L"JustStand",	m_pImg, fPoint(92.f, 0.f), fPoint(30.f, 24.f), fPoint(0.f, 0.f), 5.f, 1);
 	GetAnimator()->CreateAnimation(L"JustDance",	m_pImg, fPoint(0.f, 0.f), fPoint(30.f, 24.f), fPoint(30.f, 0.f), 0.5f, 2);
 	GetAnimator()->Play(L"JustStand");
-
 
 	CAnimation* pAni;
 	pAni = GetAnimator()->FindAnimation(L"JustDance");
@@ -46,4 +44,9 @@ void CPlayerTitle::render()
 void CPlayerTitle::Load(const wstring& strKey, const wstring& strPath)
 {
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
+}
+
+void CPlayerTitle::Dance()
+{
+	GetAnimator()->Play(L"JustDance");
 }

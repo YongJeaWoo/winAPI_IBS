@@ -61,7 +61,6 @@ enum class GROUP_SCENE
 	TOOL,
 	TITLEUP,
 	TITLE,
-	START,
 	STAGE_01,
 	STAGE_02,
 
