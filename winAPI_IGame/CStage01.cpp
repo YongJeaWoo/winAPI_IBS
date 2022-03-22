@@ -3,6 +3,8 @@
 #include "CMap.h"
 #include "CPlayer.h"
 #include "CMonster.h"
+#include "CTraceState.h"
+#include "CIdleState.h"
 
 CStage01::CStage01()
 {
@@ -28,10 +30,14 @@ void CStage01::Enter()
 
 	CPlayer* Bubby = new CPlayer;
 	AddObject(Bubby, GROUP_GAMEOBJ::PLAYER);
+	Bubby->RegisterPlayer();
 	
-	CMonster* ZenChan = new CMonster;
-	ZenChan->SetPos(fPoint(WINSIZEX / 2, WINSIZEY / 2));
-	AddObject(ZenChan, GROUP_GAMEOBJ::ENEMY);
+	CMonster* ZenChan1 = new CMonster;
+	ZenChan1->SetPos(fPoint(WINSIZEX / 2, WINSIZEY / 2));
+	AddObject(ZenChan1, GROUP_GAMEOBJ::ENEMY);
+
+	CMonster* ZenChan2 = CMonster::Create(MON_TYPE::NORMAL, fPoint(300.f, 300.f));
+	AddObject(ZenChan2, GROUP_GAMEOBJ::ENEMY);
 }
 
 void CStage01::Exit()

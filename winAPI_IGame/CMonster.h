@@ -32,7 +32,7 @@ public:
 	virtual ~CMonster();
 	virtual CMonster* Clone();
 
-	static CMonster* Create(MON_TYPE type, fPoint pos);
+	static CMonster* Create(MON_TYPE type, fPoint pos);		// ∆—≈‰∏Æ ∆–≈œ
 
 	virtual void render();
 	virtual void update();

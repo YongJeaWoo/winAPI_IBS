@@ -29,6 +29,8 @@ void CIdleState::update()
 	if (fLen < pMonster->GetMonInfo().fRecogRange)
 		ChangeAIState(GetOwnerAI(), STATE_MON::TRACE);
 
+	// TODO : 일정 범위 안 다른 조건 넣기
+
 
 }
 

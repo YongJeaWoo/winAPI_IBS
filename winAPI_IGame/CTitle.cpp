@@ -42,6 +42,12 @@ void CTitle::update()
 
 		if (Iobj->GetPos().y < -800.f)
 		{
+			CImageObject* TitleBar = new CImageObject;
+			TitleBar->Load(L"TitleBar", L"texture\\Title\\TitleBar.png");
+			TitleBar->SetPos(fPoint((WINSIZEX / 2) - 150.f, 50.f));
+			TitleBar->SetScale(fPoint(300.f, 300.f));
+			AddObject(TitleBar, GROUP_GAMEOBJ::TITLEBAR);
+
 			Pobj->Dance();
 			step++;
 		}
