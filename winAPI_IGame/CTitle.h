@@ -12,6 +12,7 @@ private:
 	CDummyTitle*	Pobj;
 	float m_fAccTime;
 	bool m_bIsFadeOut;
+	int step = 0;			// 커튼 올라가는 단계
 
 public:
 	CTitle();

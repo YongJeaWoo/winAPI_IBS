@@ -23,41 +23,44 @@ void CTitle::update()
 {
 	CScene::update();
 
-	if (KeyDown(VK_SPACE))
+	if (step == 0)	// 커튼이 내려가져 있을 때 시동작업
 	{
-		m_bIsRaise = true;
-	}
-
-	if (m_bIsRaise)
-	{
-		fPoint pos = Iobj->GetPos();
-		pos.y -= 200.f * fDT;
-		Iobj->SetPos(pos);
-	}
-
-	// 해당 범위 갔을 경우 오브젝트 없애고 플레이어 애니메이션 구현
-	if (Iobj->GetPos().y < -300.f)
-	{
-		m_bIsRaise = false;
-
-		// 춤추기
-		Pobj->Dance();
-
-		// 한번 더 눌렀을 때 페이드 아웃과 씬 전환
 		if (KeyDown(VK_SPACE))
 		{
-			m_fAccTime += fDT;
+			m_bIsRaise = true;
+			step++;
+		}
+	}
+	else if (step == 1) // 커튼이 스페이스바에 의해 올라감
+	{
+		if (m_bIsRaise)
+		{
+			fPoint pos = Iobj->GetPos();
+			pos.y -= 200.f * fDT;
+			Iobj->SetPos(pos);
+		}
 
-			if (!m_bIsFadeOut)
-			{
-				m_bIsFadeOut = true;
-				CCameraManager::getInst()->FadeOut(2.f);
-			}
-
-			if (m_fAccTime > 2.f)
-			{
-				ChangeScn(GROUP_SCENE::STAGE_01);
-			}
+		if (Iobj->GetPos().y < -800.f)
+		{
+			Pobj->Dance();
+			step++;
+		}
+	}
+	else if (step == 2)		// 커튼이 모두 올라갔을 때 페이드 아웃
+	{
+		if (KeyDown(VK_SPACE))
+		{
+			m_bIsFadeOut = true;
+			CCameraManager::getInst()->FadeOut(3.f);
+			step++;
+		}
+	}
+	else if (step == 3)	// 페이드 아웃 후 씬 전환
+	{
+		m_fAccTime += fDT;
+		if (m_fAccTime > 3.f)
+		{
+			ChangeScn(GROUP_SCENE::STAGE_01);
 		}
 	}
 
