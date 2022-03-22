@@ -240,7 +240,7 @@
     <ClInclude Include="CTraceState.h">
       <Filter>Object\State\Trace</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerTitle.h">
+    <ClInclude Include="CDummyTitle.h">
       <Filter>Scene\scene_title</Filter>
     </ClInclude>
     <ClInclude Include="CStage01.h">
@@ -371,7 +371,7 @@
     <ClCompile Include="CTraceState.cpp">
       <Filter>Object\State\Trace</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerTitle.cpp">
+    <ClCompile Include="CDummyTitle.cpp">
       <Filter>Scene\scene_title</Filter>
     </ClCompile>
     <ClCompile Include="CStage01.cpp">

@@ -2,7 +2,7 @@
 #include "CTitle.h"
 #include "CTitleGround.h"
 #include "CImageObject.h"
-#include "CPlayerTitle.h"
+#include "CDummyTitle.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
 
@@ -92,7 +92,7 @@ void CTitle::Enter()
 	AddObject(m_pTitleImage, GROUP_GAMEOBJ::TITLE);
 
 	// 오브젝트 생성
-	Pobj = new CPlayerTitle;
+	Pobj = new CDummyTitle;
 	Pobj->Load(L"DumPlayer", L"texture\\Title\\TitlePlayerAnimation.png");
 	Pobj->SetPos(fPoint(WINSIZEX / 2, 550.f));
 	Pobj->SetScale(fPoint(100.f, 100.f));

@@ -1,16 +1,16 @@
 #pragma once
 #include "CGameObject.h"
 
-class CPlayerTitle : public CGameObject
+class CDummyTitle : public CGameObject
 {
 private:
 	CD2DImage* m_pImg;
 
 public:
-	CPlayerTitle();
-	~CPlayerTitle();
+	CDummyTitle();
+	~CDummyTitle();
 
-	virtual CPlayerTitle* Clone();
+	virtual CDummyTitle* Clone();
 
 	virtual void update();
 	virtual void render();

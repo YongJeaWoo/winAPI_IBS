@@ -1,6 +1,6 @@
 #pragma once
 #include "CScene.h"
-#include "CPlayerTitle.h"
+#include "CDummyTitle.h"
 
 class CImageObject;
 
@@ -9,7 +9,7 @@ class CTitle : public CScene
 private:
 	bool m_bIsRaise;
 	CImageObject*	Iobj;
-	CPlayerTitle*	Pobj;
+	CDummyTitle*	Pobj;
 	float m_fAccTime;
 	bool m_bIsFadeOut;
 

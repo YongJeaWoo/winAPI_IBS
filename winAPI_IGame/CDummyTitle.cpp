@@ -1,11 +1,11 @@
 #include "framework.h"
-#include "CPlayerTitle.h"
+#include "CDummyTitle.h"
 #include "CTexture.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
 #include "CTitle.h"
 
-CPlayerTitle::CPlayerTitle()
+CDummyTitle::CDummyTitle()
 {
     m_pImg = nullptr;
 
@@ -22,31 +22,31 @@ CPlayerTitle::CPlayerTitle()
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -5.f);
 }
 
-CPlayerTitle::~CPlayerTitle()
+CDummyTitle::~CDummyTitle()
 {
 }
 
-CPlayerTitle* CPlayerTitle::Clone()
+CDummyTitle* CDummyTitle::Clone()
 {
-    return new CPlayerTitle(*this);
+    return new CDummyTitle(*this);
 }
 
-void CPlayerTitle::update()
+void CDummyTitle::update()
 {
 	GetAnimator()->update();
 }
 
-void CPlayerTitle::render()
+void CDummyTitle::render()
 {
 	component_render();
 }
 
-void CPlayerTitle::Load(const wstring& strKey, const wstring& strPath)
+void CDummyTitle::Load(const wstring& strKey, const wstring& strPath)
 {
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
 }
 
-void CPlayerTitle::Dance()
+void CDummyTitle::Dance()
 {
 	GetAnimator()->Play(L"JustDance");
 }
