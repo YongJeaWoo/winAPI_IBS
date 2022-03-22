@@ -4,7 +4,6 @@
 class CPlayer;
 class CMonster;
 
-
 class CStage01 : public CScene
 {
 private:
@@ -14,7 +13,6 @@ public:
 	virtual ~CStage01();
 
 	virtual void update();
-	virtual void render();
 	virtual void Enter();
 	virtual void Exit();
 };

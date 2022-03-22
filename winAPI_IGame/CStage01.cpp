@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "CStage01.h"
-#include "CBackGround.h"
+#include "CMap.h"
 #include "CPlayer.h"
 #include "CMonster.h"
 
@@ -17,14 +17,10 @@ void CStage01::update()
 	CScene::update();
 }
 
-void CStage01::render()
-{
-}
-
 void CStage01::Enter()
 {
 	// 메인 배경
-	CBackGround* BG1 = new CBackGround;
+	CMap* BG1 = new CMap;
 	BG1->Load(L"Stage01", L"texture\\background\\Stage01.png");
 	BG1->SetPos(fPoint(0.f, 0.f));
 	BG1->SetScale(fPoint(WINSIZEX, WINSIZEY));
