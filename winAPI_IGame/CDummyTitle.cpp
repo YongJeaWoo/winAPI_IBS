@@ -9,16 +9,17 @@ CDummyTitle::CDummyTitle()
 {
     m_pImg = nullptr;
 
-	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
+	CD2DImage* m_pPlayerImg = CResourceManager::getInst()->LoadD2DImage(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
 	SetName(L"TitlePlayer");
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"JustStand",	m_pImg, fPoint(54.f, 0.f), fPoint(27.f, 26.f), fPoint(0.f, 0.f), 5.f, 1);
-	GetAnimator()->CreateAnimation(L"JustDance",	m_pImg, fPoint(0.f, 0.f), fPoint(27.f, 26.f), fPoint(27.f, 0.f), 0.5f, 2);
-	GetAnimator()->Play(L"JustStand");
+	// Player
+	GetAnimator()->CreateAnimation(L"PlayerStand", m_pPlayerImg, fPoint(54.f, 0.f), fPoint(27.f, 26.f), fPoint(0.f, 0.f), 5.f, 1);
+	GetAnimator()->CreateAnimation(L"PlayerDance", m_pPlayerImg, fPoint(0.f, 0.f), fPoint(27.f, 26.f), fPoint(27.f, 0.f), 0.5f, 2);
+	GetAnimator()->Play(L"PlayerStand");
 
 	CAnimation* pAni;
-	pAni = GetAnimator()->FindAnimation(L"JustDance");
+	pAni = GetAnimator()->FindAnimation(L"PlayerDance");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -5.f);
 }
 
@@ -48,5 +49,5 @@ void CDummyTitle::Load(const wstring& strKey, const wstring& strPath)
 
 void CDummyTitle::Dance()
 {
-	GetAnimator()->Play(L"JustDance");
+	GetAnimator()->Play(L"PlayerDance");
 }

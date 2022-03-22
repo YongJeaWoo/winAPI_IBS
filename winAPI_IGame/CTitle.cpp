@@ -102,7 +102,7 @@ void CTitle::Enter()
 
 	// 오브젝트 생성
 	Pobj = new CDummyTitle;
-	Pobj->Load(L"DumPlayer", L"texture\\Title\\TitlePlayerAnimation.png");
+	Pobj->Load(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
 	Pobj->SetPos(fPoint(WINSIZEX / 2, 550.f));
 	Pobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Pobj, GROUP_GAMEOBJ::DUMMYTITLE);

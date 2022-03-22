@@ -21,7 +21,13 @@ void CStage01::update()
 
 void CStage01::Enter()
 {
-	// 메인 배경
+	CMap* BackGround = new CMap;
+	BackGround->Load(L"BackGround", L"texture\\background\\BackGround.png");
+	BackGround->SetPos(fPoint(0.f, 0.f));
+	BackGround->SetScale(fPoint(WINSIZEX, WINSIZEY));
+	AddObject(BackGround, GROUP_GAMEOBJ::BACKGROUND);
+
+	// 배경
 	CMap* BG1 = new CMap;
 	BG1->Load(L"Stage01", L"texture\\background\\Stage01.png");
 	BG1->SetPos(fPoint(0.f, 0.f));
