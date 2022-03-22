@@ -94,7 +94,10 @@
     <Filter Include="Object\State\IdleState">
       <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\scene_stage_01">
+    <Filter Include="Scene\stage02">
+      <UniqueIdentifier>{63a76f8a-0222-4887-84e0-c269c7edbbe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\stage01">
       <UniqueIdentifier>{78b135d7-b507-4801-90b4-a1ebf21c51d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -241,7 +244,10 @@
       <Filter>Scene\scene_title</Filter>
     </ClInclude>
     <ClInclude Include="CStage01.h">
-      <Filter>Scene\scene_stage_01</Filter>
+      <Filter>Scene\stage01</Filter>
+    </ClInclude>
+    <ClInclude Include="CStage02.h">
+      <Filter>Scene\stage02</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -369,7 +375,10 @@
       <Filter>Scene\scene_title</Filter>
     </ClCompile>
     <ClCompile Include="CStage01.cpp">
-      <Filter>Scene\scene_stage_01</Filter>
+      <Filter>Scene\stage01</Filter>
+    </ClCompile>
+    <ClCompile Include="CStage02.cpp">
+      <Filter>Scene\stage02</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

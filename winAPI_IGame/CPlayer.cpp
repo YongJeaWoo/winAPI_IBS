@@ -13,6 +13,7 @@ CPlayer::CPlayer()
 {
 	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
 	SetName(L"Player");
+	SetPos(fPoint(20.f, (WINSIZEY - 100.f)));
 	SetScale(fPoint(70.f, 70.f));
 
 	CreateCollider();

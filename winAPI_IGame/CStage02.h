@@ -1,17 +1,13 @@
 #pragma once
 #include "CScene.h"
 
-class CPlayer;
-class CMonster;
-
-
-class CStage01 : public CScene
+class CStage02 : public CScene
 {
 private:
 
 public:
-	CStage01();
-	virtual ~CStage01();
+	CStage02();
+	virtual ~CStage02();
 
 	virtual void update();
 	virtual void render();

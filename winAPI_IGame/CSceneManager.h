@@ -13,7 +13,6 @@ private:
 	CScene* m_pCurScene;							// ÇöÀç ¾À
 
 	void ChangeScene(GROUP_SCENE scene);			// ¾À ÀüÈ¯
-	
 
 public:
 	void update();

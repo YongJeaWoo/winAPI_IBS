@@ -28,43 +28,44 @@ void CTitle::update()
 		m_bIsRaise = true;
 	}
 
-	// 스페이스 한 번 누를 때 올리기
 	if (m_bIsRaise)
 	{
 		fPoint pos = Iobj->GetPos();
-		pos.y -= 100.f * fDT;
+		pos.y -= 200.f * fDT;
 		Iobj->SetPos(pos);
 	}
 
 	// 해당 범위 갔을 경우 오브젝트 없애고 플레이어 애니메이션 구현
-	if (Iobj->GetPos().y < -800.f)
+	if (Iobj->GetPos().y < -300.f)
 	{
-		Iobj->GetPos().y == -800.f;
 		m_bIsRaise = false;
 
-		// TODO:
+		// 춤추기
 		Pobj->Dance();
 
-		// 한번 더 눌렀을 때 씬 전환
+		// 한번 더 눌렀을 때 페이드 아웃과 씬 전환
 		if (KeyDown(VK_SPACE))
 		{
 			m_fAccTime += fDT;
+
 			if (!m_bIsFadeOut)
 			{
 				m_bIsFadeOut = true;
-				CCameraManager::getInst()->FadeOut(3.5f);
+				CCameraManager::getInst()->FadeOut(2.f);
 			}
-		}
 
-		if (m_fAccTime > 3.5f)
-		{
-			m_bIsFadeOut = false;
-			ChangeScn(GROUP_SCENE::STAGE_01);
+			if (m_fAccTime > 2.f)
+			{
+				ChangeScn(GROUP_SCENE::STAGE_01);
+			}
 		}
 	}
 
 	if (Key(VK_ESCAPE))
+	{
 		PostQuitMessage(0);
+	}
+
 }
 
 void CTitle::Enter()
@@ -83,19 +84,19 @@ void CTitle::Enter()
 	Iobj->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(Iobj, GROUP_GAMEOBJ::BACKGROUNDUP);
 
-	// 오브젝트 생성
-	Pobj = new CPlayerTitle;
-	Pobj->Load(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
-	Pobj->SetPos(fPoint(WINSIZEX / 2, 550.f));
-	Pobj->SetScale(fPoint(100.f, 100.f));
-	AddObject(Pobj, GROUP_GAMEOBJ::TITLEPLAYER);
-
 	// 메인 타이틀 일부분 가려주는 커튼
 	CTitleGround* m_pTitleImage = new CTitleGround;
 	m_pTitleImage->Load(L"Title", L"texture\\Title\\Title.png");
 	m_pTitleImage->SetPos(fPoint(0, 0));
 	m_pTitleImage->SetScale(fPoint(WINSIZEX, WINSIZEY));
 	AddObject(m_pTitleImage, GROUP_GAMEOBJ::TITLE);
+
+	// 오브젝트 생성
+	Pobj = new CPlayerTitle;
+	Pobj->Load(L"DumPlayer", L"texture\\Title\\TitlePlayerAnimation.png");
+	Pobj->SetPos(fPoint(WINSIZEX / 2, 550.f));
+	Pobj->SetScale(fPoint(100.f, 100.f));
+	AddObject(Pobj, GROUP_GAMEOBJ::TITLEPLAYER);
 }
 
 void CTitle::Exit()

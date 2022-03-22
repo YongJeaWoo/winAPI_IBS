@@ -3,6 +3,17 @@
 
 class CD2DImage;
 
+enum class PLAYER_STATE
+{
+	IDLE,
+	WALK,
+	ATTACK,
+	JUMP,
+	DEAD,
+
+	SIZE,
+};
+
 class CPlayer : public CGameObject
 {
 private:

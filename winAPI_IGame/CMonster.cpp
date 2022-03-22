@@ -14,7 +14,7 @@ CMonster::CMonster()
 	m_sInfo = {};
 
 	SetName(L"Monster");
-	SetScale(fPoint(100, 100));
+	SetScale(fPoint(100.f, 100.f));
 
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(90.f, 90.f));

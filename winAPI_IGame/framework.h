@@ -37,18 +37,6 @@ using namespace std;
 //## 게임 그룹						##
 //========================================
 
-enum class PLAYER_STATE
-{
-	IDLE,
-	WALK,
-	ATTACK,
-	JUMP,
-	DEAD,
-
-	SIZE,
-};
-
-
 enum class GROUP_GAMEOBJ
 {
 	DEFAULT,
