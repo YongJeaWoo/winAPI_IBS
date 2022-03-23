@@ -91,9 +91,6 @@
     <Filter Include="Object\State\Trace">
       <UniqueIdentifier>{1ac6bb40-9639-47c1-a6e0-25da06159a13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\State\IdleState">
-      <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene\stage02">
       <UniqueIdentifier>{63a76f8a-0222-4887-84e0-c269c7edbbe9}</UniqueIdentifier>
     </Filter>
@@ -102,6 +99,9 @@
     </Filter>
     <Filter Include="Object\State\Run">
       <UniqueIdentifier>{11733380-8d8d-471d-a422-69a704b1a041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\State\Idle">
+      <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -232,7 +232,7 @@
       <Filter>Object\State</Filter>
     </ClInclude>
     <ClInclude Include="CIdleState.h">
-      <Filter>Object\State\IdleState</Filter>
+      <Filter>Object\State\Idle</Filter>
     </ClInclude>
     <ClInclude Include="AI.h">
       <Filter>Object\AI</Filter>
@@ -366,7 +366,7 @@
       <Filter>Object\State</Filter>
     </ClCompile>
     <ClCompile Include="CIdleState.cpp">
-      <Filter>Object\State\IdleState</Filter>
+      <Filter>Object\State\Idle</Filter>
     </ClCompile>
     <ClCompile Include="AI.cpp">
       <Filter>Object\AI</Filter>

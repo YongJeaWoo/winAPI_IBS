@@ -14,13 +14,18 @@ class CD2DImage;
 //	SIZE,
 //};
 
+struct PlayerAct
+{
+	float m_fVelocity;
+	bool m_bIsLeft;
+};
+
 class CPlayer : public CGameObject
 {
 private:
 	static CPlayer* instance;
 	float m_fSpeed = 500;
-	bool m_bIsLeft;
-	float m_fVelocity;
+	PlayerAct act;
 
 	void CreateMissile();
 

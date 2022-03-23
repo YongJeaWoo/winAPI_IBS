@@ -14,7 +14,7 @@ CTraceState::~CTraceState()
 void CTraceState::update()
 {
 	CPlayer* pPlayer = CPlayer::GetPlayer();
-	if (nullptr != pPlayer)
+	if (nullptr == pPlayer)
 		return;
 
 	fPoint fptPlayerPos = pPlayer->GetPos();

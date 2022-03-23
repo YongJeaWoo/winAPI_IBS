@@ -35,8 +35,7 @@ CPlayer::CPlayer()
 	pAni = GetAnimator()->FindAnimation(L"RightMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 
-	m_bIsLeft = false;
-	m_fVelocity = 0.f;
+	act = {};
 }
 
 CPlayer::~CPlayer()
@@ -62,21 +61,23 @@ void CPlayer::render()
 	component_render();
 }
 
-void CPlayer::update_act()			// 상황만 업데이트
+void CPlayer::update_act()			// 상황에 대한 업데이트
 {
 	fPoint pos = GetPos();
+	act.m_fVelocity = 0;
 
 	if (Key(VK_LEFT))
 	{
 		pos.x -= m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIsLeft = true;
+		act.m_bIsLeft = true;
+		act.m_fVelocity = m_fSpeed;
 	}
 	if (Key(VK_RIGHT))
 	{
 		pos.x += m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIsLeft = false;
+		act.m_bIsLeft = false;
+		act.m_fVelocity = m_fSpeed;
+		
 	}
 	if (Key(VK_UP))
 	{
@@ -98,9 +99,9 @@ void CPlayer::update_act()			// 상황만 업데이트
 
 void CPlayer::update_ani()			// 움직임에 대한 업데이트
 {
-	if (m_bIsLeft)
+	if (act.m_bIsLeft)
 	{
-		if (m_fVelocity > 0)
+		if (act.m_fVelocity > 0.f)
 			GetAnimator()->Play(L"LeftMove");
 		else
 			GetAnimator()->Play(L"LeftNone");
@@ -108,7 +109,7 @@ void CPlayer::update_ani()			// 움직임에 대한 업데이트
 
 	else
 	{
-		if (m_fVelocity > 0)
+		if (act.m_fVelocity > 0.f)
 			GetAnimator()->Play(L"RightMove");
 		else
 			GetAnimator()->Play(L"RightNone");
@@ -127,7 +128,7 @@ CPlayer* CPlayer::GetPlayer()
 
 void CPlayer::CreateMissile()
 {
-	if (!m_bIsLeft)
+	if (!act.m_bIsLeft)
 	{
 		fPoint fpMissilePos = GetPos();
 		fpMissilePos.x += GetScale().x / 2.f;
@@ -141,6 +142,7 @@ void CPlayer::CreateMissile()
 		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);
 	}
 
+	// 반대방향일 경우 반대방향으로
 	else
 	{
 		fPoint fpMissilePos = GetPos();
