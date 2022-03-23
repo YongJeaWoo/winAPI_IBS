@@ -127,14 +127,31 @@ CPlayer* CPlayer::GetPlayer()
 
 void CPlayer::CreateMissile()
 {
- 	fPoint fpMissilePos = GetPos();
-	fpMissilePos.x += GetScale().x / 2.f;
+	if (!m_bIsLeft)
+	{
+		fPoint fpMissilePos = GetPos();
+		fpMissilePos.x += GetScale().x / 2.f;
 
-	// Misiile Object
-	CMissile* pMissile = new CMissile;
-	pMissile->SetPos(fpMissilePos);
-	pMissile->SetDir(fVec2(1, 0));
-	pMissile->SetName(L"Missile");
+		// Misiile Object
+		CMissile* pMissile = new CMissile;
+		pMissile->SetPos(fpMissilePos);
+		pMissile->SetDir(fVec2(1, 0));
+		pMissile->SetName(L"Missile");
 
-	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);
+		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);
+	}
+
+	else
+	{
+		fPoint fpMissilePos = GetPos();
+		fpMissilePos.x -= GetScale().x / 2.f;
+
+		// Misiile Object
+		CMissile* pMissile = new CMissile;
+		pMissile->SetPos(fpMissilePos);
+		pMissile->SetDir(fVec2(-1, 0));
+		pMissile->SetName(L"Missile");
+
+		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);
+	}
 }
