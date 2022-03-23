@@ -1,20 +1,21 @@
 #include "framework.h"
-#include "CTraceState.h"
+#include "CRunState.h"
 #include "CPlayer.h"
 #include "CMonster.h"
 
-CTraceState::CTraceState(STATE_MON state) : CState(state)
+CRunState::CRunState(STATE_MON state) 
+	: CState(state)
 {
 }
 
-CTraceState::~CTraceState()
+CRunState::~CRunState()
 {
 }
 
-void CTraceState::update()
+void CRunState::update()
 {
 	CPlayer* pPlayer = CPlayer::GetPlayer();
-	if (nullptr != pPlayer)
+	if (nullptr == pPlayer)
 		return;
 
 	fPoint fptPlayerPos = pPlayer->GetPos();
@@ -25,22 +26,19 @@ void CTraceState::update()
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
 	float fLen = fvDiff.Length();
 
-	if (pMonster->GetMonInfo().fHp < 10.f && fLen < pMonster->GetMonInfo().fRecogRange)
-		ChangeAIState(GetOwnerAI(), STATE_MON::RUN);
-
-	else if (fLen < pMonster->GetMonInfo().fRecogRange)
+	if (fLen >= pMonster->GetMonInfo().fRecogRange)
 		ChangeAIState(GetOwnerAI(), STATE_MON::IDLE);
 
-	// 추적해
+	// 도망쳐
 	fPoint pos = pMonster->GetPos();
-	pos += fvDiff.Normalize() * 100 * fDT;
+	pos += fvDiff.Normalize() * -100 * fDT;
 	pMonster->SetPos(pos);
 }
 
-void CTraceState::Enter()
+void CRunState::Enter()
 {
 }
 
-void CTraceState::Exit()
+void CRunState::Exit()
 {
 }

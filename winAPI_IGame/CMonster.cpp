@@ -6,6 +6,7 @@
 #include "AI.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
+#include "CRunState.h"
 
 CMonster::CMonster()
 {
@@ -53,7 +54,7 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		pMon->SetPos(pos);
 
 		sMonInfo info = {};
-		info.fAtt = 10.f;
+		// info.fAtt = 10.f;
 		info.fRecogRange = 300.f;
 		info.fHp = 50.f;
 		info.fSpeed = 150.f;
@@ -61,6 +62,7 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		AI* pAI = new AI;
 		pAI->AddState(new CIdleState(STATE_MON::IDLE));
 		pAI->AddState(new CTraceState(STATE_MON::TRACE));
+		pAI->AddState(new CRunState(STATE_MON::RUN));
 		pAI->SetCurState(STATE_MON::IDLE);
 		pMon->SetMonInfo(info);
 		pMon->SetAI(pAI);
@@ -128,9 +130,9 @@ void CMonster::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Missile_Player")
+	if (pOtherObj->GetName() == L"Missile")
 	{
-		m_sInfo.fHp -= 1;
+		m_sInfo.fHp -= 10;
 		if (m_sInfo.fHp <= 0)
 			DeleteObj(this);
 	}

@@ -21,6 +21,8 @@ enum class MON_TYPE
 	SIZE,
 };
 
+typedef void(*MON_FUNC) (DWORD_PTR, DWORD_PTR);
+
 class CMonster : public CGameObject
 {
 private:

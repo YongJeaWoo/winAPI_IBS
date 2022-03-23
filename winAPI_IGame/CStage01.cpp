@@ -44,6 +44,10 @@ void CStage01::Enter()
 
 	CMonster* ZenChan2 = CMonster::Create(MON_TYPE::NORMAL, fPoint(300.f, 300.f));
 	AddObject(ZenChan2, GROUP_GAMEOBJ::ENEMY);
+
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::ENEMY);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE, GROUP_GAMEOBJ::ENEMY);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 }
 
 void CStage01::Exit()

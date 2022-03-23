@@ -26,12 +26,11 @@ void CIdleState::update()
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
 	float fLen = fvDiff.Length();
 
-	if (fLen < pMonster->GetMonInfo().fRecogRange)
+	if (pMonster->GetMonInfo().fHp < 10.f && fLen < pMonster->GetMonInfo().fRecogRange)
+		ChangeAIState(GetOwnerAI(), STATE_MON::RUN);
+
+	else if (fLen < pMonster->GetMonInfo().fRecogRange)
 		ChangeAIState(GetOwnerAI(), STATE_MON::TRACE);
-
-	// TODO : 일정 범위 안 다른 조건 넣기
-
-
 }
 
 void CIdleState::Enter()

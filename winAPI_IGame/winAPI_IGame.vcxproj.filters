@@ -100,6 +100,9 @@
     <Filter Include="Scene\stage01">
       <UniqueIdentifier>{78b135d7-b507-4801-90b4-a1ebf21c51d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\State\Run">
+      <UniqueIdentifier>{11733380-8d8d-471d-a422-69a704b1a041}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -249,6 +252,9 @@
     <ClInclude Include="CStage02.h">
       <Filter>Scene\stage02</Filter>
     </ClInclude>
+    <ClInclude Include="CRunState.h">
+      <Filter>Object\State\Run</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -379,6 +385,9 @@
     </ClCompile>
     <ClCompile Include="CStage02.cpp">
       <Filter>Scene\stage02</Filter>
+    </ClCompile>
+    <ClCompile Include="CRunState.cpp">
+      <Filter>Object\State\Run</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
