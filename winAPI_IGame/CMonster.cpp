@@ -132,8 +132,8 @@ void CMonster::OnCollisionEnter(CCollider* pOther)
 
 	if (pOtherObj->GetName() == L"Missile")
 	{
-		m_sInfo.fHp -= 10;
-		if (m_sInfo.fHp <= 0)
+		m_sInfo.fHp -= 10.f;
+		if (m_sInfo.fHp <= 0.f)
 			DeleteObj(this);
 	}
 }
