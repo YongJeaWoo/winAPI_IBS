@@ -6,10 +6,11 @@ class AI;
 
 struct sMonInfo
 {
-	float fSpeed;
-	float fHp;
-	float fRecogRange;
-	float fAtt;
+	float	fSpeed;
+	float	fHp;
+	float	fRecogRange;
+	float	fAtt;
+	int		MCount;		// 적의 개수
 };
 
 enum class MON_TYPE
@@ -26,7 +27,7 @@ typedef void(*MON_FUNC) (DWORD_PTR, DWORD_PTR);
 class CMonster : public CGameObject
 {
 private:
-	sMonInfo m_sInfo;
+	sMonInfo Info;
 	AI* m_pAI;
 
 public:
@@ -48,5 +49,9 @@ public:
 	void SetMonInfo(const sMonInfo& info);
 
 	void OnCollisionEnter(CCollider* pOther);
+
+	// 몬스터 카운트 확인
+	int GetMonsterCount();
+	void PlusMonsterCount();
 };
 

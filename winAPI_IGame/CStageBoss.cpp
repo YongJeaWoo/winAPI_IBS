@@ -1,30 +1,30 @@
 #include "framework.h"
-#include "CStage02.h"
+#include "CStageBoss.h"
 #include "CMap.h"
 #include "CPlayer.h"
 #include "CMonster.h"
-#include "CTraceState.h"
 #include "CIdleState.h"
+#include "CTraceState.h"
 
-CStage02::CStage02()
+CStageBoss::CStageBoss()
 {
 }
 
-CStage02::~CStage02()
+CStageBoss::~CStageBoss()
 {
 }
 
-void CStage02::update()
+void CStageBoss::update()
 {
 	CScene::update();
 
-	if (GetGroupObject(GROUP_GAMEOBJ::ENEMY).size() == 0)
+	/*if (GetGroupObject(GROUP_GAMEOBJ::ENEMY).size() == 0)
 	{
-		ChangeScn(GROUP_SCENE::STAGE_BOSS);
-	}
+		ChangeScn(GROUP_SCENE::HAPPYENDING);
+	}*/
 }
 
-void CStage02::Enter()
+void CStageBoss::Enter()
 {
 	CMap* BackGround = new CMap;
 	BackGround->Load(L"BackGround", L"texture\\background\\BackGround.png");
@@ -33,15 +33,16 @@ void CStage02::Enter()
 	AddObject(BackGround, GROUP_GAMEOBJ::BACKGROUND);
 
 	CMap* BG = new CMap;
-	BG->Load(L"Stage02", L"texture\\background\\Stage02.png");
+	BG->Load(L"StageBoss", L"texture\\background\\StageBoss.png");
 	BG->SetPos(fPoint(0.f, 0.f));
 	BG->SetScale(fPoint(WINSIZEX, WINSIZEY));
-	AddObject(BG, GROUP_GAMEOBJ::STAGE_02);
+	AddObject(BG, GROUP_GAMEOBJ::STAGE_BOSS);
 
 	CPlayer* Bubby = new CPlayer;
 	AddObject(Bubby, GROUP_GAMEOBJ::PLAYER);
 	Bubby->RegisterPlayer();
 
+	// Å×½ºÆ® 
 	CMonster* ZenChan1 = CMonster::Create(MON_TYPE::NORMAL, fPoint(300.f, 300.f));
 	AddObject(ZenChan1, GROUP_GAMEOBJ::ENEMY);
 
@@ -49,7 +50,7 @@ void CStage02::Enter()
 	AddObject(ZenChan2, GROUP_GAMEOBJ::ENEMY);
 }
 
-void CStage02::Exit()
+void CStageBoss::Exit()
 {
 	DeleteAll();
 }

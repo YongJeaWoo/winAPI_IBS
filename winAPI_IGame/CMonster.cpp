@@ -12,7 +12,7 @@ CMonster::CMonster()
 {
 	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"MonsterTex", L"texture\\PlayerStand.png");
 	m_pAI = nullptr;
-	m_sInfo = {};
+	Info = {};
 
 	SetName(L"Monster");
 	SetScale(fPoint(100.f, 100.f));
@@ -58,6 +58,7 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		info.fRecogRange = 300.f;
 		info.fHp = 50.f;
 		info.fSpeed = 150.f;
+		info.MCount = 1;
 
 		AI* pAI = new AI;
 		pAI->AddState(new CIdleState(STATE_MON::IDLE));
@@ -102,17 +103,17 @@ void CMonster::update()
 
 float CMonster::GetSpeed()
 {
-	return m_sInfo.fSpeed;
+	return Info.fSpeed;
 }
 
 const sMonInfo& CMonster::GetMonInfo()
 {
-	return m_sInfo;
+	return Info;
 }
 
 void CMonster::SetSpeed(float speed)
 {
-	m_sInfo.fSpeed = speed;
+	Info.fSpeed = speed;
 }
 
 void CMonster::SetAI(AI* ai)
@@ -123,7 +124,7 @@ void CMonster::SetAI(AI* ai)
 
 void CMonster::SetMonInfo(const sMonInfo& info)
 {
-	m_sInfo = info;
+	Info = info;
 }
 
 void CMonster::OnCollisionEnter(CCollider* pOther)
@@ -132,8 +133,8 @@ void CMonster::OnCollisionEnter(CCollider* pOther)
 
 	if (pOtherObj->GetName() == L"Missile")
 	{
-		m_sInfo.fHp -= 10.f;
-		if (m_sInfo.fHp <= 0.f)
+		Info.fHp -= 10.f;
+		if (Info.fHp <= 0.f)
 			DeleteObj(this);
 	}
 }

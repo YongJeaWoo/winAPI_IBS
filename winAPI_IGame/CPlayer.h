@@ -18,6 +18,7 @@ struct PlayerAct
 {
 	float m_fVelocity;
 	bool m_bIsLeft;
+	float m_fDelay;
 };
 
 class CPlayer : public CGameObject
