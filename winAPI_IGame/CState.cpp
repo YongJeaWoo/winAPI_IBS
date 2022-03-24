@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "CState.h"
 #include "AI.h"
-#include "CMonster.h"
+#include "CZen.h"
 
 CState::CState(STATE_MON state)
 {
@@ -23,7 +23,7 @@ STATE_MON CState::GetType()
 	return m_eState;
 }
 
-CMonster* CState::GetMonster()
+CZen* CState::GetMonster()
 {
 	return m_pOwnerAI->GetOwnerAI();
 }

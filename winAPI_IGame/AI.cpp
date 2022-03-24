@@ -18,7 +18,7 @@ AI::~AI()
 	m_mapState.clear();
 }
 
-CMonster* AI::GetOwnerAI()
+CZen* AI::GetOwnerAI()
 {
 	return m_pOwner;
 }

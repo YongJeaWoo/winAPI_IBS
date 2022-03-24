@@ -164,7 +164,6 @@
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMissile.h" />
-    <ClInclude Include="CMonster.h" />
     <ClInclude Include="CPanelUI.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPlayer.h" />
@@ -195,6 +194,7 @@
     <ClInclude Include="CTraceState.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
+    <ClInclude Include="CZen.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Resource.h" />
@@ -223,7 +223,6 @@
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMissile.cpp" />
-    <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CPanelUI.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
@@ -254,6 +253,7 @@
     <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
+    <ClCompile Include="CZen.cpp" />
     <ClCompile Include="winAPI_IGame.cpp" />
   </ItemGroup>
   <ItemGroup>

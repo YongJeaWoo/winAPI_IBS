@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "CIdleState.h"
 #include "CPlayer.h"
-#include "CMonster.h"
+#include "CZen.h"
 
 CIdleState::CIdleState(STATE_MON state)
 	: CState(state)
@@ -20,7 +20,7 @@ void CIdleState::update()
 
 	fPoint fptPlayerPos = pPlayer->GetPos();
 
-	CMonster* pMonster = GetMonster();
+	CZen* pMonster = GetMonster();
 	fPoint fptMonsterPos = pMonster->GetPos();
 
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;

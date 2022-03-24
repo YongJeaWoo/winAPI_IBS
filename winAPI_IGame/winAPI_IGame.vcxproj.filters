@@ -115,6 +115,18 @@
     <Filter Include="Scene\Bad">
       <UniqueIdentifier>{e1ff1c8f-5d7d-47f1-91cb-4cb55e9e7b83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Character\Player">
+      <UniqueIdentifier>{793b1cb9-f747-4208-809f-4d49c1ecf2d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Missile">
+      <UniqueIdentifier>{02e480b7-f497-4daf-b6ed-761c7aab4a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Enemy">
+      <UniqueIdentifier>{fbf29ba3-843a-4003-8366-605338cdf5f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character\Enemy\Zen">
+      <UniqueIdentifier>{fba3c6f8-9eb5-4d9d-b1d4-6f6d815f42cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -161,15 +173,6 @@
     </ClInclude>
     <ClInclude Include="CBackGround.h">
       <Filter>Object\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Object\Character</Filter>
     </ClInclude>
     <ClInclude Include="CButtonUI.h">
       <Filter>Object\UI</Filter>
@@ -288,6 +291,15 @@
     <ClInclude Include="CBadEnding.h">
       <Filter>Scene\Bad</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Object\Character\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="CZen.h">
+      <Filter>Object\Character\Enemy\Zen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -316,15 +328,6 @@
     </ClCompile>
     <ClCompile Include="CBackGround.cpp">
       <Filter>Object\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Object\Character</Filter>
     </ClCompile>
     <ClCompile Include="CButtonUI.cpp">
       <Filter>Object\UI</Filter>
@@ -442,6 +445,15 @@
     </ClCompile>
     <ClCompile Include="CBadEnding.cpp">
       <Filter>Scene\Bad</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Object\Character\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="CZen.cpp">
+      <Filter>Object\Character\Enemy\Zen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 
 class AI;
-class CMonster;
+class CZen;
 
 class CState
 {
@@ -17,7 +17,7 @@ public:
 
 	AI* GetOwnerAI();
 	STATE_MON GetType();
-	CMonster* GetMonster();
+	CZen* GetMonster();
 
 	virtual void update() = 0;
 	virtual void Enter() = 0;

@@ -1,22 +1,22 @@
 #pragma once
 
-class CMonster;
+class CZen;
 class CState;
 
 class AI
 {
-	friend class CMonster;
+	friend class CZen;
 
 private:
 	map<STATE_MON, CState*> m_mapState;
-	CMonster* m_pOwner;
+	CZen*	m_pOwner;
 	CState* m_pCurState;
 
 public:
 	AI();
 	~AI();
 
-	CMonster* GetOwnerAI();
+	CZen* GetOwnerAI();
 	CState* GetState(STATE_MON state);
 	void SetCurState(STATE_MON state);
 

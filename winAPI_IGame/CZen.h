@@ -4,7 +4,7 @@
 class CD2DImage;
 class AI;
 
-struct sMonInfo
+struct MonInfo
 {
 	float	fSpeed;
 	float	fHp;
@@ -15,7 +15,7 @@ struct sMonInfo
 enum class MON_TYPE
 {
 	NORMAL,
-	RANGE,
+	SHOOT,
 
 
 	SIZE,
@@ -23,29 +23,29 @@ enum class MON_TYPE
 
 typedef void(*MON_FUNC) (DWORD_PTR, DWORD_PTR);
 
-class CMonster : public CGameObject
+class CZen : public CGameObject
 {
 private:
-	sMonInfo Info;
-	AI* m_pAI;
+	MonInfo Info;
+	AI*		m_pAI;
 
 public:
-	CMonster();
-	virtual ~CMonster();
-	virtual CMonster* Clone();
+	CZen();
+	virtual ~CZen();
+	virtual CZen* Clone();
 
-	static CMonster* Create(MON_TYPE type, fPoint pos);		// ∆—≈‰∏Æ ∆–≈œ
+	static CZen* Create(MON_TYPE type, fPoint pos);		// ∆—≈‰∏Æ ∆–≈œ
 
 	virtual void render();
 	virtual void update();
 
 	float GetSpeed();
-	const sMonInfo& GetMonInfo();
+	const MonInfo& GetMonInfo();
 
 	void SetSpeed(float speed);
 
 	void SetAI(AI* ai);
-	void SetMonInfo(const sMonInfo& info);
+	void SetMonInfo(const MonInfo& info);
 
 	void OnCollisionEnter(CCollider* pOther);
 };

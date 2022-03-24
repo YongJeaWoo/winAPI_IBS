@@ -2,7 +2,7 @@
 #include "CStageBoss.h"
 #include "CMap.h"
 #include "CPlayer.h"
-#include "CMonster.h"
+#include "CZen.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
 
@@ -43,10 +43,10 @@ void CStageBoss::Enter()
 	Bubby->RegisterPlayer();
 
 	// Å×½ºÆ® 
-	CMonster* ZenChan1 = CMonster::Create(MON_TYPE::NORMAL, fPoint(300.f, 300.f));
+	CZen* ZenChan1 = CZen::Create(MON_TYPE::NORMAL, fPoint(300.f, 300.f));
 	AddObject(ZenChan1, GROUP_GAMEOBJ::ENEMY);
 
-	CMonster* ZenChan2 = CMonster::Create(MON_TYPE::NORMAL, fPoint(500.f, 300.f));
+	CZen* ZenChan2 = CZen::Create(MON_TYPE::NORMAL, fPoint(500.f, 300.f));
 	AddObject(ZenChan2, GROUP_GAMEOBJ::ENEMY);
 }
 

@@ -65,7 +65,7 @@ void CMissile::SetDir(float theta)
 void CMissile::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
-	if (pOtherObj->GetName() == L"Monster")
+	if (pOtherObj->GetName() == L"Zen")
 	{
 		DeleteObj(this);
 	}

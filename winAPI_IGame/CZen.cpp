@@ -1,64 +1,61 @@
 #include "framework.h"
-#include "CMonster.h"
+#include "CZen.h"
 #include "CCollider.h"
-#include "CD2DImage.h"
 #include "CAnimator.h"
+#include "CD2DImage.h"
 #include "AI.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
 #include "CRunState.h"
 
-CMonster::CMonster()
+CZen::CZen()
 {
-	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"MonsterTex", L"texture\\PlayerStand.png");
-	m_pAI = nullptr;
-	Info = {};
-
-	SetName(L"Monster");
-	SetScale(fPoint(100.f, 100.f));
+	CD2DImage* pRImg = CResourceManager::getInst()->LoadD2DImage(L"Zen", L"texture\\enemy\\Zen_Move_Right.png");
+	SetName(L"Zen");
+	SetScale(fVec2(80.f, 80.f));
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(90.f, 90.f));
+	GetCollider()->SetScale(fVec2(70.f, 70.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"PlayerStand", m_pImg, fPoint(0, 0), fPoint(32.f, 32.f), fPoint(32.f, 0), 0.1f, 5, true);
-	GetAnimator()->Play(L"PlayerStand");
+	GetAnimator()->CreateAnimation(L"Move_Right", pRImg, fVec2(0.f, 0.f), fVec2(31.25f, 22.f), fVec2(31.25f, 0.f), 1.f, 4, false);
+	GetAnimator()->Play(L"Move_Right");
+
+	Info = {};
+	m_pAI = nullptr;
 }
 
-CMonster::~CMonster()
+CZen::~CZen()
 {
 	if (nullptr != m_pAI)
-	{
 		delete m_pAI;
-	}
 }
 
-CMonster* CMonster::Clone()
+CZen* CZen::Clone()
 {
-	CMonster* newMonster = new CMonster;
+	CZen* newMonster = new CZen;
 	if (nullptr != m_pAI)
 		newMonster->m_pAI = new AI;
 
-	return new CMonster(*newMonster);
+	return new CZen(*newMonster);
 }
 
-CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
+CZen* CZen::Create(MON_TYPE type, fPoint pos)
 {
-	CMonster* pMon = nullptr;
+	CZen* pMon = nullptr;
 
 	switch (type)
 	{
 	case MON_TYPE::NORMAL:
 	{
-		pMon = new CMonster;
+		pMon = new CZen;
 		pMon->SetPos(pos);
 
-		sMonInfo info = {};
+		MonInfo info = {};
 		// info.fAtt = 10.f;
 		info.fRecogRange = 300.f;
 		info.fHp = 50.f;
 		info.fSpeed = 150.f;
-		info.MCount = 1;
 
 		AI* pAI = new AI;
 		pAI->AddState(new CIdleState(STATE_MON::IDLE));
@@ -69,7 +66,7 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		pMon->SetAI(pAI);
 	}
 	break;
-	case MON_TYPE::RANGE:
+	case MON_TYPE::SHOOT:
 		break;
 
 	default:
@@ -79,16 +76,16 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 	return pMon;
 }
 
-void CMonster::render()
+void CZen::render()
 {
 	fPoint pos = GetPos();
- 	fPoint scale = GetScale();
+	fPoint scale = GetScale();
 	pos = CCameraManager::getInst()->GetRenderPos(pos);
 
 	component_render();
 }
 
-void CMonster::update()
+void CZen::update()
 {
 	if (nullptr != GetAnimator())
 	{
@@ -101,33 +98,33 @@ void CMonster::update()
 	}
 }
 
-float CMonster::GetSpeed()
+float CZen::GetSpeed()
 {
 	return Info.fSpeed;
 }
 
-const sMonInfo& CMonster::GetMonInfo()
+const MonInfo& CZen::GetMonInfo()
 {
 	return Info;
 }
 
-void CMonster::SetSpeed(float speed)
+void CZen::SetSpeed(float speed)
 {
 	Info.fSpeed = speed;
 }
 
-void CMonster::SetAI(AI* ai)
+void CZen::SetAI(AI* ai)
 {
 	m_pAI = ai;
 	m_pAI->m_pOwner = this;
 }
 
-void CMonster::SetMonInfo(const sMonInfo& info)
+void CZen::SetMonInfo(const MonInfo& info)
 {
 	Info = info;
 }
 
-void CMonster::OnCollisionEnter(CCollider* pOther)
+void CZen::OnCollisionEnter(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
 

@@ -20,7 +20,6 @@ CPlayer::CPlayer()
 	CD2DImage* m_pImgLShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerLShoot", L"texture\\player\\Player_Shoot_Left.png");
 	CD2DImage* m_pImgRShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerRShoot", L"texture\\player\\Player_Shoot_Right.png");
 	SetName(L"Player");
-	SetPos(fPoint(100.f, 600.f));
 	SetScale(fPoint(80.f, 80.f));
 
 	CreateCollider();
@@ -38,9 +37,9 @@ CPlayer::CPlayer()
 
 	CAnimation* pAni;
 	pAni = GetAnimator()->FindAnimation(L"PlayerLMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
+	pAni->GetFrame(1).fptOffset = fPoint(0.f, -10.f);
 	pAni = GetAnimator()->FindAnimation(L"PlayerRMove");
-	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
+	pAni->GetFrame(1).fptOffset = fPoint(0.f, -10.f);
 
 	act = {};
 	act.m_fDelay = 0.f;

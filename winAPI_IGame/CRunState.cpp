@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "CRunState.h"
 #include "CPlayer.h"
-#include "CMonster.h"
+#include "CZen.h"
 
 CRunState::CRunState(STATE_MON state) 
 	: CState(state)
@@ -20,7 +20,7 @@ void CRunState::update()
 
 	fPoint fptPlayerPos = pPlayer->GetPos();
 
-	CMonster* pMonster = GetMonster();
+	CZen* pMonster = GetMonster();
 	fPoint fptMonsterPos = pMonster->GetPos();
 
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;

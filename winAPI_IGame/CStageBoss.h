@@ -2,7 +2,7 @@
 #include "CScene.h"
 
 class CPlayer;
-class CMonster;
+class CZen;
 
 class CStageBoss : public CScene
 {

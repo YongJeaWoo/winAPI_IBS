@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "CTraceState.h"
 #include "CPlayer.h"
-#include "CMonster.h"
+#include "CZen.h"
 
 CTraceState::CTraceState(STATE_MON state) : CState(state)
 {
@@ -19,7 +19,7 @@ void CTraceState::update()
 
 	fPoint fptPlayerPos = pPlayer->GetPos();
 
-	CMonster* pMonster = GetMonster();
+	CZen* pMonster = GetMonster();
 	fPoint fptMonsterPos = pMonster->GetPos();
 
 	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
