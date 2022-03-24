@@ -5,6 +5,7 @@
 #include "CGameObject.h"
 #include "CStage01.h"
 #include "CStage02.h"
+#include "CStageBoss.h"
 
 CSceneManager::CSceneManager()
 {
@@ -59,6 +60,9 @@ void CSceneManager::init()
 
 	m_arrScene[(size_t)GROUP_SCENE::STAGE_02] = new CStage02;
 	m_arrScene[(size_t)GROUP_SCENE::STAGE_02]->SetName(L"Stage02");
+
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS] = new CStageBoss;
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS]->SetName(L"StageBoss");
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");

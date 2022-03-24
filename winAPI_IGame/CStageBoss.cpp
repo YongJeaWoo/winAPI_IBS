@@ -18,10 +18,10 @@ void CStageBoss::update()
 {
 	CScene::update();
 
-	if (GetGroupObject(GROUP_GAMEOBJ::ENEMY).size() == 0)
+	/*if (GetGroupObject(GROUP_GAMEOBJ::ENEMY).size() == 0)
 	{
 		ChangeScn(GROUP_SCENE::HAPPYENDING);
-	}
+	}*/
 }
 
 void CStageBoss::Enter()
@@ -42,6 +42,7 @@ void CStageBoss::Enter()
 	AddObject(Bubby, GROUP_GAMEOBJ::PLAYER);
 	Bubby->RegisterPlayer();
 
+	// Å×½ºÆ® 
 	CMonster* ZenChan1 = CMonster::Create(MON_TYPE::NORMAL, fPoint(300.f, 300.f));
 	AddObject(ZenChan1, GROUP_GAMEOBJ::ENEMY);
 
