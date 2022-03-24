@@ -138,13 +138,3 @@ void CMonster::OnCollisionEnter(CCollider* pOther)
 			DeleteObj(this);
 	}
 }
-
-int CMonster::GetMonsterCount()
-{
-	return Info.MCount;
-}
-
-void CMonster::PlusMonsterCount()
-{
-	Info.MCount++;
-}
