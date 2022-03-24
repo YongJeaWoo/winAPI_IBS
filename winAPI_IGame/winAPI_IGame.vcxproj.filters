@@ -106,6 +106,9 @@
     <Filter Include="Scene\scene_title\title_object">
       <UniqueIdentifier>{1e6ff6a3-9385-4288-b1b4-38deb0b31e54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\stageboss">
+      <UniqueIdentifier>{92acee8f-4b60-411c-bfbe-e8d9e11e9553}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -270,6 +273,9 @@
     <ClInclude Include="CTitleChu.h">
       <Filter>Scene\scene_title\title_object</Filter>
     </ClInclude>
+    <ClInclude Include="CStageBoss.h">
+      <Filter>Scene\stageboss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -415,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="CTitleChu.cpp">
       <Filter>Scene\scene_title\title_object</Filter>
+    </ClCompile>
+    <ClCompile Include="CStageBoss.cpp">
+      <Filter>Scene\stageboss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

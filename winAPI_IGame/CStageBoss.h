@@ -4,13 +4,13 @@
 class CPlayer;
 class CMonster;
 
-class CStage02 : public CScene
+class CStageBoss : public CScene
 {
 private:
 
 public:
-	CStage02();
-	virtual ~CStage02();
+	CStageBoss();
+	virtual ~CStageBoss();
 
 	virtual void update();
 	virtual void Enter();
