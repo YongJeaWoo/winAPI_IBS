@@ -2,7 +2,7 @@
 #include "CTitle.h"
 #include "CTitleGround.h"
 #include "CImageObject.h"
-#include "CDummyTitle.h"
+#include "CTitlePlayer.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
 
@@ -11,6 +11,7 @@ CTitle::CTitle()
 	m_bIsRaise = false;
 	Iobj = nullptr;
 	Pobj = nullptr;
+	Zobj = nullptr;
 	m_fAccTime = 0.f;
 	m_bIsFadeOut = false;
 }
@@ -101,11 +102,18 @@ void CTitle::Enter()
 	AddObject(m_pTitleImage, GROUP_GAMEOBJ::TITLE);
 
 	// 오브젝트 생성
-	Pobj = new CDummyTitle;
+	Pobj = new CTitlePlayer;
 	Pobj->Load(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
 	Pobj->SetPos(fPoint(WINSIZEX / 2, 550.f));
 	Pobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Pobj, GROUP_GAMEOBJ::DUMMYTITLE);
+
+	// 테스트 수정 필요
+	Zobj = new CTitleZen;
+	Zobj->Load(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
+	Zobj->SetPos(fPoint(300.f, 550.f));
+	Zobj->SetScale(fPoint(100.f, 100.f));
+	AddObject(Zobj, GROUP_GAMEOBJ::DUMMYTITLE);
 }
 
 void CTitle::Exit()

@@ -1,6 +1,9 @@
 #pragma once
 #include "CScene.h"
 
+class CPlayer;
+class CMosnter;
+
 class CStage02 : public CScene
 {
 private:
@@ -10,7 +13,6 @@ public:
 	virtual ~CStage02();
 
 	virtual void update();
-	virtual void render();
 	virtual void Enter();
 	virtual void Exit();
 };

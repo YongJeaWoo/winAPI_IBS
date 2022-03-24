@@ -103,6 +103,9 @@
     <Filter Include="Object\State\Idle">
       <UniqueIdentifier>{9935abec-ce17-48ac-9776-5e4f6b8086d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\scene_title\title_object">
+      <UniqueIdentifier>{1e6ff6a3-9385-4288-b1b4-38deb0b31e54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -237,14 +240,8 @@
     <ClInclude Include="AI.h">
       <Filter>Object\AI</Filter>
     </ClInclude>
-    <ClInclude Include="CImageObject.h">
-      <Filter>Scene\scene_title</Filter>
-    </ClInclude>
     <ClInclude Include="CTraceState.h">
       <Filter>Object\State\Trace</Filter>
-    </ClInclude>
-    <ClInclude Include="CDummyTitle.h">
-      <Filter>Scene\scene_title</Filter>
     </ClInclude>
     <ClInclude Include="CStage01.h">
       <Filter>Scene\stage01</Filter>
@@ -254,6 +251,24 @@
     </ClInclude>
     <ClInclude Include="CRunState.h">
       <Filter>Object\State\Run</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitlePlayer.h">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitleZen.h">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClInclude>
+    <ClInclude Include="CImageObject.h">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitleMig.h">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitleMon.h">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitleChu.h">
+      <Filter>Scene\scene_title\title_object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -371,14 +386,8 @@
     <ClCompile Include="AI.cpp">
       <Filter>Object\AI</Filter>
     </ClCompile>
-    <ClCompile Include="CImageObject.cpp">
-      <Filter>Scene\scene_title</Filter>
-    </ClCompile>
     <ClCompile Include="CTraceState.cpp">
       <Filter>Object\State\Trace</Filter>
-    </ClCompile>
-    <ClCompile Include="CDummyTitle.cpp">
-      <Filter>Scene\scene_title</Filter>
     </ClCompile>
     <ClCompile Include="CStage01.cpp">
       <Filter>Scene\stage01</Filter>
@@ -388,6 +397,24 @@
     </ClCompile>
     <ClCompile Include="CRunState.cpp">
       <Filter>Object\State\Run</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitlePlayer.cpp">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleZen.cpp">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClCompile>
+    <ClCompile Include="CImageObject.cpp">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleMig.cpp">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleMon.cpp">
+      <Filter>Scene\scene_title\title_object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleChu.cpp">
+      <Filter>Scene\scene_title\title_object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

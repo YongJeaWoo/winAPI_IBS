@@ -1,13 +1,11 @@
 #include "framework.h"
-#include "CDummyTitle.h"
-#include "CTexture.h"
-#include "CAnimation.h"
+#include "CTitleChu.h"
 #include "CAnimator.h"
-#include "CTitle.h"
+#include "CAnimation.h"
 
-CDummyTitle::CDummyTitle()
+CTitleChu::CTitleChu()
 {
-    m_pImg = nullptr;
+	m_pImg = nullptr;
 
 	CD2DImage* m_pPlayerImg = CResourceManager::getInst()->LoadD2DImage(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
 	SetName(L"TitlePlayer");
@@ -23,31 +21,31 @@ CDummyTitle::CDummyTitle()
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -5.f);
 }
 
-CDummyTitle::~CDummyTitle()
+CTitleChu::~CTitleChu()
 {
 }
 
-CDummyTitle* CDummyTitle::Clone()
+CTitleChu* CTitleChu::Clone()
 {
-    return new CDummyTitle(*this);
+	return new CTitleChu(*this);
 }
 
-void CDummyTitle::update()
+void CTitleChu::update()
 {
 	GetAnimator()->update();
 }
 
-void CDummyTitle::render()
+void CTitleChu::render()
 {
 	component_render();
 }
 
-void CDummyTitle::Load(const wstring& strKey, const wstring& strPath)
+void CTitleChu::Load(const wstring& strKey, const wstring& strPath)
 {
 	m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
 }
 
-void CDummyTitle::Dance()
+void CTitleChu::Dance()
 {
 	GetAnimator()->Play(L"PlayerDance");
 }
