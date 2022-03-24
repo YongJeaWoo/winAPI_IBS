@@ -109,6 +109,12 @@
     <Filter Include="Scene\stageboss">
       <UniqueIdentifier>{92acee8f-4b60-411c-bfbe-e8d9e11e9553}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Happy">
+      <UniqueIdentifier>{f35badd9-8b8b-4681-ae7c-063d846fe2ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Bad">
+      <UniqueIdentifier>{e1ff1c8f-5d7d-47f1-91cb-4cb55e9e7b83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -276,6 +282,12 @@
     <ClInclude Include="CStageBoss.h">
       <Filter>Scene\stageboss</Filter>
     </ClInclude>
+    <ClInclude Include="CHappyEnding.h">
+      <Filter>Scene\Happy</Filter>
+    </ClInclude>
+    <ClInclude Include="CBadEnding.h">
+      <Filter>Scene\Bad</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -424,6 +436,12 @@
     </ClCompile>
     <ClCompile Include="CStageBoss.cpp">
       <Filter>Scene\stageboss</Filter>
+    </ClCompile>
+    <ClCompile Include="CHappyEnding.cpp">
+      <Filter>Scene\Happy</Filter>
+    </ClCompile>
+    <ClCompile Include="CBadEnding.cpp">
+      <Filter>Scene\Bad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

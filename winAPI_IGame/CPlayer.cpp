@@ -11,7 +11,14 @@ CPlayer* CPlayer::instance = nullptr;
 
 CPlayer::CPlayer()
 {
-	CD2DImage* m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation_Player.bmp");
+	CD2DImage* m_pImgLIdle = CResourceManager::getInst()->LoadD2DImage(L"PlayerLIdle", L"texture\\player\\Player_Idle_Left.png");
+	CD2DImage* m_pImgRIdle = CResourceManager::getInst()->LoadD2DImage(L"PlayerRIdle", L"texture\\player\\Player_Idle_Right.png");
+	CD2DImage* m_pImgLJump = CResourceManager::getInst()->LoadD2DImage(L"PlayerLJump", L"texture\\player\\Player_Jump_Left.png");
+	CD2DImage* m_pImgRJump = CResourceManager::getInst()->LoadD2DImage(L"PlayerRJump", L"texture\\player\\Player_Jump_Right.png");
+	CD2DImage* m_pImgLMove = CResourceManager::getInst()->LoadD2DImage(L"PlayerLMove", L"texture\\player\\Player_Move_Left.png");
+	CD2DImage* m_pImgRMove = CResourceManager::getInst()->LoadD2DImage(L"PlayerRMove", L"texture\\player\\Player_Move_Right.png");
+	CD2DImage* m_pImgLShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerLShoot", L"texture\\player\\Player_Shoot_Left.png");
+	CD2DImage* m_pImgRShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerRShoot", L"texture\\player\\Player_Shoot_Right.png");
 	SetName(L"Player");
 	SetPos(fPoint(100.f, 600.f));
 	SetScale(fPoint(80.f, 80.f));
@@ -21,21 +28,22 @@ CPlayer::CPlayer()
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"LeftNone",		m_pImg, fPoint(0.f, 0.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"RightNone",	m_pImg, fPoint(0.f, 70.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"LeftMove",		m_pImg, fPoint(0.f, 140.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"RightMove",	m_pImg, fPoint(0.f, 210.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"LeftHit",		m_pImg, fPoint(140.f, 0.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->CreateAnimation(L"RightHit",		m_pImg, fPoint(140.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
+	GetAnimator()->CreateAnimation(L"PlayerLIdle",		m_pImgLIdle,  fPoint(0.f, 0.f),	   fPoint(27.f, 22.f),   fPoint(27.f, 0.f), 0.5f, 2);
+	GetAnimator()->CreateAnimation(L"PlayerRIdle",		m_pImgRIdle,  fPoint(0.f, 0.f),    fPoint(27.f, 22.f),   fPoint(27.f, 0.f), 0.5f, 2);
+	GetAnimator()->CreateAnimation(L"PlayerLMove",		m_pImgLMove,  fPoint(0.f, 0.f),    fPoint(26.5f, 24.f),  fPoint(26.5f, 0.f), 0.25f, 5);
+	GetAnimator()->CreateAnimation(L"PlayerRMove",		m_pImgRMove,  fPoint(0.f, 0.f),    fPoint(26.5f, 24.f),  fPoint(26.5f, 0.f), 0.25f, 5);
+	GetAnimator()->CreateAnimation(L"PlayerLShoot",		m_pImgLShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.25f, 4);
+	GetAnimator()->CreateAnimation(L"PlayerRShoot",		m_pImgRShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.25f, 4);
 	GetAnimator()->Play(L"LeftNone");
 
 	CAnimation* pAni;
-	pAni = GetAnimator()->FindAnimation(L"LeftMove");
+	pAni = GetAnimator()->FindAnimation(L"PlayerLMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
-	pAni = GetAnimator()->FindAnimation(L"RightMove");
+	pAni = GetAnimator()->FindAnimation(L"PlayerRMove");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -20.f);
 
 	act = {};
+	act.m_fDelay = 0.f;
 }
 
 CPlayer::~CPlayer()
@@ -92,27 +100,46 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 
 	if (KeyDown(VK_SPACE))
 	{
-		CreateMissile();
-		GetAnimator()->Play(L"LeftHit");
+		if (act.m_bIsLeft)
+		{
+			act.m_fDelay = 0.6f;
+			CreateMissile();
+			GetAnimator()->Play(L"PlayerLShoot");
+		}
+		else
+		{
+			act.m_fDelay = 0.6f;
+			CreateMissile();
+			GetAnimator()->Play(L"PlayerRShoot");
+		}
 	}
+	act.m_fDelay -= fDT;
 }
 
 void CPlayer::update_ani()			// 움직임에 대한 업데이트
 {
 	if (act.m_bIsLeft)
 	{
-		if (act.m_fVelocity > 0.f)
-			GetAnimator()->Play(L"LeftMove");
+		if (act.m_fDelay >= 0.f)
+			GetAnimator()->Play(L"PlayerLShoot");
+
+		else if (act.m_fVelocity > 0.f)
+			GetAnimator()->Play(L"PlayerLMove");
+
 		else
-			GetAnimator()->Play(L"LeftNone");
+			GetAnimator()->Play(L"PlayerLIdle");
 	}
 
 	else
 	{
-		if (act.m_fVelocity > 0.f)
-			GetAnimator()->Play(L"RightMove");
+		if (act.m_fDelay >= 0.f)
+			GetAnimator()->Play(L"PlayerRShoot");
+
+		else if (act.m_fVelocity > 0.f)
+			GetAnimator()->Play(L"PlayerRMove");
+
 		else
-			GetAnimator()->Play(L"RightNone");
+			GetAnimator()->Play(L"PlayerRIdle");
 	}
 }
 

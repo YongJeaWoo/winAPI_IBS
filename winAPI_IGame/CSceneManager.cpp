@@ -64,6 +64,12 @@ void CSceneManager::init()
 	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS] = new CStageBoss;
 	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS]->SetName(L"StageBoss");
 
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS] = new CStageBoss;
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS]->SetName(L"HappyEnding");
+
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS] = new CStageBoss;
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_BOSS]->SetName(L"BadEnding");
+
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
 
