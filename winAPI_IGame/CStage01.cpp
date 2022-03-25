@@ -27,6 +27,11 @@ void CStage01::update()
 
 void CStage01::Enter()
 {
+	// 타일 로드
+	wstring path = CPathManager::getInst()->GetContentPath();
+	path += L"tile\\Stage01.tile";
+	LoadTile(path);
+
 	CMap* BackGround = new CMap;
 	BackGround->Load(L"BackGround", L"texture\\background\\BackGround.png");
 	BackGround->SetPos(fPoint(0.f, 0.f));

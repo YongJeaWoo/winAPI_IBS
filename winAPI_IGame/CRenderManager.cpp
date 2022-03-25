@@ -149,7 +149,7 @@ void CRenderManager::RenderRectangle(float dstX, float dstY, float dstW, float d
 	int green = (color >> 8) & 0xFF;
 	int blue = (color >> 16) & 0xFF;
 
-	m_pBrush->SetColor(D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f, 1.f));
+	m_pBrush->SetColor(D2D1::ColorF(red / 255.f, green / 255.f, blue / 255.0f, 1.f));
 	m_pRenderTarget->DrawRectangle(m_imgRect, m_pBrush, strokeWidth);
 }
 
@@ -221,4 +221,3 @@ IDWriteFactory* CRenderManager::GetWriteFactory()
 {
 	return m_pWriteFactory;
 }
-

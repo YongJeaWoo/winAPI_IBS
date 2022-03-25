@@ -85,7 +85,7 @@ void CScene_Tool::Enter()
 	m_hWnd = CreateDialog(hInst, MAKEINTRESOURCE(IDD_TILEBOX), hWnd, TileWinProc);
 	ShowWindow(m_hWnd, SW_SHOW);
 
-	CreateTile(10, 10);
+	CreateTile(20, 20);
 	CreateTilePanel();
 
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
@@ -342,7 +342,7 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 	if (m_gTile == GROUP_TILE::NONE)
 	{
 		m_gTile = GROUP_TILE::GROUND;
-		button->SetText(L"Ground");
+		button->SetText(L"GROUND");
 	}
 	else if (m_gTile == GROUP_TILE::GROUND)
 	{
@@ -395,6 +395,7 @@ void CScene_Tool::CreateTilePanel()
 	CButtonUI* btnTileGroup = new CButtonUI;
 	btnTileGroup->SetScale(fPoint(100.f, 50.f));
 	btnTileGroup->SetPos(fPoint(50.f, 500.f));
+	btnTileGroup->SetText(L"NONE");
 	btnTileGroup->SetClickedCallBack(ClickTileGroupButton, (DWORD_PTR)this, (DWORD_PTR)btnTileGroup);
 	panelTile->AddChild(btnTileGroup);
 
@@ -456,21 +457,23 @@ void CScene_Tool::PrintTileGroup()
 		if (GROUP_TILE::GROUND == pTile->GetGroup())
 		{
 			CRenderManager::getInst()->RenderEllipse(
-				pTile->GetPos().x + CTile::SIZE_TILE / 2.f,
-				pTile->GetPos().y + CTile::SIZE_TILE / 2.f,
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
-				RGB(255, 0, 0)
+				RGB(255, 0, 0),
+				3.f
 			);
 		}
 		else if (GROUP_TILE::WALL == pTile->GetGroup())
 		{
 			CRenderManager::getInst()->RenderEllipse(
-				pTile->GetPos().x + CTile::SIZE_TILE / 2.f,
-				pTile->GetPos().y + CTile::SIZE_TILE / 2.f,
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
-				RGB(0, 255, 0)
+				RGB(0, 255, 0),
+				3.f
 			);
 		}
 	}
