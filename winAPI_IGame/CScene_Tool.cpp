@@ -35,12 +35,7 @@ void CScene_Tool::update()
 	CScene::update();
 
 	if (KeyDown(VK_TAB))
-	{
-		ChangeScn(GROUP_SCENE::TOOL);
-
-		if (KeyDown(VK_TAB))
-			ChangeScn(GROUP_SCENE::TITLE);
-	}
+		ChangeScn(GROUP_SCENE::TITLE);
 
 	if (Key('A'))
 	{
@@ -132,10 +127,10 @@ void CScene_Tool::SetTileIdx()
 	}
 }
 
-void CScene_Tool::SetGroup(GROUP_TILE group)
-{
-	m_gTile = group;
-}
+//void CScene_Tool::SetGroup(GROUP_TILE group)
+//{
+//	m_gTile = group;
+//}
 
 void CScene_Tool::SetTileGroup()
 {
@@ -352,12 +347,12 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 		m_gTile = GROUP_TILE::WALL;
 		button->SetText(L"WALL");
 	}
-	else if (m_gTile == GROUP_TILE::PLATFORM)
+	else if (m_gTile == GROUP_TILE::WALL)
 	{
 		m_gTile = GROUP_TILE::PLATFORM;
 		button->SetText(L"PLATFORM");
 	}
-	else if (m_gTile == GROUP_TILE::WALL)
+	else if (m_gTile == GROUP_TILE::PLATFORM)
 	{
 		m_gTile = GROUP_TILE::NONE;
 		button->SetText(L"NONE");
