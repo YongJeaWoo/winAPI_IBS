@@ -149,7 +149,7 @@ void CScene_Tool::SetTileGroup()
 		int iRow = (int)fptMousePos.y / CTile::SIZE_TILE;
 
 		if (fptMousePos.x < 0.f || iTileX <= iCol ||
-			fptMousePos.y < 0.f || iTileY <= iRow)
+				fptMousePos.y < 0.f || iTileY <= iRow)
 		{
 			return;		// 타일이 없는 위치 무시
 		}
@@ -510,16 +510,14 @@ INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		}
 		else if (LOWORD(wParam) == IDC_MAP)
 		{
-			int x = GetDlgItemInt(hDlg, IDC_EDIT_SIZEX, nullptr, false);
-			int y = GetDlgItemInt(hDlg, IDC_EDIT_SIZEY, nullptr, false);
-
 			CScene* pCurScene = CSceneManager::getInst()->GetCurScene();
 
 			CScene_Tool* pToolScene = dynamic_cast<CScene_Tool*>(pCurScene);
 			assert(pToolScene);
 
-			pToolScene->DeleteGroup(GROUP_GAMEOBJ::TILE);
-			pToolScene->CreateTile(x, y);
+			pToolScene->LoadMap();
+
+			return (INT_PTR)TRUE;
 		}
 		else if (LOWORD(wParam) == IDC_BUTTON_SIZE)
 		{
