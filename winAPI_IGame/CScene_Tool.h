@@ -18,6 +18,8 @@ private:
 	UINT m_iTileX;
 	UINT m_iTileY;
 
+	bool IsWindow;
+
 public:
 	CScene_Tool();
 	~CScene_Tool();

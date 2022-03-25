@@ -22,6 +22,8 @@ CScene_Tool::CScene_Tool()
 	m_velocity = 500;
 	m_iTileX = 0;
 	m_iTileY = 0;
+
+	IsWindow = false;
 }
 
 CScene_Tool::~CScene_Tool()
@@ -137,6 +139,7 @@ void CScene_Tool::SetGroup(GROUP_TILE group)
 
 void CScene_Tool::SetTileGroup()
 {
+	
 	if (Key(VK_LBUTTON) || Key(VK_RBUTTON))
 	{
 		fPoint fptMousePos = MousePos();
@@ -149,7 +152,7 @@ void CScene_Tool::SetTileGroup()
 		int iRow = (int)fptMousePos.y / CTile::SIZE_TILE;
 
 		if (fptMousePos.x < 0.f || iTileX <= iCol ||
-				fptMousePos.y < 0.f || iTileY <= iRow)
+			fptMousePos.y < 0.f || iTileY <= iRow)
 		{
 			return;		// 타일이 없는 위치 무시
 		}
@@ -349,6 +352,11 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 		m_gTile = GROUP_TILE::WALL;
 		button->SetText(L"WALL");
 	}
+	else if (m_gTile == GROUP_TILE::PLATFORM)
+	{
+		m_gTile = GROUP_TILE::PLATFORM;
+		button->SetText(L"PLATFORM");
+	}
 	else if (m_gTile == GROUP_TILE::WALL)
 	{
 		m_gTile = GROUP_TILE::NONE;
@@ -414,8 +422,8 @@ void CScene_Tool::PrintMap()
 		m_pMap,
 		0 - pos.x,
 		0 - pos.y,
-		2 * m_pMap->GetWidth() - pos.x,
-		2 * m_pMap->GetHeight() - pos.y
+		WINSIZEX - pos.x,
+		WINSIZEY - pos.y
 	);
 }
 
@@ -473,6 +481,18 @@ void CScene_Tool::PrintTileGroup()
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(0, 255, 0),
+				3.f
+			);
+		}
+
+		else if (GROUP_TILE::PLATFORM == pTile->GetGroup())
+		{
+			CRenderManager::getInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(0, 0, 255),
 				3.f
 			);
 		}
