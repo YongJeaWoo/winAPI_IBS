@@ -35,6 +35,9 @@ void CScene_Tool::update()
 	if (KeyDown(VK_TAB))
 	{
 		ChangeScn(GROUP_SCENE::TOOL);
+
+		if (KeyDown(VK_TAB))
+			ChangeScn(GROUP_SCENE::TITLE);
 	}
 
 	if (Key('A'))
@@ -82,7 +85,7 @@ void CScene_Tool::Enter()
 	m_hWnd = CreateDialog(hInst, MAKEINTRESOURCE(IDD_TILEBOX), hWnd, TileWinProc);
 	ShowWindow(m_hWnd, SW_SHOW);
 
-	CreateTile(20, 20);
+	CreateTile(10, 10);
 	CreateTilePanel();
 
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
@@ -453,23 +456,21 @@ void CScene_Tool::PrintTileGroup()
 		if (GROUP_TILE::GROUND == pTile->GetGroup())
 		{
 			CRenderManager::getInst()->RenderEllipse(
-				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
-				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
-				RGB(255, 0, 0),
-				3.f
+				RGB(255, 0, 0)
 			);
 		}
 		else if (GROUP_TILE::WALL == pTile->GetGroup())
 		{
 			CRenderManager::getInst()->RenderEllipse(
-				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
-				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
-				RGB(0, 255, 0),
-				3.f
+				RGB(0, 255, 0)
 			);
 		}
 	}

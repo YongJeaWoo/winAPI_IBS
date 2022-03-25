@@ -8,7 +8,7 @@ CTile::CTile()
 	m_iX = 0;
 	m_iY = 0;
 	m_iIdx = 0;
-	m_group = GROUP_TILE::NONE;
+	m_group = GROUP_TILE::GROUND;
 	SetScale(fPoint(SIZE_TILE, SIZE_TILE));
 }
 
@@ -27,7 +27,7 @@ void CTile::update()
 
 void CTile::render()
 {
-	if (nullptr == m_pImg)
+	if (nullptr == m_pImg || 0 == m_iIdx)
 	{
 		return;
 	}

@@ -36,6 +36,7 @@ public:
 	void CreateTile(UINT xSize, UINT ySize);
 	void SaveTile(const wstring& strPath);
 	void LoadTile(const wstring& strPath);
+
 	void SaveTileData();
 	void LoadTileData();
 	void LoadMap();

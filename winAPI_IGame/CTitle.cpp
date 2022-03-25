@@ -76,6 +76,10 @@ void CTitle::update()
 		PostQuitMessage(0);
 	}
 
+	if (KeyDown(VK_TAB))
+	{
+		ChangeScn(GROUP_SCENE::TOOL);
+	}
 }
 
 void CTitle::Enter()
