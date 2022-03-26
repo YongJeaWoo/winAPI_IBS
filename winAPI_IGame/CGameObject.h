@@ -2,6 +2,7 @@
 
 class CCollider;
 class CAnimator;
+class CGravity;
 
 class CGameObject
 {
@@ -13,8 +14,9 @@ private:
 	fPoint m_fptScale;
 
 	// Component
-	CCollider* m_pCollider;
-	CAnimator* m_pAnimator;
+	CCollider*	m_pCollider;
+	CAnimator*	m_pAnimator;
+	CGravity*	m_pGravity;
 
 	bool m_bAlive;
 	void SetDead();
@@ -42,6 +44,9 @@ public:
 
 	CCollider* GetCollider();				// 충돌체 반환
 	void CreateCollider();					// 충돌체 생성
+
+	CGravity* GetGravity();
+	void CreateGravity();
 
 	virtual void OnCollision(CCollider* _pOther) {}			// 재정의용 충돌중 가상함수
 	virtual void OnCollisionEnter(CCollider* _pOther) {}	// 재정의용 충돌시 가상함수

@@ -31,9 +31,10 @@ void CSound::Load(const wstring& strFilePath, bool bgm)
 	}
 }
 
-void CSound::Play()
+void CSound::Play(float volume)
 {
 	CSoundManager::getInst()->GetSystem()->playSound(m_pSound, 0, false, &m_pChannel);
+	m_pChannel->setVolume(volume);
 	assert(m_pChannel);
 }
 

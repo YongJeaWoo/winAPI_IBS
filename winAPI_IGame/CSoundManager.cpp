@@ -45,11 +45,11 @@ void CSoundManager::AddSound(wstring keyName, wstring filePath, bool bgm, bool l
 	m_mapSound.insert(make_pair(keyName, pSound));
 }
 
-void CSoundManager::Play(wstring keyName)
+void CSoundManager::Play(wstring keyName, float volume)
 {
 	map<wstring, CSound*>::iterator iter = m_mapSound.find(keyName);
 	if (iter != m_mapSound.end())
-		iter->second->Play();
+		iter->second->Play(volume);
 }
 
 void CSoundManager::Stop(wstring keyName)

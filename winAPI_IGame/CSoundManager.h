@@ -20,7 +20,7 @@ public:
 	void update();
 
 	void AddSound(wstring keyName, wstring filePath, bool bgm = false, bool loop = false);
-	void Play(wstring keyName);
+	void Play(wstring keyName, float volume = 1.f);
 	void Stop(wstring keyName);
 	void Pause(wstring keyName);
 	void Resume(wstring keyName);

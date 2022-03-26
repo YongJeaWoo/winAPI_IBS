@@ -7,17 +7,17 @@ CTitleMig::CTitleMig()
 {
 	m_pImg = nullptr;
 
-	CD2DImage* m_pPlayerImg = CResourceManager::getInst()->LoadD2DImage(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
-	SetName(L"TitlePlayer");
+	CD2DImage* m_pPlayerImg = CResourceManager::getInst()->LoadD2DImage(L"TitleMig", L"texture\\Title\\TitleMighta.png");
+	SetName(L"TitleMig");
 
 	CreateAnimator();
 	// Player
-	GetAnimator()->CreateAnimation(L"PlayerStand", m_pPlayerImg, fPoint(54.f, 0.f), fPoint(27.f, 26.f), fPoint(0.f, 0.f), 5.f, 1);
-	GetAnimator()->CreateAnimation(L"PlayerDance", m_pPlayerImg, fPoint(0.f, 0.f), fPoint(27.f, 26.f), fPoint(27.f, 0.f), 0.5f, 2);
-	GetAnimator()->Play(L"PlayerStand");
+	GetAnimator()->CreateAnimation(L"TitleMigIdle", m_pPlayerImg, fPoint(0.f, 0.f), fPoint(28.f, 23.f), fPoint(0.f, 0.f), 5.f, 1);
+	GetAnimator()->CreateAnimation(L"TitleMigDance", m_pPlayerImg, fPoint(0.f, 0.f), fPoint(28.f, 23.f), fPoint(28.f, 0.f), 0.5f, 2);
+	GetAnimator()->Play(L"TitleMigIdle");
 
 	CAnimation* pAni;
-	pAni = GetAnimator()->FindAnimation(L"PlayerDance");
+	pAni = GetAnimator()->FindAnimation(L"TitleMigDance");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -5.f);
 }
 
@@ -47,5 +47,5 @@ void CTitleMig::Load(const wstring& strKey, const wstring& strPath)
 
 void CTitleMig::Dance()
 {
-	GetAnimator()->Play(L"PlayerDance");
+	GetAnimator()->Play(L"TitleMigDance");
 }

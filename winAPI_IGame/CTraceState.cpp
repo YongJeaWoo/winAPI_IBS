@@ -2,6 +2,7 @@
 #include "CTraceState.h"
 #include "CPlayer.h"
 #include "CZen.h"
+#include "CAnimator.h"
 
 CTraceState::CTraceState(STATE_MON state) : CState(state)
 {
@@ -35,6 +36,7 @@ void CTraceState::update()
 	fPoint pos = pMonster->GetPos();
 	pos += fvDiff.Normalize() * 100 * fDT;
 	pMonster->SetPos(pos);
+	pMonster->GetAnimator()->Play(L"MonsterTrace");
 }
 
 void CTraceState::Enter()

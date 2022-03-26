@@ -4,16 +4,16 @@ class CGameObject;
 
 class CGravity
 {
-private:
 	friend class CGameObject;
 
+private:
 	CGameObject* m_pOwner;
-	bool m_bGround;
+	UINT m_uiCountGround;
 
 public:
 	CGravity();
-	~CGravity();
+	virtual ~CGravity();
 
+	virtual void update();
 	virtual void finalupdate();
 };
-

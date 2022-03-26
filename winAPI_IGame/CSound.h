@@ -16,7 +16,7 @@ public:
 	CSound();
 	~CSound();
 
-	void Play();
+	void Play(float volume);
 	void Stop();
 	void Pause();
 	void Resume();

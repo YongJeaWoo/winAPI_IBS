@@ -11,6 +11,7 @@
 CZen::CZen()
 {
 	CD2DImage* pRImg = CResourceManager::getInst()->LoadD2DImage(L"Zen", L"texture\\enemy\\Zen_Move_Right.png");
+	CD2DImage* m_pImgTrace = CResourceManager::getInst()->LoadD2DImage(L"MonsterTraceTex", L"texture\\Player.bmp");
 	SetName(L"Zen");
 	SetScale(fVec2(80.f, 80.f));
 
@@ -19,6 +20,7 @@ CZen::CZen()
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Move_Right", pRImg, fVec2(0.f, 0.f), fVec2(31.25f, 22.f), fVec2(31.25f, 0.f), 1.f, 4, false);
+	GetAnimator()->CreateAnimation(L"MonsterTrace", m_pImgTrace, fPoint(0, 0), fPoint(70.f, 70.f), fPoint(70.f, 0), 0.3f, 1, true);
 	GetAnimator()->Play(L"Move_Right");
 
 	Info = {};

@@ -18,6 +18,6 @@ public:
 	void SetDir(fVec2 vec);
 	void SetDir(float theta);
 
-	void OnCollisionEnter(CCollider* pOther);
+	virtual void OnCollisionEnter(CCollider* pOther);
 };
 

@@ -4,15 +4,21 @@
 #include "CImageObject.h"
 #include "CTitlePlayer.h"
 #include "CTitleZen.h"
+#include "CTitleChu.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
 
 CTitle::CTitle()
 {
-	m_bIsRaise = false;
-	Iobj = nullptr;
-	Pobj = nullptr;
-	Zobj = nullptr;
+	m_bIsRaise	= false;
+	Iobj		= nullptr;
+	Pobj		= nullptr;
+	Zobj		= nullptr;
+	Cobj		= nullptr;
+	Migobj		= nullptr;
+	Monobj		= nullptr;
+
+
 	m_fAccTime = 0.f;
 	m_bIsFadeOut = false;
 }
@@ -46,11 +52,14 @@ void CTitle::update()
 		{
 			CImageObject* TitleBar = new CImageObject;
 			TitleBar->Load(L"TitleBar", L"texture\\Title\\TitleBar.png");
-			TitleBar->SetPos(fPoint((WINSIZEX / 2) - 150.f, 50.f));
-			TitleBar->SetScale(fPoint(300.f, 300.f));
+			TitleBar->SetPos(fPoint((WINSIZEX / 2) - 170.f, 50.f));
+			TitleBar->SetScale(fPoint(350.f, 350.f));
 			AddObject(TitleBar, GROUP_GAMEOBJ::TITLEBAR);
 
 			Pobj->Dance();
+			Cobj->Dance();
+			Migobj->Dance();
+			Monobj->Dance();
 			step++;
 		}
 	}
@@ -109,7 +118,7 @@ void CTitle::Enter()
 	// 오브젝트 생성
 	Pobj = new CTitlePlayer;
 	Pobj->Load(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
-	Pobj->SetPos(fPoint(WINSIZEX / 2, 550.f));
+	Pobj->SetPos(fPoint((WINSIZEX / 2), 600.f));
 	Pobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Pobj, GROUP_GAMEOBJ::DUMMYTITLE);
 
@@ -118,6 +127,24 @@ void CTitle::Enter()
 	Zobj->SetPos(fPoint(400.f, 550.f));
 	Zobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Zobj, GROUP_GAMEOBJ::DUMMYTITLE);
+
+	Cobj = new CTitleChu;
+	Cobj->Load(L"TitleChu", L"texture\\Title\\TitleChu.png");
+	Cobj->SetPos(fPoint((WINSIZEX / 2) - 400.f, 390.f));
+	Cobj->SetScale(fPoint(100.f, 100.f));
+	AddObject(Cobj, GROUP_GAMEOBJ::DUMMYTITLE);
+
+	Migobj = new CTitleMig;
+	Migobj->Load(L"TitleMig", L"texture\\Title\\TitleMighta.png");
+	Migobj->SetPos(fPoint((WINSIZEX / 2) + 400.f, 390.f));
+	Migobj->SetScale(fPoint(100.f, 100.f));
+	AddObject(Migobj, GROUP_GAMEOBJ::DUMMYTITLE);
+
+	Monobj = new CTitleMon;
+	Monobj->Load(L"TitleMig", L"texture\\Title\\TitleMon.png");
+	Monobj->SetPos(fPoint((WINSIZEX / 2) + 300.f, 330.f));
+	Monobj->SetScale(fPoint(100.f, 100.f));
+	AddObject(Monobj, GROUP_GAMEOBJ::DUMMYTITLE);
 }
 
 void CTitle::Exit()

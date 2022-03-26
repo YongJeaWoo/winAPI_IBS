@@ -26,6 +26,10 @@ class CPlayer : public CGameObject
 private:
 	static CPlayer* instance;
 	float m_fSpeed = 500;
+	float m_fHorizontalSpeed;
+
+	UINT m_uiGroundCount;
+
 	PlayerAct act;
 
 	void CreateMissile();
@@ -43,5 +47,9 @@ public:
 
 	void RegisterPlayer();
 	static CPlayer* GetPlayer();		// 게임 내 하나만 있는 플레이어 객체 확인 - 임의 싱글톤 선언
+
+	virtual void OnCollision(CCollider* _other);
+	virtual void OnCollisionEnter(CCollider* _other);
+	virtual void OnCollisionExit(CCollider* _other);
 };
 

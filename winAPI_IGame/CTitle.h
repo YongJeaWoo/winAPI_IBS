@@ -2,6 +2,9 @@
 #include "CScene.h"
 #include "CTitlePlayer.h"
 #include "CTitleZen.h"
+#include "CTitleChu.h"
+#include "CTitleMig.h"
+#include "CTitleMon.h"
 
 class CImageObject;
 
@@ -12,7 +15,9 @@ private:
 	CImageObject*	Iobj;
 	CTitlePlayer*	Pobj;
 	CTitleZen*		Zobj;
-
+	CTitleChu*		Cobj;
+	CTitleMig*		Migobj;
+	CTitleMon*		Monobj;
 
 	float m_fAccTime;
 	bool m_bIsFadeOut;

@@ -6,6 +6,7 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
+#include "CTile.h"
 
 CPlayer* CPlayer::instance = nullptr;
 
@@ -43,6 +44,8 @@ CPlayer::CPlayer()
 
 	act = {};
 	act.m_fDelay = 0.f;
+	m_uiGroundCount = 0;
+	m_fHorizontalSpeed = 0;
 }
 
 CPlayer::~CPlayer()
@@ -97,7 +100,13 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 
 	SetPos(pos);
 
-	if (KeyDown(VK_SPACE))
+	if (Key('X'))
+	{
+		m_fHorizontalSpeed = -100.f;
+	}
+	pos.y += m_fHorizontalSpeed * fDT;
+
+	if (KeyDown('Z'))
 	{
 		if (act.m_bIsLeft)
 		{
@@ -113,6 +122,17 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		}
 	}
 	act.m_fDelay -= fDT;
+
+	if (m_uiGroundCount > 0)
+	{
+		m_fHorizontalSpeed = 0.f;
+	}
+	else
+	{
+		m_fHorizontalSpeed += fDT * 500.f;
+		if (m_fHorizontalSpeed > 500.f)
+			m_fHorizontalSpeed = 500.f;
+	}
 }
 
 void CPlayer::update_ani()			// 움직임에 대한 업데이트
@@ -150,6 +170,72 @@ void CPlayer::RegisterPlayer()
 CPlayer* CPlayer::GetPlayer()
 {
 	return instance;
+}
+
+void CPlayer::OnCollision(CCollider* _other)
+{
+	if (_other->GetObj()->GetName() == L"Tile")
+	{
+		CTile* pTile = (CTile*)(_other->GetObj());
+		fPoint pos = GetPos();
+		fPoint offset = GetCollider()->GetOffsetPos();
+		fPoint thisPos = GetCollider()->GetFinalPos();
+		fPoint thisScale = GetCollider()->GetScale();
+		fPoint otherPos = _other->GetFinalPos();
+		fPoint otherScale = _other->GetScale();
+
+		if (pTile->GetGroup() == GROUP_TILE::GROUND)
+		{
+			// 바닥과 충돌 처리
+			// 계속 밀어내기 - 정해진 위치로 set
+			// 위에서 아래로 충돌
+			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
+
+			// 좌우에서 충돌
+
+		}
+		else if (pTile->GetGroup() == GROUP_TILE::WALL)
+		{
+			// 벽과 충돌 처리
+		}
+		SetPos(pos);
+	}
+}
+
+void CPlayer::OnCollisionEnter(CCollider* _other)
+{
+	if (_other->GetObj()->GetName() == L"Tile")
+	{
+		CTile* pTile = (CTile*)_other->GetObj();
+		fPoint thisPos = GetCollider()->GetFinalPos();
+		fPoint otherPos = _other->GetFinalPos();
+		if (pTile->GetGroup() == GROUP_TILE::GROUND)
+		{
+			// 바닥과 충돌 처리
+			m_uiGroundCount++;
+		}
+		else if (pTile->GetGroup() == GROUP_TILE::WALL)
+		{
+			// 벽과 충돌 처리
+		}
+	}
+}
+
+void CPlayer::OnCollisionExit(CCollider* _other)
+{
+	if (_other->GetObj()->GetName() == L"Tile")
+	{
+		CTile* pTile = (CTile*)_other->GetObj();
+		if (pTile->GetGroup() == GROUP_TILE::GROUND)
+		{
+			// 바닥과 충돌 처리
+			m_uiGroundCount--;
+		}
+		else if (pTile->GetGroup() == GROUP_TILE::WALL)
+		{
+			// 벽과 충돌 처리
+		}
+	}
 }
 
 void CPlayer::CreateMissile()
