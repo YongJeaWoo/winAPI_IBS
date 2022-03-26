@@ -7,17 +7,19 @@ CTitleZen::CTitleZen()
 {
 	m_pImg = nullptr;
 
-	CD2DImage* m_pPlayerImg = CResourceManager::getInst()->LoadD2DImage(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
-	SetName(L"TitlePlayer");
+	CD2DImage* m_pZenTurn = CResourceManager::getInst()->LoadD2DImage(L"TitleZenTurn", L"texture\\Title\\TitleZenTurn.png");
+	SetName(L"TitleZenTurn");
+
+	/*CD2DImage* m_pZenDance = CResourceManager::getInst()->LoadD2DImage(L"TitleZenDance", L"texture\\title\\TitleZenDance.png");
+	SetName(L"TitleZenDance");*/
 
 	CreateAnimator();
-	// Player
-	GetAnimator()->CreateAnimation(L"PlayerStand", m_pPlayerImg, fPoint(54.f, 0.f), fPoint(27.f, 26.f), fPoint(0.f, 0.f), 5.f, 1);
-	GetAnimator()->CreateAnimation(L"PlayerDance", m_pPlayerImg, fPoint(0.f, 0.f), fPoint(27.f, 26.f), fPoint(27.f, 0.f), 0.5f, 2);
-	GetAnimator()->Play(L"PlayerStand");
+	GetAnimator()->CreateAnimation(L"TitleZenTurn", m_pZenTurn, fPoint(128.f, 21.f), fPoint(32.f, 21.f), fPoint(-32.f, 0.f), 0.8f, 4);
+	GetAnimator()->CreateAnimation(L"ZenDance", m_pZenTurn, fPoint(0.f, 0.f), fPoint(32.f, 21.f), fPoint(160.f, 0.f), 0.5f, 2);
+	GetAnimator()->Play(L"TitleZenTurn");
 
 	CAnimation* pAni;
-	pAni = GetAnimator()->FindAnimation(L"PlayerDance");
+	pAni = GetAnimator()->FindAnimation(L"ZenDance");
 	pAni->GetFrame(1).fptOffset = fPoint(0.f, -5.f);
 }
 
@@ -47,5 +49,5 @@ void CTitleZen::Load(const wstring& strKey, const wstring& strPath)
 
 void CTitleZen::Dance()
 {
-	GetAnimator()->Play(L"PlayerDance");
+	GetAnimator()->Play(L"ZenDance");
 }

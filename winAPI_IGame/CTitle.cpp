@@ -3,6 +3,7 @@
 #include "CTitleGround.h"
 #include "CImageObject.h"
 #include "CTitlePlayer.h"
+#include "CTitleZen.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
 
@@ -112,10 +113,9 @@ void CTitle::Enter()
 	Pobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Pobj, GROUP_GAMEOBJ::DUMMYTITLE);
 
-	// 테스트 수정 필요
 	Zobj = new CTitleZen;
-	Zobj->Load(L"TitlePlayer", L"texture\\Title\\TitlePlayerAnimation.png");
-	Zobj->SetPos(fPoint(300.f, 550.f));
+	Zobj->Load(L"TitleZen", L"texture\\Title\\TitleZen.png");
+	Zobj->SetPos(fPoint(400.f, 550.f));
 	Zobj->SetScale(fPoint(100.f, 100.f));
 	AddObject(Zobj, GROUP_GAMEOBJ::DUMMYTITLE);
 }

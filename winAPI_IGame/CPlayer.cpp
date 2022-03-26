@@ -20,10 +20,10 @@ CPlayer::CPlayer()
 	CD2DImage* m_pImgLShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerLShoot", L"texture\\player\\Player_Shoot_Left.png");
 	CD2DImage* m_pImgRShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerRShoot", L"texture\\player\\Player_Shoot_Right.png");
 	SetName(L"Player");
-	SetScale(fPoint(80.f, 80.f));
+	SetScale(fPoint(70.f, 70.f));
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(40.f, 40.f));
+	GetCollider()->SetScale(fPoint(55.f, 45.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
 	CreateAnimator();
