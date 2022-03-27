@@ -3,32 +3,23 @@
 
 class CD2DImage;
 
-//enum class PLAYER_STATE
-//{
-//	IDLE,
-//	WALK,
-//	ATTACK,
-//	JUMP,
-//	DEAD,
-//
-//	SIZE,
-//};
-
 struct PlayerAct
 {
 	float m_fVelocity;
 	bool m_bIsLeft;
 	float m_fDelay;
+
+	float m_fSpeed = 300.f;
+	float m_fHorizontalSpeed;
 };
 
 class CPlayer : public CGameObject
 {
 private:
 	static CPlayer* instance;
-	float m_fSpeed = 500;
-	float m_fHorizontalSpeed;
 
 	UINT m_uiGroundCount;
+	UINT m_uiWallCount;
 
 	PlayerAct act;
 

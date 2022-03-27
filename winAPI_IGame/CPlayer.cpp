@@ -45,9 +45,8 @@ CPlayer::CPlayer()
 	act = {};
 	act.m_fDelay = 0.f;
 	m_uiGroundCount = 0;
-	m_fHorizontalSpeed = 0;
-
-	CreateGravity();
+	m_uiWallCount = 0;
+	act.m_fHorizontalSpeed = 0;
 }
 
 CPlayer::~CPlayer()
@@ -66,6 +65,7 @@ void CPlayer::update()
 	update_ani();
 
 	GetAnimator()->update();
+
 }
 
 void CPlayer::render()
@@ -76,35 +76,37 @@ void CPlayer::render()
 void CPlayer::update_act()			// 상황에 대한 업데이트
 {
 	fPoint pos = GetPos();
-	act.m_fVelocity = 0;
+	act.m_fVelocity = 0;			// 속도 상태 확인
 
 	if (Key(VK_LEFT))
 	{
-		pos.x -= m_fSpeed * fDT;
+		pos.x -= act.m_fSpeed * fDT;
 		act.m_bIsLeft = true;
-		act.m_fVelocity = m_fSpeed;
+		act.m_fVelocity = act.m_fSpeed;
 	}
 	if (Key(VK_RIGHT))
 	{
-		pos.x += m_fSpeed * fDT;
+		pos.x += act.m_fSpeed * fDT;
 		act.m_bIsLeft = false;
-		act.m_fVelocity = m_fSpeed;
-		
+		act.m_fVelocity = act.m_fSpeed;
 	}
+
+	if (Key(VK_LEFT) && Key(VK_RIGHT))
+
 	if (Key(VK_UP))		// 점프 구현
 	{
-		pos.y -= m_fSpeed * fDT;
-		m_fHorizontalSpeed = -100.f;
-		pos.y -= m_fHorizontalSpeed * fDT;
+		pos.y -= act.m_fSpeed * fDT;
+		act.m_fHorizontalSpeed = -100.f;
+		pos.y -= act.m_fHorizontalSpeed * fDT;
 	}
 	if (Key(VK_DOWN))
 	{
-		pos.y += m_fSpeed * fDT;
+		pos.y += act.m_fSpeed * fDT;
 	}
 
 	SetPos(pos);
 
-	if (KeyDown(VK_SPACE))
+	if (KeyDown('Z'))
 	{
 		if (act.m_bIsLeft)
 		{
@@ -124,12 +126,12 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 
 void CPlayer::update_ani()			// 움직임에 대한 업데이트
 {
-	if (m_fHorizontalSpeed < 0)
+	if (act.m_fHorizontalSpeed < 0)
 	{
 		GetAnimator()->Play(L"PlayerLJump");
 	}
 
-	else if (m_fHorizontalSpeed > 0)
+	else if (act.m_fHorizontalSpeed > 0)
 	{
 		GetAnimator()->Play(L"PlayerRJump");
 	}
@@ -217,11 +219,32 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 			// 바닥과 충돌 처리
 			m_uiGroundCount++;
 		}
+
 		else if (pTile->GetGroup() == GROUP_TILE::WALL)
 		{
 			// 벽과 충돌 처리
+			if (GetCollider()->GetFinalPos().y - _other->GetFinalPos().y + 2.f >= GetCollider()->GetScale().y / 2.f + _other->GetScale().y / 2.f)
+			{
+				m_uiGroundCount++;
+				m_uiWallCount++;
+			}
+
+			else
+			{
+				if (GetCollider()->GetFinalPos().x < _other->GetFinalPos().x)
+				{
+					thisPos.x -= 2.f;
+				}
+
+				else if (GetCollider()->GetFinalPos().x > _other->GetFinalPos().x)
+				{
+					thisPos.x += 2.f;
+				}
+			}
 		}
+		SetPos(thisPos);
 	}
+
 }
 
 void CPlayer::OnCollisionExit(CCollider* _other)
