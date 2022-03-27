@@ -44,9 +44,13 @@ CPlayer::CPlayer()
 
 	act = {};
 	act.m_fDelay = 0.f;
-	m_uiGroundCount = 0;
-	m_uiWallCount = 0;
+	m_uiGround = 0;
+	m_uiWall = 0;
 	act.m_fHorizontalSpeed = 0;
+
+	// 중력과 점프력 설정
+	act.m_fUpforce = 400.f;
+	act.m_fGravity = 600.f;
 }
 
 CPlayer::~CPlayer()
@@ -65,7 +69,6 @@ void CPlayer::update()
 	update_ani();
 
 	GetAnimator()->update();
-
 }
 
 void CPlayer::render()
@@ -84,6 +87,7 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		act.m_bIsLeft = true;
 		act.m_fVelocity = act.m_fSpeed;
 	}
+
 	if (Key(VK_RIGHT))
 	{
 		pos.x += act.m_fSpeed * fDT;
@@ -91,20 +95,21 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		act.m_fVelocity = act.m_fSpeed;
 	}
 
-	if (Key(VK_LEFT) && Key(VK_RIGHT))
-
-	if (Key(VK_UP))		// 점프 구현
+	if (Key(VK_UP))
 	{
 		pos.y -= act.m_fSpeed * fDT;
-		act.m_fHorizontalSpeed = -100.f;
-		pos.y -= act.m_fHorizontalSpeed * fDT;
 	}
+
 	if (Key(VK_DOWN))
 	{
 		pos.y += act.m_fSpeed * fDT;
 	}
 
-	SetPos(pos);
+	if (Key('X'))		// 점프 구현
+	{
+		act.m_fUpforce -= (act.m_fGravity * fDT);
+		pos.y -= act.m_fUpforce * fDT;
+	}
 
 	if (KeyDown('Z'))
 	{
@@ -122,6 +127,8 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		}
 	}
 	act.m_fDelay -= fDT;
+
+	SetPos(pos);
 }
 
 void CPlayer::update_ani()			// 움직임에 대한 업데이트
@@ -217,7 +224,7 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 		if (pTile->GetGroup() == GROUP_TILE::GROUND)
 		{
 			// 바닥과 충돌 처리
-			m_uiGroundCount++;
+			m_uiGround++;
 		}
 
 		else if (pTile->GetGroup() == GROUP_TILE::WALL)
@@ -225,20 +232,20 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 			// 벽과 충돌 처리
 			if (GetCollider()->GetFinalPos().y - _other->GetFinalPos().y + 2.f >= GetCollider()->GetScale().y / 2.f + _other->GetScale().y / 2.f)
 			{
-				m_uiGroundCount++;
-				m_uiWallCount++;
+				m_uiGround++;
+				m_uiWall++;
 			}
 
 			else
 			{
 				if (GetCollider()->GetFinalPos().x < _other->GetFinalPos().x)
 				{
-					thisPos.x -= 2.f;
+					thisPos.x -= 1.f;
 				}
 
 				else if (GetCollider()->GetFinalPos().x > _other->GetFinalPos().x)
 				{
-					thisPos.x += 2.f;
+					thisPos.x += 1.f;
 				}
 			}
 		}
@@ -255,11 +262,13 @@ void CPlayer::OnCollisionExit(CCollider* _other)
 		if (pTile->GetGroup() == GROUP_TILE::GROUND)
 		{
 			// 바닥과 충돌 처리
-			m_uiGroundCount--;
+			m_uiGround--;
 		}
 		else if (pTile->GetGroup() == GROUP_TILE::WALL)
 		{
 			// 벽과 충돌 처리
+			m_uiGround--;
+			m_uiWall--;
 		}
 	}
 }
