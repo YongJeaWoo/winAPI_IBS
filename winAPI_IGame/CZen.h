@@ -10,6 +10,7 @@ struct MonInfo
 	float	fHp;
 	float	fRecogRange;
 	float	fAtt;
+	bool	m_bIsLeft;
 };
 
 enum class MON_TYPE
@@ -38,6 +39,8 @@ public:
 
 	virtual void render();
 	virtual void update();
+
+	virtual void update_ani();
 
 	float GetSpeed();
 	const MonInfo& GetMonInfo();

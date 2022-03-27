@@ -29,14 +29,13 @@ void CTraceState::update()
 	if (pMonster->GetMonInfo().fHp < 20.f && fLen < pMonster->GetMonInfo().fRecogRange)
 		ChangeAIState(GetOwnerAI(), STATE_MON::RUN);
 
-	else if (fLen < pMonster->GetMonInfo().fRecogRange)
+	else if (fLen >= pMonster->GetMonInfo().fRecogRange)
 		ChangeAIState(GetOwnerAI(), STATE_MON::IDLE);
 
 	// ÃßÀûÇØ
 	fPoint pos = pMonster->GetPos();
 	pos += fvDiff.Normalize() * 100 * fDT;
 	pMonster->SetPos(pos);
-	pMonster->GetAnimator()->Play(L"MonsterTrace");
 }
 
 void CTraceState::Enter()

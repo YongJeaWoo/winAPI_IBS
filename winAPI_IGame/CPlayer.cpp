@@ -46,6 +46,8 @@ CPlayer::CPlayer()
 	act.m_fDelay = 0.f;
 	m_uiGroundCount = 0;
 	m_fHorizontalSpeed = 0;
+
+	CreateGravity();
 }
 
 CPlayer::~CPlayer()
@@ -89,9 +91,11 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		act.m_fVelocity = m_fSpeed;
 		
 	}
-	if (Key(VK_UP))
+	if (Key(VK_UP))		// 점프 구현
 	{
 		pos.y -= m_fSpeed * fDT;
+		m_fHorizontalSpeed = -100.f;
+		pos.y -= m_fHorizontalSpeed * fDT;
 	}
 	if (Key(VK_DOWN))
 	{
@@ -100,13 +104,7 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 
 	SetPos(pos);
 
-	if (Key('X'))
-	{
-		m_fHorizontalSpeed = -100.f;
-	}
-	pos.y += m_fHorizontalSpeed * fDT;
-
-	if (KeyDown('Z'))
+	if (KeyDown(VK_SPACE))
 	{
 		if (act.m_bIsLeft)
 		{
@@ -122,21 +120,20 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		}
 	}
 	act.m_fDelay -= fDT;
-
-	if (m_uiGroundCount > 0)
-	{
-		m_fHorizontalSpeed = 0.f;
-	}
-	else
-	{
-		m_fHorizontalSpeed += fDT * 500.f;
-		if (m_fHorizontalSpeed > 500.f)
-			m_fHorizontalSpeed = 500.f;
-	}
 }
 
 void CPlayer::update_ani()			// 움직임에 대한 업데이트
 {
+	if (m_fHorizontalSpeed < 0)
+	{
+		GetAnimator()->Play(L"PlayerLJump");
+	}
+
+	else if (m_fHorizontalSpeed > 0)
+	{
+		GetAnimator()->Play(L"PlayerRJump");
+	}
+
 	if (act.m_bIsLeft)
 	{
 		if (act.m_fDelay >= 0.f)
@@ -197,6 +194,12 @@ void CPlayer::OnCollision(CCollider* _other)
 		else if (pTile->GetGroup() == GROUP_TILE::WALL)
 		{
 			// 벽과 충돌 처리
+		}
+
+		else if (pTile->GetGroup() == GROUP_TILE::PLATFORM)
+		{
+			// 플랫폼과 충돌 처리
+			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
 		}
 		SetPos(pos);
 	}

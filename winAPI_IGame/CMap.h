@@ -10,7 +10,7 @@ private:
 
 public:
 	CMap();
-	~CMap();
+	virtual ~CMap();
 
 	virtual CMap* Clone();
 	virtual void update();

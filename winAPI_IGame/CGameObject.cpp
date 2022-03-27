@@ -32,6 +32,12 @@ CGameObject::CGameObject(const CGameObject& other)
 		m_pAnimator = new CAnimator(*other.m_pAnimator);
 		m_pAnimator->m_pOwner = this;
 	}
+
+	if (nullptr != other.m_pGravity)
+	{
+		m_pGravity = new CGravity(*other.m_pGravity);
+		m_pGravity->m_pOwner = this;
+	}
 }
 
 CGameObject::~CGameObject()
@@ -101,6 +107,7 @@ void CGameObject::finalupdate()
 	{
 		m_pCollider->finalupdate();
 	}
+
 	if (nullptr != m_pGravity)
 	{
 		m_pGravity->finalupdate();

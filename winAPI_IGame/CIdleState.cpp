@@ -32,8 +32,6 @@ void CIdleState::update()
 
 	else if (fLen < pMonster->GetMonInfo().fRecogRange)
 		ChangeAIState(GetOwnerAI(), STATE_MON::TRACE);
-
-	pMonster->GetAnimator()->Play(L"PlayerStand");
 }
 
 void CIdleState::Enter()

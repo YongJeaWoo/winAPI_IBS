@@ -7,8 +7,8 @@ class CGravity
 	friend class CGameObject;
 
 private:
-	CGameObject* m_pOwner;
-	UINT m_uiCountGround;
+	CGameObject*	m_pOwner;
+	UINT			m_uiCountGround;
 
 public:
 	CGravity();
@@ -16,4 +16,5 @@ public:
 
 	virtual void update();
 	virtual void finalupdate();
+
 };
