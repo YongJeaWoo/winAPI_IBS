@@ -47,7 +47,6 @@ void CStage01::Enter()
 
 	CPlayer* Bubby = new CPlayer;
 	AddObject(Bubby, GROUP_GAMEOBJ::PLAYER);
-	Bubby->SetPos(fVec2(150.f, 650.f));
 	Bubby->RegisterPlayer();
 	
 	CZen* ZenChan1 = new CZen;

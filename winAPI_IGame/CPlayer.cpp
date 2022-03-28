@@ -21,6 +21,7 @@ CPlayer::CPlayer()
 	CD2DImage* m_pImgLShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerLShoot", L"texture\\player\\Player_Shoot_Left.png");
 	CD2DImage* m_pImgRShoot = CResourceManager::getInst()->LoadD2DImage(L"PlayerRShoot", L"texture\\player\\Player_Shoot_Right.png");
 	SetName(L"Player");
+	SetPos(fVec2(150.f, 650.f));
 	SetScale(fPoint(70.f, 70.f));
 
 	CreateCollider();
@@ -47,10 +48,6 @@ CPlayer::CPlayer()
 	m_uiGround = 0;
 	m_uiWall = 0;
 	act.m_fHorizontalSpeed = 0;
-
-	// 중력과 점프력 설정
-	act.m_fUpforce = 400.f;
-	act.m_fGravity = 600.f;
 }
 
 CPlayer::~CPlayer()
@@ -107,8 +104,7 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 
 	if (Key('X'))		// 점프 구현
 	{
-		act.m_fUpforce -= (act.m_fGravity * fDT);
-		pos.y -= act.m_fUpforce * fDT;
+		
 	}
 
 	if (KeyDown('Z'))

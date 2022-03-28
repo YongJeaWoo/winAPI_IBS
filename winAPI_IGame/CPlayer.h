@@ -11,10 +11,6 @@ struct PlayerAct
 
 	float m_fSpeed = 300.f;
 	float m_fHorizontalSpeed;
-
-	// 점프 구현해보기
-	float m_fGravity;
-	float m_fUpforce;
 };
 
 class CPlayer : public CGameObject

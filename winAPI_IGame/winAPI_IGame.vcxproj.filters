@@ -127,9 +127,6 @@
     <Filter Include="Object\Character\Enemy\Zen">
       <UniqueIdentifier>{fba3c6f8-9eb5-4d9d-b1d4-6f6d815f42cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Gravity">
-      <UniqueIdentifier>{a2ee121e-20df-4154-9ccb-19044f037973}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -303,9 +300,6 @@
     <ClInclude Include="CZen.h">
       <Filter>Object\Character\Enemy\Zen</Filter>
     </ClInclude>
-    <ClInclude Include="CGravity.h">
-      <Filter>Engine\Gravity</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI_IGame.cpp">
@@ -460,9 +454,6 @@
     </ClCompile>
     <ClCompile Include="CZen.cpp">
       <Filter>Object\Character\Enemy\Zen</Filter>
-    </ClCompile>
-    <ClCompile Include="CGravity.cpp">
-      <Filter>Engine\Gravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
