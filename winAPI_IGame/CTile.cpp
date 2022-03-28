@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "CTile.h"
 #include "CD2DImage.h"
+#include "CCollider.h"
+#include "CGameObject.h"
 
 CTile::CTile()
 {
