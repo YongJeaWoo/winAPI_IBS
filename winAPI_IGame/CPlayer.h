@@ -10,7 +10,7 @@ struct PlayerAct
 	float m_fDelay;
 
 	float m_fSpeed = 300.f;
-	float m_fHorizontalSpeed;
+	float m_YPower;
 };
 
 class CPlayer : public CGameObject
@@ -18,8 +18,8 @@ class CPlayer : public CGameObject
 private:
 	static CPlayer* instance;
 
-	UINT m_uiGround;
-	UINT m_uiWall;
+	UINT m_uiGroundCount;
+	UINT m_uiWallCount;
 
 	PlayerAct act;
 

@@ -33,8 +33,8 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"PlayerRIdle",		m_pImgRIdle,  fPoint(0.f, 0.f),    fPoint(27.f, 22.f),   fPoint(27.f, 0.f), 0.5f, 2);
 	GetAnimator()->CreateAnimation(L"PlayerLMove",		m_pImgLMove,  fPoint(0.f, 0.f),    fPoint(26.5f, 24.f),  fPoint(26.5f, 0.f), 0.25f, 5);
 	GetAnimator()->CreateAnimation(L"PlayerRMove",		m_pImgRMove,  fPoint(0.f, 0.f),    fPoint(26.5f, 24.f),  fPoint(26.5f, 0.f), 0.25f, 5);
-	GetAnimator()->CreateAnimation(L"PlayerLShoot",		m_pImgLShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.25f, 4);
-	GetAnimator()->CreateAnimation(L"PlayerRShoot",		m_pImgRShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.25f, 4);
+	GetAnimator()->CreateAnimation(L"PlayerLShoot",		m_pImgLShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.3f, 4);
+	GetAnimator()->CreateAnimation(L"PlayerRShoot",		m_pImgRShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.3f, 4);
 	GetAnimator()->Play(L"LeftNone");
 
 	CAnimation* pAni;
@@ -45,9 +45,9 @@ CPlayer::CPlayer()
 
 	act = {};
 	act.m_fDelay = 0.f;
-	m_uiGround = 0;
-	m_uiWall = 0;
-	act.m_fHorizontalSpeed = 0;
+	m_uiGroundCount = 0;
+	m_uiWallCount = 0;
+	act.m_YPower = 100.f;
 }
 
 CPlayer::~CPlayer()
@@ -104,20 +104,22 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 
 	if (Key('X'))		// 점프 구현
 	{
-		
+		pos.y -= 1.f;
+		act.m_YPower = -100.f;
 	}
+	pos.y += act.m_YPower * fDT;
 
 	if (KeyDown('Z'))
 	{
 		if (act.m_bIsLeft)
 		{
-			act.m_fDelay = 0.6f;
+			act.m_fDelay = 0.8f;
 			CreateMissile();
 			GetAnimator()->Play(L"PlayerLShoot");
 		}
 		else
 		{
-			act.m_fDelay = 0.6f;
+			act.m_fDelay = 0.8f;
 			CreateMissile();
 			GetAnimator()->Play(L"PlayerRShoot");
 		}
@@ -125,22 +127,27 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 	act.m_fDelay -= fDT;
 
 	SetPos(pos);
+
+	GetAnimator()->update();
+
+	if (m_uiGroundCount > 0)
+		act.m_YPower = 0.f;
+	
+	else
+	{
+		act.m_YPower += fDT * 500.f;
+		if (act.m_YPower > 500.f)
+			act.m_YPower = 500.f;
+	}
 }
 
 void CPlayer::update_ani()			// 움직임에 대한 업데이트
 {
-	if (act.m_fHorizontalSpeed < 0)
-	{
-		GetAnimator()->Play(L"PlayerLJump");
-	}
-
-	else if (act.m_fHorizontalSpeed > 0)
-	{
-		GetAnimator()->Play(L"PlayerRJump");
-	}
-
 	if (act.m_bIsLeft)
 	{
+		if (act.m_YPower < 0)		// 점프가 된 상황
+			GetAnimator()->Play(L"PlayerLJump");
+
 		if (act.m_fDelay >= 0.f)
 			GetAnimator()->Play(L"PlayerLShoot");
 
@@ -153,6 +160,9 @@ void CPlayer::update_ani()			// 움직임에 대한 업데이트
 
 	else
 	{
+		if (act.m_YPower < 0)
+			GetAnimator()->Play(L"PlayerRJump");
+
 		if (act.m_fDelay >= 0.f)
 			GetAnimator()->Play(L"PlayerRShoot");
 
@@ -220,7 +230,7 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 		if (pTile->GetGroup() == GROUP_TILE::GROUND)
 		{
 			// 바닥과 충돌 처리
-			m_uiGround++;
+			m_uiGroundCount++;
 		}
 
 		else if (pTile->GetGroup() == GROUP_TILE::WALL)
@@ -228,8 +238,8 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 			// 벽과 충돌 처리
 			if (GetCollider()->GetFinalPos().y - _other->GetFinalPos().y + 2.f >= GetCollider()->GetScale().y / 2.f + _other->GetScale().y / 2.f)
 			{
-				m_uiGround++;
-				m_uiWall++;
+				m_uiGroundCount++;
+				m_uiWallCount++;
 			}
 
 			else
@@ -258,13 +268,13 @@ void CPlayer::OnCollisionExit(CCollider* _other)
 		if (pTile->GetGroup() == GROUP_TILE::GROUND)
 		{
 			// 바닥과 충돌 처리
-			m_uiGround--;
+			m_uiGroundCount--;
 		}
 		else if (pTile->GetGroup() == GROUP_TILE::WALL)
 		{
 			// 벽과 충돌 처리
-			m_uiGround--;
-			m_uiWall--;
+			m_uiGroundCount--;
+			m_uiWallCount--;
 		}
 	}
 }
