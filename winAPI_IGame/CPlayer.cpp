@@ -35,6 +35,9 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"PlayerRMove",		m_pImgRMove,  fPoint(0.f, 0.f),    fPoint(26.5f, 24.f),  fPoint(26.5f, 0.f), 0.25f, 5);
 	GetAnimator()->CreateAnimation(L"PlayerLShoot",		m_pImgLShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.3f, 4);
 	GetAnimator()->CreateAnimation(L"PlayerRShoot",		m_pImgRShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.3f, 4);
+	GetAnimator()->CreateAnimation(L"PlayerLJump",		m_pImgLJump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.2f, 7);
+	GetAnimator()->CreateAnimation(L"PlayerRJump",		m_pImgRJump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.2f, 7);
+
 	GetAnimator()->Play(L"LeftNone");
 
 	CAnimation* pAni;
@@ -45,9 +48,11 @@ CPlayer::CPlayer()
 
 	act = {};
 	act.m_fDelay = 0.f;
-	m_uiGroundCount = 0;
-	m_uiWallCount = 0;
-	act.m_YPower = 100.f;
+	m_GtileCount = 0;
+	m_WtileCount = 0;
+	m_PtileCount = 0;
+	act.m_YPower = 1000.f;
+	act.Jump = false;
 }
 
 CPlayer::~CPlayer()
@@ -62,8 +67,8 @@ CPlayer* CPlayer::Clone()
 
 void CPlayer::update()
 {
-	update_act();
-	update_ani();
+	update_action();
+	update_animation();
 
 	GetAnimator()->update();
 }
@@ -73,10 +78,20 @@ void CPlayer::render()
 	component_render();
 }
 
-void CPlayer::update_act()			// 상황에 대한 업데이트
+void CPlayer::update_action()			// 상황에 대한 업데이트
 {
 	fPoint pos = GetPos();
 	act.m_fVelocity = 0;			// 속도 상태 확인
+
+	if (m_GtileCount > 0 && m_WtileCount > 0 && m_PtileCount > 0)
+		act.m_YPower = 0.f;
+
+	else
+	{
+		act.m_YPower += fDT * 1000.f;
+		if (act.m_YPower > 1000.f)
+			act.m_YPower = 1000.f;
+	}
 
 	if (Key(VK_LEFT))
 	{
@@ -102,10 +117,11 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		pos.y += act.m_fSpeed * fDT;
 	}
 
-	if (Key('X'))		// 점프 구현
+	if (KeyDown('X') && act.Jump == false)		// 점프 구현
 	{
+		act.Jump = true;
 		pos.y -= 1.f;
-		act.m_YPower = -100.f;
+		act.m_YPower = -500.f;
 	}
 	pos.y += act.m_YPower * fDT;
 
@@ -115,13 +131,11 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 		{
 			act.m_fDelay = 0.8f;
 			CreateMissile();
-			GetAnimator()->Play(L"PlayerLShoot");
 		}
 		else
 		{
 			act.m_fDelay = 0.8f;
 			CreateMissile();
-			GetAnimator()->Play(L"PlayerRShoot");
 		}
 	}
 	act.m_fDelay -= fDT;
@@ -129,27 +143,17 @@ void CPlayer::update_act()			// 상황에 대한 업데이트
 	SetPos(pos);
 
 	GetAnimator()->update();
-
-	if (m_uiGroundCount > 0)
-		act.m_YPower = 0.f;
-	
-	else
-	{
-		act.m_YPower += fDT * 500.f;
-		if (act.m_YPower > 500.f)
-			act.m_YPower = 500.f;
-	}
 }
 
-void CPlayer::update_ani()			// 움직임에 대한 업데이트
+void CPlayer::update_animation()			// 움직임에 대한 업데이트
 {
 	if (act.m_bIsLeft)
 	{
-		if (act.m_YPower < 0)		// 점프가 된 상황
-			GetAnimator()->Play(L"PlayerLJump");
-
 		if (act.m_fDelay >= 0.f)
 			GetAnimator()->Play(L"PlayerLShoot");
+
+		else if (act.m_YPower < 0)		// 점프가 된 상황
+			GetAnimator()->Play(L"PlayerLJump");
 
 		else if (act.m_fVelocity > 0.f)
 			GetAnimator()->Play(L"PlayerLMove");
@@ -160,11 +164,11 @@ void CPlayer::update_ani()			// 움직임에 대한 업데이트
 
 	else
 	{
-		if (act.m_YPower < 0)
-			GetAnimator()->Play(L"PlayerRJump");
-
 		if (act.m_fDelay >= 0.f)
 			GetAnimator()->Play(L"PlayerRShoot");
+
+		else if (act.m_YPower < 0)
+			GetAnimator()->Play(L"PlayerRJump");
 
 		else if (act.m_fVelocity > 0.f)
 			GetAnimator()->Play(L"PlayerRMove");
@@ -184,62 +188,32 @@ CPlayer* CPlayer::GetPlayer()
 	return instance;
 }
 
-void CPlayer::OnCollision(CCollider* _other)
-{
-	if (_other->GetObj()->GetName() == L"Tile")
-	{
-		CTile* pTile = (CTile*)(_other->GetObj());
-		fPoint pos = GetPos();
-		fPoint offset = GetCollider()->GetOffsetPos();
-		fPoint thisPos = GetCollider()->GetFinalPos();
-		fPoint thisScale = GetCollider()->GetScale();
-		fPoint otherPos = _other->GetFinalPos();
-		fPoint otherScale = _other->GetScale();
-
-		if (pTile->GetGroup() == GROUP_TILE::GROUND)
-		{
-			// 바닥과 충돌 처리
-			// 계속 밀어내기 - 정해진 위치로 set
-			// 위에서 아래로 충돌
-			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
-
-			// 좌우에서 충돌
-
-		}
-		else if (pTile->GetGroup() == GROUP_TILE::WALL)
-		{
-			// 벽과 충돌 처리
-		}
-
-		else if (pTile->GetGroup() == GROUP_TILE::PLATFORM)
-		{
-			// 플랫폼과 충돌 처리
-			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
-		}
-		SetPos(pos);
-	}
-}
-
 void CPlayer::OnCollisionEnter(CCollider* _other)
 {
-	if (_other->GetObj()->GetName() == L"Tile")
-	{
-		CTile* pTile = (CTile*)_other->GetObj();
-		fPoint thisPos = GetCollider()->GetFinalPos();
-		fPoint otherPos = _other->GetFinalPos();
-		if (pTile->GetGroup() == GROUP_TILE::GROUND)
-		{
-			// 바닥과 충돌 처리
-			m_uiGroundCount++;
-		}
+	CGameObject* pOtherObj = _other->GetObj();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
 
-		else if (pTile->GetGroup() == GROUP_TILE::WALL)
+	fPoint thisPos = GetCollider()->GetFinalPos();
+	fPoint otherPos = _other->GetFinalPos();
+
+	if (pOtherObj->GetName() == L"Tile")
+	{
+		switch (Type)
 		{
-			// 벽과 충돌 처리
+		case GROUP_TILE::GROUND:
+		{
+			act.Jump = false;
+			m_GtileCount++;
+		}
+		break;
+
+		case GROUP_TILE::WALL:
+		{
 			if (GetCollider()->GetFinalPos().y - _other->GetFinalPos().y + 2.f >= GetCollider()->GetScale().y / 2.f + _other->GetScale().y / 2.f)
 			{
-				m_uiGroundCount++;
-				m_uiWallCount++;
+				m_GtileCount++;
+				m_WtileCount++;
 			}
 
 			else
@@ -255,27 +229,90 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 				}
 			}
 		}
-		SetPos(thisPos);
-	}
+		break;
 
+		case GROUP_TILE::PLATFORM:
+		{
+			m_GtileCount++;
+			m_WtileCount++;
+			m_PtileCount++;
+		}
+		break;
+
+		SetPos(thisPos);
+		}
+	}
+}
+
+void CPlayer::OnCollision(CCollider* _other)
+{
+	CGameObject* pOtherObj = _other->GetObj();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
+
+	fPoint pos = GetPos();
+	fPoint offset = GetCollider()->GetOffsetPos();
+
+	fPoint thisPos = GetCollider()->GetFinalPos();
+	fPoint thisScale = GetCollider()->GetScale();
+
+	fPoint otherPos = _other->GetFinalPos();
+	fPoint otherScale = _other->GetScale();
+
+	if (pOtherObj->GetName() == L"Tile")
+	{
+		switch (Type)
+		{
+		case GROUP_TILE::GROUND:
+		{
+			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
+		}
+		break;
+
+		case GROUP_TILE::WALL:
+		{
+
+		}
+		break;
+
+		case GROUP_TILE::PLATFORM:
+		{
+
+		}
+		break;
+		}
+		SetPos(pos);
+	}
 }
 
 void CPlayer::OnCollisionExit(CCollider* _other)
 {
-	if (_other->GetObj()->GetName() == L"Tile")
+	CGameObject* pOtherObj = _other->GetObj();
+	CTile* pTile = (CTile*)pOtherObj;
+	GROUP_TILE Type = pTile->GetGroup();
+
+	switch (Type)
 	{
-		CTile* pTile = (CTile*)_other->GetObj();
-		if (pTile->GetGroup() == GROUP_TILE::GROUND)
-		{
-			// 바닥과 충돌 처리
-			m_uiGroundCount--;
-		}
-		else if (pTile->GetGroup() == GROUP_TILE::WALL)
-		{
-			// 벽과 충돌 처리
-			m_uiGroundCount--;
-			m_uiWallCount--;
-		}
+	case GROUP_TILE::GROUND:
+	{
+		m_GtileCount--;
+	}
+	break;
+
+	case GROUP_TILE::WALL:
+	{
+		m_GtileCount--;
+		m_WtileCount--;
+	}
+	break;
+
+	case GROUP_TILE::PLATFORM:
+	{
+		m_GtileCount--;
+		m_WtileCount--;
+		m_PtileCount--;
+	}
+	break;
 	}
 }
 
