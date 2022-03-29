@@ -50,11 +50,13 @@ CPlayer::CPlayer()
 
 	act = {};
 	act.m_fDelay = 0.f;
+	act.m_YPower = 1000.f;
+	act.Jump = false;
+	act.m_bIsLeft = false;
+
 	m_GtileCount = 0;
 	m_WtileCount = 0;
 	m_PtileCount = 0;
-	act.m_YPower = 1000.f;
-	act.Jump = false;
 }
 
 CPlayer::~CPlayer()
@@ -214,29 +216,15 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 		{
 			act.Jump = false;
 			m_GtileCount++;
+			m_WtileCount++;
 		}
 		break;
 
 		case GROUP_TILE::WALL:
 		{
-			if (GetCollider()->GetFinalPos().y - _other->GetFinalPos().y + 2.f >= GetCollider()->GetScale().y / 2.f + _other->GetScale().y / 2.f)
-			{
-				m_GtileCount++;
-				m_WtileCount++;
-			}
-
-			else
-			{
-				if (GetCollider()->GetFinalPos().x < _other->GetFinalPos().x)
-				{
-					thisPos.x -= 1.f;
-				}
-
-				else if (GetCollider()->GetFinalPos().x > _other->GetFinalPos().x)
-				{
-					thisPos.x += 1.f;
-				}
-			}
+			m_GtileCount++;
+			m_WtileCount++;
+			m_PtileCount++;
 		}
 		break;
 
@@ -281,22 +269,18 @@ void CPlayer::OnCollision(CCollider* _other)
 
 		case GROUP_TILE::WALL:
 		{
-
+			if (thisPos.x > WINSIZEX)
+				// ¿À¸¥ÂÊ º®¿¡ ºÎµúÄ¥ ¶§
+				pos.x = otherPos.x - otherScale.x / 2.f - thisScale.x / 2.f - offset.x + 1;
+				
+			else
+				// ¿ÞÂÊ º®¿¡ ºÎµúÄ¥ ¶§
+				pos.x = otherPos.x + otherScale.x / 2.f + thisScale.x / 2.f - offset.x + 1;
 		}
 		break;
 
 		case GROUP_TILE::PLATFORM:
 		{
-			if (otherPos.y - otherScale.y / 2.f > thisScale.y / 2.f - offset.y + 1)
-			{
-				return;
-			}
-
-			else if (otherPos.y - otherScale.y / 2.f < thisScale.y / 2.f - offset.y + 1)
-			{
-				return;
-			}
-
 			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
 		}
 		break;
@@ -316,6 +300,7 @@ void CPlayer::OnCollisionExit(CCollider* _other)
 	case GROUP_TILE::GROUND:
 	{
 		m_GtileCount--;
+		m_WtileCount--;
 	}
 	break;
 
@@ -323,6 +308,7 @@ void CPlayer::OnCollisionExit(CCollider* _other)
 	{
 		m_GtileCount--;
 		m_WtileCount--;
+		m_PtileCount--;
 	}
 	break;
 
