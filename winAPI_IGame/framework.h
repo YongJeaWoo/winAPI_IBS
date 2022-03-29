@@ -79,6 +79,7 @@ enum class GROUP_TILE
 	GROUND,
 	PLATFORM,
 	WALL,
+	CEILING,
 
 	SIZE,
 };

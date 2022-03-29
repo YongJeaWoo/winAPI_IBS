@@ -127,10 +127,6 @@ void CScene_Tool::SetTileIdx()
 	}
 }
 
-//void CScene_Tool::SetGroup(GROUP_TILE group)
-//{
-//	m_gTile = group;
-//}
 
 void CScene_Tool::SetTileGroup()
 {
@@ -354,6 +350,11 @@ void CScene_Tool::ClickTileGroup(CButtonUI* button)
 	}
 	else if (m_gTile == GROUP_TILE::PLATFORM)
 	{
+		m_gTile = GROUP_TILE::CEILING;
+		button->SetText(L"CEILING");
+	}
+	else if (m_gTile == GROUP_TILE::CEILING)
+	{
 		m_gTile = GROUP_TILE::NONE;
 		button->SetText(L"NONE");
 	}
@@ -488,6 +489,18 @@ void CScene_Tool::PrintTileGroup()
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(0, 0, 255),
+				3.f
+			);
+		}
+
+		else if (GROUP_TILE::CEILING == pTile->GetGroup())
+		{
+			CRenderManager::getInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(0, 255, 255),
 				3.f
 			);
 		}

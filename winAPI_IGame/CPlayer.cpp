@@ -217,16 +217,16 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 			act.Jump = false;
 			m_GtileCount++;
 			m_WtileCount++;
+			break;
 		}
-		break;
 
 		case GROUP_TILE::WALL:
 		{
 			m_GtileCount++;
 			m_WtileCount++;
 			m_PtileCount++;
+			break;
 		}
-		break;
 
 		case GROUP_TILE::PLATFORM:
 		{
@@ -234,8 +234,8 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 			m_GtileCount++;
 			m_WtileCount++;
 			m_PtileCount++;
+			break;
 		}
-		break;
 
 		SetPos(thisPos);
 		}
@@ -254,7 +254,7 @@ void CPlayer::OnCollision(CCollider* _other)
 	fPoint thisPos = GetCollider()->GetFinalPos();		// 플레이어 좌표
 	fPoint thisScale = GetCollider()->GetScale();
 
-	fPoint otherPos = _other->GetFinalPos();			// 충돌 좌표
+	fPoint otherPos = _other->GetFinalPos();			// 타일 좌표
 	fPoint otherScale = _other->GetScale();
 
 	if (pOtherObj->GetName() == L"Tile")
@@ -264,27 +264,29 @@ void CPlayer::OnCollision(CCollider* _other)
 		case GROUP_TILE::GROUND:
 		{
 			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
+			break;
 		}
-		break;
 
 		case GROUP_TILE::WALL:
 		{
 			if (thisPos.x > WINSIZEX)
-				// 오른쪽 벽에 부딪칠 때
-				pos.x = otherPos.x - otherScale.x / 2.f - thisScale.x / 2.f - offset.x + 1;
-				
-			else
-				// 왼쪽 벽에 부딪칠 때
+			// 플레이어가 왼쪽으로 와서 벽에 부딪칠 때
 				pos.x = otherPos.x + otherScale.x / 2.f + thisScale.x / 2.f - offset.x + 1;
+
+			else if (thisPos.x < WINSIZEX)
+			// 플레이어가 오른쪽으로 와서 벽에 부딪칠 때
+				pos.x = otherPos.x - thisScale.x + offset.x + 1;
+			break;
 		}
-		break;
 
 		case GROUP_TILE::PLATFORM:
 		{
 			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
+			break;
 		}
-		break;
+
 		}
+
 		SetPos(pos);
 	}
 }
@@ -301,24 +303,24 @@ void CPlayer::OnCollisionExit(CCollider* _other)
 	{
 		m_GtileCount--;
 		m_WtileCount--;
+		break;
 	}
-	break;
 
 	case GROUP_TILE::WALL:
 	{
 		m_GtileCount--;
 		m_WtileCount--;
 		m_PtileCount--;
+		break;
 	}
-	break;
 
 	case GROUP_TILE::PLATFORM:
 	{
 		m_GtileCount--;
 		m_WtileCount--;
 		m_PtileCount--;
+		break;
 	}
-	break;
 	}
 }
 
