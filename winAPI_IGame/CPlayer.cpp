@@ -35,8 +35,10 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"PlayerRMove",		m_pImgRMove,  fPoint(0.f, 0.f),    fPoint(26.5f, 24.f),  fPoint(26.5f, 0.f), 0.25f, 5);
 	GetAnimator()->CreateAnimation(L"PlayerLShoot",		m_pImgLShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.3f, 4);
 	GetAnimator()->CreateAnimation(L"PlayerRShoot",		m_pImgRShoot, fPoint(0.f, 0.f),    fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.3f, 4);
-	GetAnimator()->CreateAnimation(L"PlayerLJump",		m_pImgLJump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.2f, 7);
-	GetAnimator()->CreateAnimation(L"PlayerRJump",		m_pImgRJump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.2f, 7);
+
+	// 점프 리소스 재구현
+	GetAnimator()->CreateAnimation(L"PlayerLJump",		m_pImgLJump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.6f, 6);
+	GetAnimator()->CreateAnimation(L"PlayerRJump",		m_pImgRJump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.6f, 6);
 
 	GetAnimator()->Play(L"LeftNone");
 
@@ -121,7 +123,7 @@ void CPlayer::update_action()			// 상황에 대한 업데이트
 	{
 		act.Jump = true;
 		pos.y -= 1.f;
-		act.m_YPower = -500.f;
+		act.m_YPower = -600.f;
 	}
 	pos.y += act.m_YPower * fDT;
 
@@ -140,6 +142,12 @@ void CPlayer::update_action()			// 상황에 대한 업데이트
 	}
 	act.m_fDelay -= fDT;
 
+	// 맵을 벗어날 때 다시 위로 올리기
+	if (pos.y > WINSIZEY)
+	{
+		pos.y = 0;
+	}
+
 	SetPos(pos);
 
 	GetAnimator()->update();
@@ -147,6 +155,7 @@ void CPlayer::update_action()			// 상황에 대한 업데이트
 
 void CPlayer::update_animation()			// 움직임에 대한 업데이트
 {
+	// 순서 확인 
 	if (act.m_bIsLeft)
 	{
 		if (act.m_fDelay >= 0.f)
@@ -233,6 +242,7 @@ void CPlayer::OnCollisionEnter(CCollider* _other)
 
 		case GROUP_TILE::PLATFORM:
 		{
+			act.Jump = false;
 			m_GtileCount++;
 			m_WtileCount++;
 			m_PtileCount++;
@@ -250,13 +260,13 @@ void CPlayer::OnCollision(CCollider* _other)
 	CTile* pTile = (CTile*)pOtherObj;
 	GROUP_TILE Type = pTile->GetGroup();
 
-	fPoint pos = GetPos();
+	fPoint pos = GetPos();								// 충돌 감지 좌표
 	fPoint offset = GetCollider()->GetOffsetPos();
 
-	fPoint thisPos = GetCollider()->GetFinalPos();
+	fPoint thisPos = GetCollider()->GetFinalPos();		// 플레이어 좌표
 	fPoint thisScale = GetCollider()->GetScale();
 
-	fPoint otherPos = _other->GetFinalPos();
+	fPoint otherPos = _other->GetFinalPos();			// 충돌 좌표
 	fPoint otherScale = _other->GetScale();
 
 	if (pOtherObj->GetName() == L"Tile")
@@ -277,7 +287,17 @@ void CPlayer::OnCollision(CCollider* _other)
 
 		case GROUP_TILE::PLATFORM:
 		{
+			if (otherPos.y - otherScale.y / 2.f > thisScale.y / 2.f - offset.y + 1)
+			{
+				return;
+			}
 
+			else if (otherPos.y - otherScale.y / 2.f < thisScale.y / 2.f - offset.y + 1)
+			{
+				return;
+			}
+
+			pos.y = otherPos.y - otherScale.y / 2.f - thisScale.y / 2.f - offset.y + 1;
 		}
 		break;
 		}
