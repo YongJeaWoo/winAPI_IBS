@@ -3,16 +3,37 @@
 
 class CD2DImage;
 
-struct PlayerAct
+enum class CharacterState
 {
-	float m_fVelocity;
-	bool m_bIsLeft;
-	float m_fDelay;
+	IDLE,
+	HIT,
+	DEAD,
 
-	float m_fSpeed = 300.f;
-	float m_YPower;
+	MOVE,
+	ATTACK,
+	JUMP,
+	FALL,
 
-	bool Jump = false;
+	SIZE
+};
+
+struct PlayerState
+{
+	float CurHp;
+	float FullHp;
+
+	fVec2 CurDir;
+	fVec2 PrevDir;
+	float Speed;
+	float AccelGravity;
+	float Upper;
+
+	bool Acting;
+	bool Attacking;
+	bool Grounding;
+
+	bool JustHit;
+	bool IsRight;
 };
 
 class CPlayer : public CGameObject
@@ -20,13 +41,22 @@ class CPlayer : public CGameObject
 private:
 	static CPlayer* instance;
 
+	float m_gravity;
+
 	UINT m_GtileCount;
 	UINT m_WtileCount;
 	UINT m_PtileCount;
 
-	PlayerAct act;
+	fPoint m_fCurDir;
+	fPoint m_fPrevDir;
+
+	PlayerState pState;
+
+	CharacterState m_State;
+	CharacterState m_PrevState;
 
 	void CreateMissile();
+	void Jump();
 
 public:
 	CPlayer();
@@ -37,13 +67,15 @@ public:
 	virtual void render();
 
 	void update_action();
+	void update_state();
 	void update_animation();
 
 	void RegisterPlayer();
-	static CPlayer* GetPlayer();		// 게임 내 하나만 있는 플레이어 객체 확인 - 임의 싱글톤 선언
 
-	virtual void OnCollision(CCollider* _other);
-	virtual void OnCollisionEnter(CCollider* _other);
-	virtual void OnCollisionExit(CCollider* _other);
+	virtual void OnCollision(CCollider* pOther);
+	virtual void OnCollisionEnter(CCollider* pOther);
+	virtual void OnCollisionExit(CCollider* pOther);
+
+	static CPlayer* GetPlayer();		// 게임 내 하나만 있는 플레이어 객체 확인(임의 싱글톤 선언)
 };
 

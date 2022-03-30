@@ -72,12 +72,7 @@ void CCollisionManager::CollisionGroupUpdate(GROUP_GAMEOBJ objLeft, GROUP_GAMEOB
 				// Prev X, Cur O
 				else
 				{
-					// 충돌체 중 하나가 Dead 상태라면 충돌 시키지 않음
-					if (vecLeft[i]->isDead() || vecRight[j]->isDead())
-					{
-						// 아무것도 하지 않음
-					}
-					else
+					if (!(vecLeft[i]->isDead() || vecRight[j]->isDead()))
 					{
 						vecLeft[i]->GetCollider()->OnCollisionEnter(vecRight[j]->GetCollider());
 						vecRight[j]->GetCollider()->OnCollisionEnter(vecLeft[i]->GetCollider());

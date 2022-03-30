@@ -72,6 +72,11 @@ void CCollider::finalupdate()
 {
 	fPoint fptObjectPos = m_pOwner->GetPos();
 	m_fptFinalPos = fptObjectPos + m_fptOffsetPos;
+
+	m_rcCollider.left	= (LONG)(m_fptFinalPos.x - m_fptScale.x / 2.f);
+	m_rcCollider.right	= (LONG)(m_fptFinalPos.x + m_fptScale.x / 2.f);
+	m_rcCollider.top	= (LONG)(m_fptFinalPos.y - m_fptScale.y / 2.f);
+	m_rcCollider.bottom = (LONG)(m_fptFinalPos.y + m_fptScale.y / 2.f);
 }
 
 void CCollider::render()
@@ -90,6 +95,11 @@ void CCollider::render()
 		fptRenderPos.x + m_fptScale.x / 2.f,
 		fptRenderPos.y + m_fptScale.y / 2.f,
 		rgb);
+}
+
+RECT CCollider::GetBorderPos()
+{
+	return m_rcCollider;
 }
 
 void CCollider::OnCollision(CCollider* pOther)
