@@ -23,7 +23,6 @@ CPlayer::CPlayer()
 	CD2DImage* m_Jump			= CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\player\\Player_Jump.png");
 	CD2DImage* m_Fall			= CResourceManager::getInst()->LoadD2DImage(L"Fall", L"texture\\player\\Player_Fall.png");
 	CD2DImage* m_JumpBubble		= CResourceManager::getInst()->LoadD2DImage(L"JumpBubble", L"texture\\player\\Player_Jump_Bubble.png");
-	CD2DImage* m_FallBubble		= CResourceManager::getInst()->LoadD2DImage(L"FallBubble", L"texture\\player\\Player_Fall_Bubble.png");
 	CD2DImage* m_Bubble			= CResourceManager::getInst()->LoadD2DImage(L"Bubble", L"texture\\player\\Player_Bubble.png");
 
 	CreateAnimator();
@@ -37,8 +36,6 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"LFall",		m_Fall, fPoint(0.f, 0.f), fPoint(27.25f, 23.f), fPoint(27.25f, 0.f), 0.2f, 4, false);
 	GetAnimator()->CreateAnimation(L"JumpBubble",	m_JumpBubble, fPoint(0.f, 0.f), fPoint(28.f, 23.f), fPoint(28.f, 0.f), 0.2f, 4, true);
 	GetAnimator()->CreateAnimation(L"LJumpBubble",	m_JumpBubble, fPoint(0.f, 0.f), fPoint(28.f, 23.f), fPoint(28.f, 0.f), 0.2f, 4, false);
-	GetAnimator()->CreateAnimation(L"FallBubble",	m_FallBubble, fPoint(0.f, 0.f), fPoint(28.f, 22.f), fPoint(28.f, 0.f), 0.2f, 4, true);
-	GetAnimator()->CreateAnimation(L"LFallBubble",	m_FallBubble, fPoint(0.f, 0.f), fPoint(28.f, 22.f), fPoint(28.f, 0.f), 0.2f, 4, false);
 	GetAnimator()->CreateAnimation(L"Bubble",		m_Bubble, fPoint(0.f, 0.f), fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.2f, 4, true);
 	GetAnimator()->CreateAnimation(L"LBubble",		m_Bubble, fPoint(0.f, 0.f), fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.2f, 4, false);
 	GetAnimator()->Play(L"Idle");
@@ -47,7 +44,6 @@ CPlayer::CPlayer()
 	GetCollider()->SetScale(fPoint(45.f, 45.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 5.f));
 
-	pState.IsRight = true;
 	pState.JustHit = false;
 	pState.Grounding = true;
 	pState.Attacking = false;
@@ -95,9 +91,9 @@ void CPlayer::render()
 void CPlayer::update_state()
 {
 	// 기본 자세 상태
-	if (!pState.Attacking && pState.Grounding && pState.AccelGravity == 0)
+	if (pState.Grounding && pState.AccelGravity == 0)
 	{
-		if (pState.Speed <=0)
+		if (pState.Speed == 0)
 			m_State = CharacterState::IDLE;
 	}
 
@@ -116,14 +112,9 @@ void CPlayer::update_state()
 	if (pState.AccelGravity >= 100 && !pState.Grounding)
 	{
 		m_State = CharacterState::FALL;
-
-		if (pState.Grounding && pState.AccelGravity == 0)
-		{
-			m_State = CharacterState::IDLE;
-		}
 	}
 
-	// 점프와 동시에 쏘는 상태
+	// 점프와 떨어짐 동시에 쏘는 상태
 	if (!pState.Grounding && pState.Speed <= MAX_SPEED && KeyDown('Z'))
 	{
 		CreateMissile();
@@ -131,8 +122,15 @@ void CPlayer::update_state()
 		pState.Attacking = true;
 	}
 
-	// 땅에서 움직였거나 멈췄을 때에도 쏘는 상태
-	if (pState.Grounding && pState.Speed <= 0 && KeyDown('Z'))
+	// 땅에서 움직이면서 쏘는 상태
+	else if (pState.Grounding && pState.Speed <= MAX_SPEED && KeyDown('Z'))
+	{
+		CreateMissile();
+		m_State = CharacterState::BUBBLE;
+		pState.Attacking = true;
+	}
+
+	else if (pState.Grounding && pState.Speed == 0 && KeyDown('Z'))
 	{
 		CreateMissile();
 		m_State = CharacterState::BUBBLE;
@@ -144,27 +142,25 @@ void CPlayer::update_move()
 {
 	if (Key(VK_LEFT))
 	{
-		pState.IsRight = false;
 		m_fCurDir.x = -1;
 		pState.Speed = MAX_SPEED;
 	}
 
 	else if (KeyUp(VK_LEFT))
 	{
-		pState.IsRight = false;
+		m_fCurDir.x = -1;
 		pState.Speed = 0.f;
 	}
 
 	if (Key(VK_RIGHT))
 	{
-		pState.IsRight = true;
 		m_fCurDir.x = 1;
 		pState.Speed = MAX_SPEED;
 	}
 
 	else if (KeyUp(VK_RIGHT))
 	{
-		pState.IsRight = true;
+		m_fCurDir.x = 1;
 		pState.Speed = 0.f;
 	}
 
@@ -272,28 +268,6 @@ void CPlayer::update_animation()
 		break;
 	}
 
-	case CharacterState::FALLBUBBLE:
-	{
-		if (-1 == m_fCurDir.x)
-		{
-			GetAnimator()->Play(L"FallBubble");
-		}
-
-		else
-		{
-			GetAnimator()->Play(L"LFallBubble");
-		}
-
-		static float fTime = 0.f;
-		fTime += fDT;
-		if (0.3 <= fTime)
-		{
-			pState.Attacking = false;
-			fTime = 0.f;
-		}
-		break;
-	}
-
 	case CharacterState::BUBBLE:
 	{
 		if (-1 == m_fCurDir.x)
@@ -328,7 +302,7 @@ void CPlayer::CreateMissile()
 
 	if (-1 == m_fCurDir.x)
 	{
-		fptMissilePos.x = (GetScale().x / 2.f) + 2.f;
+		fptMissilePos.x = (GetScale().x / 2.f) + 10.f;
 		pMissile->SetDir(fVec2(-1, 0));
 		pMissile->SetName(L"Missile");
 		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);
@@ -336,7 +310,7 @@ void CPlayer::CreateMissile()
 
 	else
 	{
-		fptMissilePos.x = (GetScale().x / 2.f) - 2.f;
+		fptMissilePos.x = (GetScale().x / 2.f) - 10.f;
 		pMissile->SetDir(fVec2(1, 0));
 		pMissile->SetName(L"Missile");
 		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);

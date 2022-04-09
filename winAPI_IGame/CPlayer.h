@@ -9,12 +9,10 @@ enum class CharacterState
 	HIT,
 	DEAD,
 	MOVE,
-	ATTACK,
 	JUMP,
 	FALL,
 	BUBBLE,
 	JUMPBUBBLE,
-	FALLBUBBLE,
 
 	SIZE
 };
@@ -36,7 +34,6 @@ struct PlayerState
 	bool Grounding;
 
 	bool JustHit;
-	bool IsRight;
 };
 
 class CPlayer : public CGameObject
