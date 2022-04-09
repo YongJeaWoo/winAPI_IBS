@@ -8,7 +8,6 @@ enum class CharacterState
 	IDLE,
 	HIT,
 	DEAD,
-
 	MOVE,
 	ATTACK,
 	JUMP,

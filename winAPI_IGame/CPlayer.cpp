@@ -47,7 +47,7 @@ CPlayer::CPlayer()
 	GetCollider()->SetScale(fPoint(45.f, 45.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 5.f));
 
-	pState.IsRight = false;
+	pState.IsRight = true;
 	pState.JustHit = false;
 	pState.Grounding = true;
 	pState.Attacking = false;
@@ -144,23 +144,27 @@ void CPlayer::update_move()
 {
 	if (Key(VK_LEFT))
 	{
+		pState.IsRight = false;
 		m_fCurDir.x = -1;
 		pState.Speed = MAX_SPEED;
 	}
 
-	if (KeyUp(VK_LEFT))
+	else if (KeyUp(VK_LEFT))
 	{
+		pState.IsRight = false;
 		pState.Speed = 0.f;
 	}
 
 	if (Key(VK_RIGHT))
 	{
+		pState.IsRight = true;
 		m_fCurDir.x = 1;
 		pState.Speed = MAX_SPEED;
 	}
 
-	if (KeyUp(VK_RIGHT))
+	else if (KeyUp(VK_RIGHT))
 	{
+		pState.IsRight = true;
 		pState.Speed = 0.f;
 	}
 
