@@ -13,6 +13,9 @@ enum class CharacterState
 	ATTACK,
 	JUMP,
 	FALL,
+	BUBBLE,
+	JUMPBUBBLE,
+	FALLBUBBLE,
 
 	SIZE
 };
@@ -28,6 +31,7 @@ struct PlayerState
 	float AccelGravity;
 	float Upper;
 
+	bool Jumping;
 	bool Acting;
 	bool Attacking;
 	bool Grounding;
@@ -66,7 +70,7 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void update_action();
+	void update_move();
 	void update_state();
 	void update_animation();
 

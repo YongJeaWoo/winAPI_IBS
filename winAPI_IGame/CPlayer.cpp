@@ -9,7 +9,7 @@
 
 #define MAX_SPEED	200.f
 #define GRAVITY		500.f
-#define UPPER		-350.f
+#define UPPER		-380.f
 
 CPlayer* CPlayer::instance = nullptr;
 
@@ -18,20 +18,29 @@ CPlayer::CPlayer()
 	SetName(L"Player");
 	SetPos(fVec2(150.f, 650.f));
 	SetScale(fPoint(70.f, 70.f));
-	CD2DImage* m_Idle	= CResourceManager::getInst()->LoadD2DImage(L"Idle", L"texture\\player\\Player_Idle.png");
-	CD2DImage* m_Move	= CResourceManager::getInst()->LoadD2DImage(L"Move", L"texture\\player\\Player_Move.png");
-	CD2DImage* m_Jump	= CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\player\\Player_Jump.png");
-	CD2DImage* m_Bubble = CResourceManager::getInst()->LoadD2DImage(L"Bubble", L"texture\\player\\Player_Bubble.png");
+	CD2DImage* m_Idle			= CResourceManager::getInst()->LoadD2DImage(L"Idle", L"texture\\player\\Player_Idle.png");
+	CD2DImage* m_Move			= CResourceManager::getInst()->LoadD2DImage(L"Move", L"texture\\player\\Player_Move.png");
+	CD2DImage* m_Jump			= CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\player\\Player_Jump.png");
+	CD2DImage* m_Fall			= CResourceManager::getInst()->LoadD2DImage(L"Fall", L"texture\\player\\Player_Fall.png");
+	CD2DImage* m_JumpBubble		= CResourceManager::getInst()->LoadD2DImage(L"JumpBubble", L"texture\\player\\Player_Jump_Bubble.png");
+	CD2DImage* m_FallBubble		= CResourceManager::getInst()->LoadD2DImage(L"FallBubble", L"texture\\player\\Player_Fall_Bubble.png");
+	CD2DImage* m_Bubble			= CResourceManager::getInst()->LoadD2DImage(L"Bubble", L"texture\\player\\Player_Bubble.png");
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"Idle",	   m_Idle, fPoint(0.f, 0.f), fPoint(27.f, 22.f), fPoint(27.f, 0.f), 0.2f, 2, true);
-	GetAnimator()->CreateAnimation(L"LIdle",   m_Idle, fPoint(0.f, 0.f), fPoint(27.f, 22.f), fPoint(27.f, 0.f), 0.2f, 2, false);
-	GetAnimator()->CreateAnimation(L"Move",	   m_Move, fPoint(0.f, 0.f), fPoint(26.6f, 24.f), fPoint(26.6f, 0.f), 0.2f, 5, true);
-	GetAnimator()->CreateAnimation(L"LMove",   m_Move, fPoint(0.f, 0.f), fPoint(26.6f, 24.f), fPoint(26.6f, 0.f), 0.2f, 5, false);
-	GetAnimator()->CreateAnimation(L"Jump",    m_Jump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.2f, 7, true);
-	GetAnimator()->CreateAnimation(L"LJump",   m_Jump, fPoint(0.f, 0.f), fPoint(27.57f, 25.f), fPoint(27.57f, 0.f), 0.2f, 7, false);
-	GetAnimator()->CreateAnimation(L"Bubble",  m_Bubble, fPoint(0.f, 0.f), fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.2f, 4, true);
-	GetAnimator()->CreateAnimation(L"LBubble", m_Bubble, fPoint(0.f, 0.f), fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.2f, 4, false);
+	GetAnimator()->CreateAnimation(L"Idle",			m_Idle, fPoint(0.f, 0.f), fPoint(27.f, 22.f), fPoint(27.f, 0.f), 0.2f, 2, true);
+	GetAnimator()->CreateAnimation(L"LIdle",		m_Idle, fPoint(0.f, 0.f), fPoint(27.f, 22.f), fPoint(27.f, 0.f), 0.2f, 2, false);
+	GetAnimator()->CreateAnimation(L"Move",			m_Move, fPoint(0.f, 0.f), fPoint(26.6f, 24.f), fPoint(26.6f, 0.f), 0.2f, 5, true);
+	GetAnimator()->CreateAnimation(L"LMove",		m_Move, fPoint(0.f, 0.f), fPoint(26.6f, 24.f), fPoint(26.6f, 0.f), 0.2f, 5, false);
+	GetAnimator()->CreateAnimation(L"Jump",			m_Jump, fPoint(0.f, 0.f), fPoint(27.f, 25.f), fPoint(27.f, 0.f), 0.2f, 4, true);
+	GetAnimator()->CreateAnimation(L"LJump",		m_Jump, fPoint(0.f, 0.f), fPoint(27.f, 25.f), fPoint(27.f, 0.f), 0.2f, 4, false);
+	GetAnimator()->CreateAnimation(L"Fall",			m_Fall, fPoint(0.f, 0.f), fPoint(27.25f, 23.f), fPoint(27.25f, 0.f), 0.2f, 4, true);
+	GetAnimator()->CreateAnimation(L"LFall",		m_Fall, fPoint(0.f, 0.f), fPoint(27.25f, 23.f), fPoint(27.25f, 0.f), 0.2f, 4, false);
+	GetAnimator()->CreateAnimation(L"JumpBubble",	m_JumpBubble, fPoint(0.f, 0.f), fPoint(28.f, 23.f), fPoint(28.f, 0.f), 0.2f, 4, true);
+	GetAnimator()->CreateAnimation(L"LJumpBubble",	m_JumpBubble, fPoint(0.f, 0.f), fPoint(28.f, 23.f), fPoint(28.f, 0.f), 0.2f, 4, false);
+	GetAnimator()->CreateAnimation(L"FallBubble",	m_FallBubble, fPoint(0.f, 0.f), fPoint(28.f, 22.f), fPoint(28.f, 0.f), 0.2f, 4, true);
+	GetAnimator()->CreateAnimation(L"LFallBubble",	m_FallBubble, fPoint(0.f, 0.f), fPoint(28.f, 22.f), fPoint(28.f, 0.f), 0.2f, 4, false);
+	GetAnimator()->CreateAnimation(L"Bubble",		m_Bubble, fPoint(0.f, 0.f), fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.2f, 4, true);
+	GetAnimator()->CreateAnimation(L"LBubble",		m_Bubble, fPoint(0.f, 0.f), fPoint(28.75f, 22.f), fPoint(28.75f, 0.f), 0.2f, 4, false);
 	GetAnimator()->Play(L"Idle");
 
 	CreateCollider();
@@ -43,7 +52,7 @@ CPlayer::CPlayer()
 	pState.Grounding = true;
 	pState.Attacking = false;
 	pState.AccelGravity = 0.f;
-	pState.Speed = MAX_SPEED;
+	pState.Speed = 0;
 	pState.Upper = UPPER;
 
 	m_gravity = GRAVITY;
@@ -69,13 +78,12 @@ CPlayer* CPlayer::Clone()
 
 void CPlayer::update()
 {
-	update_animation();
 	update_state();
-	update_action();
-	
-	m_PrevState		= m_State;
-	pState.CurDir	= m_fCurDir;
+	update_animation();
+	update_move();
 
+	m_PrevState = m_State;
+	m_fPrevDir = m_fCurDir;
 	GetAnimator()->update();
 }
 
@@ -84,7 +92,55 @@ void CPlayer::render()
 	component_render();
 }
 
-void CPlayer::update_action()
+void CPlayer::update_state()
+{
+	// 기본 자세 상태
+	if (!pState.Attacking && pState.Grounding && pState.AccelGravity == 0)
+	{
+		if (pState.Speed <=0)
+			m_State = CharacterState::IDLE;
+	}
+
+	// 움직이는 상태
+	if (m_State == CharacterState::IDLE)
+	{
+		if (Key(VK_LEFT) || Key(VK_RIGHT) && pState.Grounding)
+			m_State = CharacterState::MOVE;
+	}
+
+	// 점프하는 상태
+	if (pState.Grounding && KeyDown('X'))
+		m_State = CharacterState::JUMP;
+
+	// 떨어지는 상태
+	if (pState.AccelGravity >= 100 && !pState.Grounding)
+	{
+		m_State = CharacterState::FALL;
+
+		if (pState.Grounding && pState.AccelGravity == 0)
+		{
+			m_State = CharacterState::IDLE;
+		}
+	}
+
+	// 점프와 동시에 쏘는 상태
+	if (!pState.Grounding && pState.Speed <= MAX_SPEED && KeyDown('Z'))
+	{
+		CreateMissile();
+		m_State = CharacterState::JUMPBUBBLE;
+		pState.Attacking = true;
+	}
+
+	// 땅에서 움직였거나 멈췄을 때에도 쏘는 상태
+	if (pState.Grounding && pState.Speed <= 0 && KeyDown('Z'))
+	{
+		CreateMissile();
+		m_State = CharacterState::BUBBLE;
+		pState.Attacking = true;
+	}
+}
+
+void CPlayer::update_move()
 {
 	if (Key(VK_LEFT))
 	{
@@ -122,6 +178,7 @@ void CPlayer::update_action()
 		Pos.y = 0;
 
 	SetPos(Pos);
+
 	pState.AccelGravity += GRAVITY * fDT;
 	if (pState.AccelGravity >= 1000.f)
 		pState.AccelGravity = 1000.f;
@@ -129,58 +186,11 @@ void CPlayer::update_action()
 	
 }
 
-void CPlayer::update_state()
-{
-	if (Key(VK_LEFT) && !pState.Attacking)
-	{
-		m_State = CharacterState::MOVE;
-	}
-
-	if (Key(VK_RIGHT) && !pState.Attacking)
-	{
-		m_State = CharacterState::MOVE;
-	}
-
-	if (KeyDown('X') && pState.Grounding && !pState.Attacking)
-	{
-		m_State = CharacterState::JUMP;
-	}
-
-	if (KeyDown('Z') && !pState.Grounding)
-	{
-		CreateMissile();
-		m_State = CharacterState::ATTACK;
-		pState.Attacking = true;
-	}
-
-	if (KeyDown('Z') && pState.Grounding && pState.Speed <= 0)
-	{
-		CreateMissile();
-		m_State = CharacterState::ATTACK;
-		pState.Attacking = true;
-	}
-
-	if (Key(VK_LEFT) && KeyDown('Z') && pState.Grounding && pState.Speed >= MAX_SPEED)
-	{
-		CreateMissile();
-		m_State = CharacterState::ATTACK;
-		pState.Attacking = true;
-	}
-
-	if (Key(VK_RIGHT) && KeyDown('Z') && pState.Grounding && pState.Speed >= MAX_SPEED)
-	{
-		CreateMissile();
-		m_State = CharacterState::ATTACK;
-		pState.Attacking = true;
-	}
-}
-
 void CPlayer::update_animation()
 {
 	if (m_PrevState == m_State && m_fPrevDir == m_fCurDir)
-	{
 		return;
-	}
+
 
 	switch (m_State)
 	{
@@ -188,12 +198,12 @@ void CPlayer::update_animation()
 	{
 		static float IdleTime = 0.f;
 		IdleTime += fDT;
-		if (-1 == m_fCurDir.x && IdleTime < 3)
+		if (-1 == m_fCurDir.x)
 		{
 			GetAnimator()->Play(L"Idle");
 		}
 
-		else if (1 == m_fCurDir.x && IdleTime < 3)
+		else
 		{
 			GetAnimator()->Play(L"LIdle");
 		}
@@ -228,7 +238,59 @@ void CPlayer::update_animation()
 		break;
 	}
 
-	case CharacterState::ATTACK:
+	case CharacterState::FALL:
+	{
+		if (-1 == m_fCurDir.x)
+			GetAnimator()->Play(L"Fall");
+		else
+			GetAnimator()->Play(L"LFall");
+	}
+
+	case CharacterState::JUMPBUBBLE:
+	{
+		if (-1 == m_fCurDir.x)
+		{
+			GetAnimator()->Play(L"JumpBubble");
+		}
+
+		else
+		{
+			GetAnimator()->Play(L"LJumpBubble");
+		}
+
+		static float fTime = 0.f;
+		fTime += fDT;
+		if (0.3 <= fTime)
+		{
+			pState.Attacking = false;
+			fTime = 0.f;
+		}
+		break;
+	}
+
+	case CharacterState::FALLBUBBLE:
+	{
+		if (-1 == m_fCurDir.x)
+		{
+			GetAnimator()->Play(L"FallBubble");
+		}
+
+		else
+		{
+			GetAnimator()->Play(L"LFallBubble");
+		}
+
+		static float fTime = 0.f;
+		fTime += fDT;
+		if (0.3 <= fTime)
+		{
+			pState.Attacking = false;
+			fTime = 0.f;
+		}
+		break;
+	}
+
+	case CharacterState::BUBBLE:
 	{
 		if (-1 == m_fCurDir.x)
 		{
@@ -239,28 +301,30 @@ void CPlayer::update_animation()
 		{
 			GetAnimator()->Play(L"LBubble");
 		}
+
 		static float fTime = 0.f;
 		fTime += fDT;
-		if (0.4 <= fTime)
+		if (0.3 <= fTime)
 		{
 			pState.Attacking = false;
 			fTime = 0.f;
 		}
 		break;
 	}
+
 	}
 }
 
 void CPlayer::CreateMissile()
 {
 	fPoint fptMissilePos = GetPos();
-	fptMissilePos.x += GetScale().x / 2.f;
 
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fptMissilePos);
 
 	if (-1 == m_fCurDir.x)
 	{
+		fptMissilePos.x = (GetScale().x / 2.f) + 2.f;
 		pMissile->SetDir(fVec2(-1, 0));
 		pMissile->SetName(L"Missile");
 		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);
@@ -268,6 +332,7 @@ void CPlayer::CreateMissile()
 
 	else
 	{
+		fptMissilePos.x = (GetScale().x / 2.f) - 2.f;
 		pMissile->SetDir(fVec2(1, 0));
 		pMissile->SetName(L"Missile");
 		CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE);
@@ -297,6 +362,33 @@ void CPlayer::OnCollisionEnter(CCollider* pOther)
 	CTile* pTile = (CTile*)pOtherObj;
 	GROUP_TILE Type = pTile->GetGroup();
 
+	if (pOtherObj->GetName() == L"Tile")
+	{
+		switch (Type)
+		{
+			case GROUP_TILE::GROUND:
+			{
+				if (GetCollider()->GetBorderPos().top < pOther->GetBorderPos().top
+					&& GetCollider()->GetBorderPos().bottom >= pOther->GetBorderPos().top)
+				{
+					if (m_State == CharacterState::JUMP)
+						m_State = CharacterState::IDLE;
+				}
+				break;
+			}
+
+			case GROUP_TILE::PLATFORM:
+			{
+				if (GetCollider()->GetBorderPos().top < pOther->GetBorderPos().top
+					&& GetCollider()->GetBorderPos().bottom >= pOther->GetBorderPos().top)
+				{
+					if (m_State == CharacterState::JUMP)
+						m_State = CharacterState::IDLE;
+				}
+			}
+			break;
+		}
+	}
 }
 
 void CPlayer::OnCollision(CCollider* pOther)
