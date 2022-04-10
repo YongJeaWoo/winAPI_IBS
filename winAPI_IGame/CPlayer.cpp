@@ -91,16 +91,31 @@ void CPlayer::render()
 void CPlayer::update_state()
 {
 	// 기본 자세 상태
-	if (pState.Grounding && pState.AccelGravity == 0)
+	if (pState.Grounding && pState.Speed == 0)
 	{
-		if (pState.Speed == 0)
-			m_State = CharacterState::IDLE;
+		pState.Attacking = false;
+		m_State = CharacterState::IDLE;
+
+		if (KeyDown('Z'))
+		{
+			m_State = CharacterState::BUBBLE;
+			CreateMissile();
+			pState.Attacking = true;
+		}	
 	}
 
 	// 움직이는 상태
 	if (m_State == CharacterState::IDLE)
 	{
-		if (Key(VK_LEFT) || Key(VK_RIGHT) && pState.Grounding)
+		if (Key(VK_LEFT) || Key(VK_RIGHT))
+			m_State = CharacterState::MOVE;
+	}
+
+	// TODO : 이 부분을 어떻게 처리하면 좋을까
+	// 공격 후 계속 공격상태가 되는 것을 풀어야 하는 상태가 옴
+	if (!pState.Attacking && !KeyDown('Z'))
+	{
+		if (Key(VK_LEFT) || Key(VK_RIGHT))
 			m_State = CharacterState::MOVE;
 	}
 
@@ -123,18 +138,18 @@ void CPlayer::update_state()
 	}
 
 	// 땅에서 움직이면서 쏘는 상태
-	else if (pState.Grounding && pState.Speed <= MAX_SPEED && KeyDown('Z'))
+	if (pState.Grounding && pState.Speed <= MAX_SPEED && KeyDown('Z'))
 	{
 		CreateMissile();
 		m_State = CharacterState::BUBBLE;
 		pState.Attacking = true;
-	}
 
-	else if (pState.Grounding && pState.Speed == 0 && KeyDown('Z'))
-	{
-		CreateMissile();
-		m_State = CharacterState::BUBBLE;
-		pState.Attacking = true;
+
+		// TODO : 안 눌러졌을 때 
+		if (!KeyDown('Z'))
+		{
+			m_State = CharacterState::MOVE;
+		}
 	}
 }
 
@@ -248,6 +263,14 @@ void CPlayer::update_animation()
 
 	case CharacterState::JUMPBUBBLE:
 	{
+		static float fTime = 0.f;
+		fTime += fDT;
+		if (0.3f <= fTime)
+		{
+			pState.Attacking = false;
+			fTime = 0.f;
+		}
+
 		if (-1 == m_fCurDir.x)
 		{
 			GetAnimator()->Play(L"JumpBubble");
@@ -257,19 +280,19 @@ void CPlayer::update_animation()
 		{
 			GetAnimator()->Play(L"LJumpBubble");
 		}
-
-		static float fTime = 0.f;
-		fTime += fDT;
-		if (0.3 <= fTime)
-		{
-			pState.Attacking = false;
-			fTime = 0.f;
-		}
 		break;
 	}
 
 	case CharacterState::BUBBLE:
 	{
+		static float fTime = 0.f;
+		fTime += fDT;
+		if (0.3f <= fTime)
+		{
+			pState.Attacking = false;
+			fTime = 0.f;
+		}
+
 		if (-1 == m_fCurDir.x)
 		{
 			GetAnimator()->Play(L"Bubble");
@@ -278,14 +301,6 @@ void CPlayer::update_animation()
 		else
 		{
 			GetAnimator()->Play(L"LBubble");
-		}
-
-		static float fTime = 0.f;
-		fTime += fDT;
-		if (0.3 <= fTime)
-		{
-			pState.Attacking = false;
-			fTime = 0.f;
 		}
 		break;
 	}
