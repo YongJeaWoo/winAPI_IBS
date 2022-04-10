@@ -11,6 +11,8 @@
 #define GRAVITY		500.f
 #define UPPER		-380.f
 
+#define ATTACKTIME	0.f
+
 CPlayer* CPlayer::instance = nullptr;
 
 CPlayer::CPlayer()
@@ -52,6 +54,7 @@ CPlayer::CPlayer()
 	pState.Upper = UPPER;
 
 	m_gravity = GRAVITY;
+	m_attacktime = ATTACKTIME;
 
 	m_fCurDir = { 1.f, 1.f };
 	m_fPrevDir = {};
@@ -95,8 +98,16 @@ void CPlayer::update_state()
 	{
 		pState.Attacking = false;
 		m_State = CharacterState::IDLE;
+		m_attacktime += fDT;
 
-		if (KeyDown('Z'))
+		if (m_attacktime > 0.3f)
+		{
+			m_State = CharacterState::BUBBLE;
+			pState.Attacking = true;
+			m_attacktime = 0.f;
+		}
+
+		if (KeyDown('Z') && m_attacktime <= 0.3f)
 		{
 			m_State = CharacterState::BUBBLE;
 			CreateMissile();
@@ -107,16 +118,10 @@ void CPlayer::update_state()
 	// 움직이는 상태
 	if (m_State == CharacterState::IDLE)
 	{
-		if (Key(VK_LEFT) || Key(VK_RIGHT))
+		if (Key(VK_LEFT) || Key(VK_RIGHT) && pState.Grounding)
+		{
 			m_State = CharacterState::MOVE;
-	}
-
-	// TODO : 이 부분을 어떻게 처리하면 좋을까
-	// 공격 후 계속 공격상태가 되는 것을 풀어야 하는 상태가 옴
-	if (!pState.Attacking && !KeyDown('Z'))
-	{
-		if (Key(VK_LEFT) || Key(VK_RIGHT))
-			m_State = CharacterState::MOVE;
+		}
 	}
 
 	// 점프하는 상태
@@ -248,12 +253,11 @@ void CPlayer::update_animation()
 	case CharacterState::JUMPBUBBLE:
 	{
 		pState.Attacking = true;
-		static float fTime = 0.f;
-		fTime += fDT;
-		if (0.3f <= fTime)
+		m_attacktime += fDT;
+		if (0.3f <= m_attacktime)
 		{
 			pState.Attacking = false;
-			fTime = 0.f;
+			m_attacktime = 0.f;
 		}
 
 		if (-1 == m_fCurDir.x)
@@ -271,12 +275,11 @@ void CPlayer::update_animation()
 	case CharacterState::BUBBLE:
 	{
 		pState.Attacking = true;
-		static float fTime = 0.f;
-		fTime += fDT;
-		if (0.3f <= fTime)
+		m_attacktime += fDT;
+		if (0.3f <= m_attacktime)
 		{
 			pState.Attacking = false;
-			fTime = 0.f;
+			m_attacktime = 0.f;
 		}
 
 		if (-1 == m_fCurDir.x)

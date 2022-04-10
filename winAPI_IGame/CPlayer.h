@@ -42,6 +42,7 @@ private:
 	static CPlayer* instance;
 
 	float m_gravity;
+	float m_attacktime;
 
 	UINT m_GtileCount;
 	UINT m_WtileCount;
