@@ -125,9 +125,7 @@ void CPlayer::update_state()
 
 	// 떨어지는 상태
 	if (pState.AccelGravity >= 100 && !pState.Grounding)
-	{
 		m_State = CharacterState::FALL;
-	}
 
 	// 점프와 떨어짐 동시에 쏘는 상태
 	if (!pState.Grounding && pState.Speed <= MAX_SPEED && KeyDown('Z'))
@@ -143,13 +141,6 @@ void CPlayer::update_state()
 		CreateMissile();
 		m_State = CharacterState::BUBBLE;
 		pState.Attacking = true;
-
-
-		// TODO : 안 눌러졌을 때 
-		if (!KeyDown('Z'))
-		{
-			m_State = CharacterState::MOVE;
-		}
 	}
 }
 
@@ -213,6 +204,7 @@ void CPlayer::update_animation()
 	{
 		static float IdleTime = 0.f;
 		IdleTime += fDT;
+
 		if (-1 == m_fCurDir.x)
 		{
 			GetAnimator()->Play(L"Idle");
@@ -253,16 +245,9 @@ void CPlayer::update_animation()
 		break;
 	}
 
-	case CharacterState::FALL:
-	{
-		if (-1 == m_fCurDir.x)
-			GetAnimator()->Play(L"Fall");
-		else
-			GetAnimator()->Play(L"LFall");
-	}
-
 	case CharacterState::JUMPBUBBLE:
 	{
+		pState.Attacking = true;
 		static float fTime = 0.f;
 		fTime += fDT;
 		if (0.3f <= fTime)
@@ -285,6 +270,7 @@ void CPlayer::update_animation()
 
 	case CharacterState::BUBBLE:
 	{
+		pState.Attacking = true;
 		static float fTime = 0.f;
 		fTime += fDT;
 		if (0.3f <= fTime)
@@ -303,6 +289,14 @@ void CPlayer::update_animation()
 			GetAnimator()->Play(L"LBubble");
 		}
 		break;
+	}
+
+	case CharacterState::FALL:
+	{
+		if (-1 == m_fCurDir.x)
+			GetAnimator()->Play(L"Fall");
+		else
+			GetAnimator()->Play(L"LFall");
 	}
 
 	}
