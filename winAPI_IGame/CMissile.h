@@ -6,6 +6,7 @@ class CMissile : public CGameObject
 private:
 	fVec2 m_fvDir;
 	float m_fSpeed = 400.f;
+	bool m_isEnterWall = false;
 
 public:
 	CMissile();

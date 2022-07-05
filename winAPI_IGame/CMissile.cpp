@@ -42,11 +42,13 @@ void CMissile::render()
 
 	fPoint fptRenderPos = CCameraManager::getInst()->GetRenderPos(pos);
 
-	CRenderManager::getInst()->RenderEllipse(
+	CRenderManager::getInst()->RenderEllipse
+	(
 		fptRenderPos.x,
 		fptRenderPos.y,
 		scale.x / 2.f,
-		scale.y / 2.f);
+		scale.y / 2.f
+	);
 
 	component_render();
 }
@@ -64,9 +66,22 @@ void CMissile::SetDir(float theta)
 
 void CMissile::OnCollisionEnter(CCollider* pOther)
 {
+	
 	CGameObject* pOtherObj = pOther->GetObj();
 	if (pOtherObj->GetName() == L"Zen")
 	{
 		DeleteObj(this);
+	}
+	if (pOtherObj->GetName() == L"Tile")
+	{
+		CMissile::m_fSpeed = 100.f;//t스피드 바꾸기
+		this->SetDir(fPoint(0, -1.f));//
+		//TODO:여기서 if문 써서 타일이 플랫폼인지 wall인지 체크해야함
+		//TODO:천장이랑 닿으면 if문 써서 Celling이면 부자연스럽게 강체 추가?
+	}
+	if (pOtherObj->GetName()==L"Missile")
+	{
+		CMissile::m_fSpeed =100.f;
+		this->SetDir(fPoint(0, -1.f));
 	}
 }
