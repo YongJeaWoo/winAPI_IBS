@@ -14,6 +14,7 @@ private:
 	fPoint m_fptFinalPos;		// 충돌체의 최종 위치
 	fPoint m_fptScale;			// 충돌체의 크기
 	int m_iColCount;			// 충돌중
+	RECT m_rcCollider;
 
 	UINT m_iID;					// 충돌체 고유한 ID 값
 
@@ -36,6 +37,8 @@ public:
 
 	void finalupdate();
 	void render();
+
+	RECT GetBorderPos();
 
 	// 충돌 시점 함수
 	void OnCollision(CCollider* pOther);

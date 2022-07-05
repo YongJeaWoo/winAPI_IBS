@@ -74,7 +74,7 @@ void CSceneManager::init()
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
 
 	// TODO : 나중에 타이틀로 변경
-	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::TITLE];
+	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::STAGE_01];
 	m_pCurScene->Enter();
 }
 

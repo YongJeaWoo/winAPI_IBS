@@ -23,6 +23,11 @@ struct fPoint
 		this->y = y;
 	}
 
+	bool operator==(const fPoint& other)
+	{
+		return (x == other.x && y == other.y);
+	}
+
 	fPoint& operator=(const fPoint& other)
 	{
 		x = other.x;
